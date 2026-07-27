@@ -1,129 +1,249 @@
-const exams = window.QUIZ_DATA || [];
-const totalQuestions = exams.reduce((sum, exam) => sum + exam.questionCount, 0);
+const exams = window.PAGE_QUIZ_DATA || [];
+const totalOptions = exams.reduce((sum, exam) => {
+  return sum + exam.sections.reduce((sectionSum, section) => sectionSum + section.optionCount, 0);
+}, 0);
 
-let activeId = exams[0]?.id || "";
-let mode = "practice";
-let done = {};
+let activeExamId = exams[0]?.id || "";
+let activeSectionIndex = 0;
+let query = "";
+let revealed = false;
+let checked = false;
+let selected = {};
 
 const list = document.querySelector("#exam-list");
-const grid = document.querySelector("#paper-grid");
+const stack = document.querySelector("#page-stack");
 const title = document.querySelector("#exam-title");
 const source = document.querySelector("#source-file");
 const search = document.querySelector("#search");
-const doneButton = document.querySelector("#done-button");
+const checkButton = document.querySelector("#check-button");
+const revealButton = document.querySelector("#reveal-button");
+const resetButton = document.querySelector("#reset-button");
 const total = document.querySelector("#question-total");
 const progressValue = document.querySelector("#progress-value");
 const progressMeter = document.querySelector("#progress-meter");
-const modeButtons = [...document.querySelectorAll("[data-mode]")];
+const resultBar = document.querySelector("#result-bar");
+const sectionTabs = document.querySelector("#section-tabs");
 
 try {
-  done = JSON.parse(localStorage.getItem("grnvs-mcq-progress") || "{}");
+  selected = JSON.parse(localStorage.getItem("grnvs-mcq-selections") || "{}");
 } catch {
-  done = {};
+  selected = {};
 }
 
-total.textContent = `${totalQuestions} questions from official solution sheets`;
+total.textContent = `${totalOptions} selectable options from official solution sheets`;
 
-function saveProgress() {
-  localStorage.setItem("grnvs-mcq-progress", JSON.stringify(done));
+function save() {
+  localStorage.setItem("grnvs-mcq-selections", JSON.stringify(selected));
 }
 
 function activeExam() {
-  return exams.find((exam) => exam.id === activeId) || exams[0];
+  return exams.find((exam) => exam.id === activeExamId) || exams[0];
+}
+
+function activeSection() {
+  return activeExam().sections[activeSectionIndex] || activeExam().sections[0];
+}
+
+function sectionKey(exam = activeExam(), section = activeSection()) {
+  return `${exam.id}--${section.task}`;
+}
+
+function selectedForCurrent() {
+  return selected[sectionKey()] || {};
+}
+
+function setSelectedForCurrent(next) {
+  selected[sectionKey()] = next;
+  save();
 }
 
 function filteredExams() {
-  const normalized = search.value.trim().toLowerCase();
+  const normalized = query.trim().toLowerCase();
   if (!normalized) return exams;
   return exams.filter((exam) => {
     return (
       exam.title.toLowerCase().includes(normalized) ||
-      exam.file.toLowerCase().includes(normalized) ||
-      exam.content.toLowerCase().includes(normalized)
+      exam.file.toLowerCase().includes(normalized)
     );
   });
 }
 
+function sectionStats(exam, section) {
+  const answers = selected[`${exam.id}--${section.task}`] || {};
+  let chosen = 0;
+  for (const page of section.pages) {
+    for (const widget of page.widgets) {
+      if (answers[widget.id]) chosen += 1;
+    }
+  }
+  return chosen;
+}
+
+function scoreCurrent() {
+  const answers = selectedForCurrent();
+  let correctChosen = 0;
+  let wrongChosen = 0;
+  let missed = 0;
+  let untouched = 0;
+
+  for (const page of activeSection().pages) {
+    for (const widget of page.widgets) {
+      const isChosen = Boolean(answers[widget.id]);
+      if (isChosen && widget.correct) correctChosen += 1;
+      if (isChosen && !widget.correct) wrongChosen += 1;
+      if (!isChosen && widget.correct) missed += 1;
+      if (!isChosen && !widget.correct) untouched += 1;
+    }
+  }
+
+  return { correctChosen, wrongChosen, missed, untouched };
+}
+
 function updateProgress() {
-  const completed = exams.reduce((sum, exam) => {
-    return sum + (done[exam.id] ? exam.questionCount : 0);
-  }, 0);
-  const progress = Math.round((completed / totalQuestions) * 100);
-  progressValue.textContent = `${progress}%`;
-  progressMeter.value = progress;
+  let chosen = 0;
+  for (const exam of exams) {
+    for (const section of exam.sections) {
+      chosen += sectionStats(exam, section);
+    }
+  }
+  progressValue.textContent = `${chosen}/${totalOptions}`;
+  progressMeter.max = totalOptions;
+  progressMeter.value = chosen;
 }
 
 function renderList() {
   list.innerHTML = "";
   for (const exam of filteredExams()) {
+    const optionCount = exam.sections.reduce((sum, section) => sum + section.optionCount, 0);
+    const chosen = exam.sections.reduce((sum, section) => sum + sectionStats(exam, section), 0);
     const button = document.createElement("button");
-    button.className = exam.id === activeId ? "exam active" : "exam";
+    button.className = exam.id === activeExamId ? "exam active" : "exam";
     button.innerHTML = `
       <span>
         <strong>${escapeHtml(exam.title)}</strong>
-        <small>${exam.questionCount} questions</small>
+        <small>${exam.sections.length} section${exam.sections.length === 1 ? "" : "s"} · ${optionCount} options</small>
       </span>
-      <span class="${done[exam.id] ? "status done" : "status"}">
-        ${done[exam.id] ? "Done" : "Open"}
-      </span>
+      <span class="${chosen > 0 ? "status done" : "status"}">${chosen}</span>
     `;
     button.addEventListener("click", () => {
-      activeId = exam.id;
+      activeExamId = exam.id;
+      activeSectionIndex = 0;
+      checked = false;
+      revealed = false;
       render();
     });
     list.appendChild(button);
   }
 }
 
-function paper(label, sublabel, text, answerSheet = false) {
-  const article = document.createElement("article");
-  article.className = answerSheet ? "paper answer-sheet" : "paper";
-  article.innerHTML = `
-    <div class="paper-header">
-      <strong>${label}</strong>
-      <span>${sublabel}</span>
-    </div>
-  `;
-  const pre = document.createElement("pre");
-  pre.textContent = text;
-  article.appendChild(pre);
-  return article;
-}
-
-function renderPaper() {
+function renderTabs() {
+  sectionTabs.innerHTML = "";
   const exam = activeExam();
-  title.textContent = exam.title;
-  source.textContent = exam.file;
-  doneButton.textContent = done[exam.id] ? "Mark Open" : "Mark Done";
-  doneButton.className = done[exam.id] ? "primary muted" : "primary";
-  grid.className = mode === "split" ? "paper-grid split" : "paper-grid";
-  grid.innerHTML = "";
+  sectionTabs.style.display = exam.sections.length > 1 ? "inline-grid" : "none";
+  sectionTabs.style.gridTemplateColumns = `repeat(${exam.sections.length}, 1fr)`;
+  exam.sections.forEach((section, index) => {
+    const button = document.createElement("button");
+    button.className = index === activeSectionIndex ? "selected" : "";
+    button.textContent = section.title;
+    button.addEventListener("click", () => {
+      activeSectionIndex = index;
+      checked = false;
+      revealed = false;
+      render();
+    });
+    sectionTabs.appendChild(button);
+  });
+}
 
-  if (mode === "practice" || mode === "split") {
-    grid.appendChild(paper("Practice Sheet", "answer marks hidden", exam.practice));
+function renderResult() {
+  const score = scoreCurrent();
+  resultBar.className = checked || revealed ? "result-bar visible" : "result-bar";
+  if (!checked && !revealed) {
+    resultBar.textContent = "";
+    return;
   }
-  if (mode === "answers" || mode === "split") {
-    grid.appendChild(
-      paper("Official Answers", "official × marks shown", exam.content, true),
-    );
+  resultBar.innerHTML = `
+    <strong>${score.correctChosen} correct selected</strong>
+    <span>${score.missed} missed</span>
+    <span>${score.wrongChosen} wrong selected</span>
+  `;
+}
+
+function renderPages() {
+  const exam = activeExam();
+  const section = activeSection();
+  const answers = selectedForCurrent();
+  title.textContent = `${exam.title} · ${section.title}`;
+  source.textContent = exam.file;
+  revealButton.textContent = revealed ? "Hide" : "Reveal";
+  stack.innerHTML = "";
+
+  for (const page of section.pages) {
+    const viewer = document.createElement("article");
+    viewer.className = "page-viewer";
+    viewer.innerHTML = `
+      <div class="page-header">
+        <strong>Page ${page.pageNumber}</strong>
+        <span>${section.answerCount} official correct selections in this section</span>
+      </div>
+      <div class="page-canvas">
+        <img src="${page.image}" alt="${escapeHtml(exam.title)} ${section.title} page ${page.pageNumber}" />
+      </div>
+    `;
+
+    const canvas = viewer.querySelector(".page-canvas");
+    for (const cover of page.covers) {
+      canvas.appendChild(positioned("span", "solution-cover", cover));
+    }
+
+    for (const widget of page.widgets) {
+      const button = positioned("button", "choice", widget);
+      const chosen = Boolean(answers[widget.id]);
+      button.type = "button";
+      button.setAttribute("aria-label", `Toggle answer ${widget.id}`);
+      button.classList.toggle("chosen", chosen);
+      if (checked || revealed) {
+        button.classList.toggle("correct", widget.correct);
+        button.classList.toggle("wrong", chosen && !widget.correct);
+        button.classList.toggle("missed", !chosen && widget.correct);
+      }
+      if (revealed && widget.correct) {
+        button.classList.add("chosen");
+      }
+      button.addEventListener("click", () => {
+        const next = { ...selectedForCurrent(), [widget.id]: !chosen };
+        if (!next[widget.id]) delete next[widget.id];
+        setSelectedForCurrent(next);
+        checked = false;
+        render();
+      });
+      canvas.appendChild(button);
+    }
+
+    stack.appendChild(viewer);
   }
 }
 
-function renderModes() {
-  for (const button of modeButtons) {
-    button.classList.toggle("selected", button.dataset.mode === mode);
-  }
+function positioned(tag, className, widget) {
+  const element = document.createElement(tag);
+  element.className = className;
+  element.style.left = `${widget.left}%`;
+  element.style.top = `${widget.top}%`;
+  element.style.width = `${widget.width}%`;
+  element.style.height = `${widget.height}%`;
+  return element;
 }
 
 function render() {
   renderList();
-  renderModes();
-  renderPaper();
+  renderTabs();
+  renderResult();
+  renderPages();
   updateProgress();
 }
 
 function escapeHtml(value) {
-  return value.replace(/[&<>"']/g, (char) => {
+  return String(value).replace(/[&<>"']/g, (char) => {
     return {
       "&": "&amp;",
       "<": "&lt;",
@@ -134,20 +254,29 @@ function escapeHtml(value) {
   });
 }
 
-search.addEventListener("input", renderList);
+search.addEventListener("input", (event) => {
+  query = event.target.value;
+  renderList();
+});
 
-doneButton.addEventListener("click", () => {
-  const exam = activeExam();
-  done[exam.id] = !done[exam.id];
-  saveProgress();
+checkButton.addEventListener("click", () => {
+  checked = true;
+  revealed = false;
   render();
 });
 
-for (const button of modeButtons) {
-  button.addEventListener("click", () => {
-    mode = button.dataset.mode;
-    render();
-  });
-}
+revealButton.addEventListener("click", () => {
+  revealed = !revealed;
+  checked = revealed;
+  render();
+});
+
+resetButton.addEventListener("click", () => {
+  delete selected[sectionKey()];
+  save();
+  checked = false;
+  revealed = false;
+  render();
+});
 
 render();
