@@ -382,6 +382,51 @@ h3 {
   line-height: 1.5;
 }
 
+.note-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.note-menu {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.note-link-card {
+  display: grid;
+  gap: 12px;
+  min-height: 230px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 22px;
+  background: var(--panel);
+  color: var(--ink);
+  text-decoration: none;
+  box-shadow: var(--shadow);
+}
+
+.note-link-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(15, 124, 119, 0.12), var(--shadow);
+}
+
+.note-link-card h2 {
+  font-size: 28px;
+}
+
+.note-link-card p {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.note-link-card strong {
+  align-self: end;
+  color: var(--accent-dark);
+}
+
 .section-heading {
   margin: 28px 0 8px;
   border-left: 4px solid var(--accent);
@@ -472,7 +517,8 @@ h3 {
 
   .topbar,
   .actions,
-  .notes-hero {
+  .notes-hero,
+  .note-nav {
     align-items: stretch;
     flex-direction: column;
   }
@@ -481,7 +527,8 @@ h3 {
     align-items: stretch;
   }
 
-  .notes-grid {
+  .notes-grid,
+  .note-menu {
     grid-template-columns: 1fr;
   }
 }

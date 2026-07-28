@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>GRNVS Notes</title>
-    <meta name="description" content="Kurznotizen zu Leitungscodierung und Modulationsverfahren." />
+    <meta name="description" content="GRNVS study notes index." />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -14,324 +14,34 @@
           <p class="eyebrow">GRNVS Kurznotizen</p>
           <h1>Study Notes</h1>
           <p>
-            Kompakte Leseseite für Themen, die in MCQs und Rechenaufgaben
-            gerne wiederkommen.
+            Wähle ein Thema aus. Jede Notizseite ist getrennt, damit du nicht
+            durch alle Themen auf einmal scrollen musst.
           </p>
         </div>
         <a class="secondary link-button" href="./index.html">Back to Practice</a>
       </header>
 
-      <section class="section-heading">
-        <p class="eyebrow">Old Notes</p>
-        <h1>Codierung & Modulation</h1>
-      </section>
-
-      <section class="notes-grid" aria-label="Leitungscodierung">
-        <article class="note-card">
-          <span class="pill">Leitungscode</span>
-          <h2>NRZ</h2>
+      <section class="note-menu" aria-label="Notes topics">
+        <a class="note-link-card" href="./notes-coding.html">
+          <span class="pill">Old Notes</span>
+          <h2>Codierung & Modulation</h2>
           <p>
-            Bei <strong>Non-Return-to-Zero</strong> werden 0 und 1 durch zwei
-            konstante Pegel dargestellt. Innerhalb eines Bits muss kein Wechsel
-            stattfinden.
+            NRZ, Manchester, MLT-3, 4B5B, ASK, PSK und QAM mit Diagrammen und
+            Übergangsregeln.
           </p>
-          <canvas class="diagram" data-diagram="nrz" width="760" height="260"></canvas>
-          <div class="transition-list">
-            <strong>Übergänge:</strong>
-            0->0: keiner, 1->1: keiner, 0->1: steigende Flanke,
-            1->0: fallende Flanke.
-          </div>
-          <ul>
-            <li>Einfach zu erzeugen und zu erkennen.</li>
-            <li>Lange Folgen gleicher Bits liefern kaum Taktinformation.</li>
-            <li>Kann einen Gleichanteil enthalten.</li>
-          </ul>
-        </article>
+          <strong>Open notes</strong>
+        </a>
 
-        <article class="note-card">
-          <span class="pill">Leitungscode</span>
-          <h2>Manchester</h2>
+        <a class="note-link-card" href="./notes-ipv6.html">
+          <span class="pill">New Notes</span>
+          <h2>IPv6 Address Notes</h2>
           <p>
-            Bei Manchester gibt es in jedem Bitintervall einen Wechsel in der
-            Mitte. Die Richtung des Wechsels kodiert den Bitwert.
+            SLAAC, Modified EUI-64, DHCPv6, Privacy-Adressen, Multicast-Regeln
+            und Quick Decision Guide.
           </p>
-          <canvas class="diagram" data-diagram="manchester" width="760" height="260"></canvas>
-          <div class="transition-list">
-            <strong>Übergänge:</strong>
-            Jedes Bit hat eine mittlere Flanke. Bei gleichen Nachbarbits gibt es
-            zusätzlich eine Flanke an der Bitgrenze; bei wechselnden Bits nicht.
-          </div>
-          <ul>
-            <li>Gut für Taktrückgewinnung, weil jedes Bit einen Übergang hat.</li>
-            <li>Benötigt mehr Bandbreite als NRZ.</li>
-            <li>Wird oft als selbsttaktender Code beschrieben.</li>
-          </ul>
-        </article>
-
-        <article class="note-card">
-          <span class="pill">Leitungscode</span>
-          <h2>MLT-3</h2>
-          <p>
-            <strong>Multi-Level-Transmit-3</strong> nutzt drei Pegel:
-            -1, 0 und +1. Eine 1 führt zum nächsten Pegel in der Folge, eine 0
-            hält den aktuellen Pegel.
-          </p>
-          <canvas class="diagram" data-diagram="mlt3" width="760" height="260"></canvas>
-          <div class="transition-list">
-            <strong>Übergänge:</strong>
-            0: Pegel bleibt. 1: nächster Pegel in der Folge
-            0 -> +1 -> 0 -> -1 -> 0 -> ...
-          </div>
-          <ul>
-            <li>Reduziert die maximale Signalfrequenz gegenüber NRZ.</li>
-            <li>Allein nicht ideal bei langen Nullfolgen.</li>
-            <li>Wird deshalb gerne mit 4B5B kombiniert.</li>
-          </ul>
-        </article>
-
-        <article class="note-card">
-          <span class="pill">Blockcode</span>
-          <h2>4B5B</h2>
-          <p>
-            4B5B bildet 4 Datenbits auf 5 Codebits ab. Die Codewörter werden so
-            gewählt, dass genügend Übergänge entstehen und zusätzliche
-            Kontrollsymbole möglich sind.
-          </p>
-          <canvas class="diagram" data-diagram="4b5b" width="760" height="260"></canvas>
-          <div class="transition-list">
-            <strong>Übergänge:</strong>
-            4B5B erzeugt Codewörter mit mehr Übergängen als rohe Daten und
-            begrenzt lange Nullfolgen; danach folgt häufig ein Leitungscode wie
-            NRZI oder MLT-3.
-          </div>
-          <ul>
-            <li>Erhöht die Bitrate auf der Leitung um den Faktor 5/4.</li>
-            <li>Hilft gegen zu lange Folgen ohne Übergang.</li>
-            <li>Ist Codierung, nicht Modulation.</li>
-          </ul>
-        </article>
-      </section>
-
-      <section class="notes-grid" aria-label="Modulation">
-        <article class="note-card">
-          <span class="pill">Modulation</span>
-          <h2>ASK</h2>
-          <p>
-            Bei <strong>Amplitude Shift Keying</strong> wird die Amplitude des
-            Trägersignals verändert. Unterschiedliche Amplituden stehen für
-            unterschiedliche Symbole.
-          </p>
-          <canvas class="diagram" data-diagram="ask" width="760" height="260"></canvas>
-          <div class="transition-list">
-            <strong>Veränderung:</strong>
-            Die Amplitude wechselt; Frequenz und Phase bleiben im einfachen
-            Modell gleich.
-          </div>
-          <ul>
-            <li>Einfaches Prinzip.</li>
-            <li>Empfindlich gegenüber Amplitudenrauschen.</li>
-            <li>2-ASK hat zwei unterscheidbare Amplituden.</li>
-          </ul>
-        </article>
-
-        <article class="note-card">
-          <span class="pill">Modulation</span>
-          <h2>PSK</h2>
-          <p>
-            Bei <strong>Phase Shift Keying</strong> wird die Phase des
-            Trägersignals verändert. Die Amplitude kann dabei konstant bleiben.
-          </p>
-          <canvas class="diagram" data-diagram="psk" width="760" height="260"></canvas>
-          <div class="transition-list">
-            <strong>Veränderung:</strong>
-            Die Phase springt zwischen Symbolpunkten; bei 2-PSK typischerweise
-            um 180 Grad.
-          </div>
-          <ul>
-            <li>2-PSK nutzt zwei Phasenlagen.</li>
-            <li>Mehr Phasenlagen bedeuten mehr Bits pro Symbol.</li>
-            <li>Die Punkte liegen im Signalraum oft auf einem Kreis.</li>
-          </ul>
-        </article>
-
-        <article class="note-card">
-          <span class="pill">Modulation</span>
-          <h2>QAM</h2>
-          <p>
-            <strong>Quadrature Amplitude Modulation</strong> verändert zwei
-            orthogonale Komponenten: I und Q. Dadurch werden Amplitude und Phase
-            kombiniert genutzt.
-          </p>
-          <canvas class="diagram" data-diagram="qam" width="760" height="260"></canvas>
-          <div class="transition-list">
-            <strong>Veränderung:</strong>
-            Symbolwechsel können I, Q, Amplitude und Phase verändern. 16-QAM
-            hat 16 Signalraumpunkte.
-          </div>
-          <ul>
-            <li>M-QAM überträgt log2(M) Bits pro Symbol.</li>
-            <li>16-QAM überträgt 4 Bits pro Symbol.</li>
-            <li>Höhere Ordnung braucht besseres SNR.</li>
-          </ul>
-        </article>
-      </section>
-
-      <section class="note-card wide">
-        <span class="pill">Prüfungstipp</span>
-        <h2>Schnelle Unterscheidung</h2>
-        <p>
-          <strong>NRZ, Manchester, MLT-3 und 4B5B</strong> sind
-          Leitungscodierungs- bzw. Blockcodierungsverfahren. Sie beschreiben,
-          wie Bits auf Leitungssignale oder Codewörter abgebildet werden.
-          <strong>ASK, PSK und QAM</strong> sind Modulationsverfahren. Sie
-          beschreiben, welche Eigenschaft eines Trägersignals verändert wird.
-        </p>
-      </section>
-
-      <section class="section-heading">
-        <p class="eyebrow">New Notes</p>
-        <h1>IPv6 Address Notes</h1>
-      </section>
-
-      <section class="note-card wide">
-        <span class="pill">Grundstruktur</span>
-        <h2>Prefix /64 + Interface ID /64</h2>
-        <p>Eine IPv6-Adresse besteht in Aufgaben meistens aus zwei Teilen.</p>
-        <pre class="note-code">Prefix /64 + Interface ID /64
-
-2001:db8:1::/64 + abcd:1234:5678:9999</pre>
-        <p>
-          Der Prefix beschreibt das Netzwerk. Die Interface ID identifiziert das
-          Gerät bzw. Interface innerhalb dieses Netzwerks.
-        </p>
-      </section>
-
-      <section class="notes-grid" aria-label="IPv6 address methods">
-        <article class="note-card">
-          <span class="pill">Methode 1</span>
-          <h2>SLAAC mit Modified EUI-64</h2>
-          <p>
-            Verwende diese Methode, wenn die Aufgabe eine
-            <strong>MAC-Adresse</strong> gibt und automatische IPv6-Erzeugung
-            erwartet.
-          </p>
-          <pre class="note-code">1. MAC nehmen
-   04:7b:cb:c1:08:06
-
-2. In der Mitte teilen
-   04:7b:cb | c1:08:06
-
-3. ff:fe einfügen
-   04:7b:cb:ff:fe:c1:08:06
-
-4. U/L-Bit im ersten Byte flippen
-   04 -> 06
-
-5. Prefix ergänzen
-   fe80::/64 für link-local
-   oder gegebenen globalen Prefix</pre>
-          <p>Ergebnis mit Link-Local Prefix:</p>
-          <pre class="note-code">fe80::67b:cbff:fec1:806</pre>
-          <div class="transition-list">
-            <strong>Merke:</strong> U/L bit flip = first byte XOR 0x02.
-            Beispiele: 00 -> 02, 04 -> 06, c0 -> c2, a6 -> a4.
-          </div>
-        </article>
-
-        <article class="note-card">
-          <span class="pill">Methode 2</span>
-          <h2>SLAAC mit gegebenem Prefix</h2>
-          <p>
-            Wenn die Interface ID bereits gegeben ist, hängst du sie nur an den
-            Prefix an.
-          </p>
-          <pre class="note-code">Interface ID = 067b:cbff:fec1:0806
-Prefix       = 2001:db8:1::/64
-
-Adresse:
-2001:db8:1::67b:cbff:fec1:806
-
-Link-local:
-fe80::67b:cbff:fec1:806</pre>
-        </article>
-
-        <article class="note-card">
-          <span class="pill">Methode 3</span>
-          <h2>Manuell gesetzte IPv6-Adresse</h2>
-          <p>
-            Manchmal gibt die Aufgabe einfach eine gewählte Adresse an oder
-            erwartet eine typische manuelle Konfiguration, besonders bei Routern
-            und Servern.
-          </p>
-          <pre class="note-code">Router interface:
-2001:db8:1::1/64</pre>
-          <p>Dafür brauchst du kein EUI-64.</p>
-        </article>
-
-        <article class="note-card">
-          <span class="pill">Methode 4</span>
-          <h2>DHCPv6</h2>
-          <p>
-            Bei DHCPv6 weist ein Server die IPv6-Adresse zu. Du berechnest sie
-            nicht aus der MAC-Adresse, außer die Aufgabe gibt eine DHCP-Tabelle.
-          </p>
-          <pre class="note-code">DHCPv6 = Server gibt Adresse
-SLAAC  = Host baut Adresse selbst</pre>
-        </article>
-
-        <article class="note-card">
-          <span class="pill">Methode 5</span>
-          <h2>Privacy / Random Interface ID</h2>
-          <p>
-            Moderne Systeme verwenden oft keine MAC-basierte EUI-64-Adresse,
-            sondern eine zufällig wirkende Interface ID.
-          </p>
-          <pre class="note-code">2001:db8:1::8f3a:91ff:bc22:1009</pre>
-          <p>
-            Wenn die Interface ID nicht zur MAC passt, kann sie random/privacy,
-            manuell oder per DHCPv6 vergeben sein.
-          </p>
-        </article>
-
-        <article class="note-card">
-          <span class="pill">Exam Memory</span>
-          <h2>Wichtige Prüfungsregeln</h2>
-          <pre class="note-code">Link-local prefix:
-fe80::/64
-
-Global prefix:
-gegeben durch Router Advertisement
-oder direkt in der Aufgabe
-z. B. 2001:db8:ff::/64
-
-Neighbor Solicitation multicast:
-ff02::1:ffXX:XXXX
-XX:XXXX = letzte 24 Bits der Ziel-IPv6
-
-IPv6 multicast MAC:
-33:33 + letzte 32 Bits der Multicast-IPv6</pre>
-        </article>
-      </section>
-
-      <section class="note-card wide">
-        <span class="pill">Quick Decision</span>
-        <h2>Welche Methode nehme ich?</h2>
-        <pre class="note-code">Given MAC + asks SLAAC/link-local:
--> use modified EUI-64
-
-Given prefix + already have interface ID:
--> prefix + interface ID
-
-Given DHCP/table:
--> use assigned address
-
-Given router/server manual config:
--> use stated/manual address
-
-Modern real-life address looks random:
--> privacy/DHCP/manual, not EUI-64</pre>
+          <strong>Open notes</strong>
+        </a>
       </section>
     </main>
-    <script src="./notes-diagrams.js"></script>
   </body>
 </html>
