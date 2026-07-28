@@ -12,14 +12,19 @@
       <header class="notes-hero">
         <div>
           <p class="eyebrow">GRNVS Kurznotizen</p>
-          <h1>Codierung & Modulation</h1>
+          <h1>Study Notes</h1>
           <p>
-            Eine kompakte Leseseite für die Begriffe, die in MCQs gerne als
-            kurze Theoriefragen auftauchen.
+            Kompakte Leseseite für Themen, die in MCQs und Rechenaufgaben
+            gerne wiederkommen.
           </p>
         </div>
         <a class="secondary link-button" href="./index.html">Back to Practice</a>
       </header>
+
+      <section class="section-heading">
+        <p class="eyebrow">Old Notes</p>
+        <h1>Codierung & Modulation</h1>
+      </section>
 
       <section class="notes-grid" aria-label="Leitungscodierung">
         <article class="note-card">
@@ -181,6 +186,150 @@
           <strong>ASK, PSK und QAM</strong> sind Modulationsverfahren. Sie
           beschreiben, welche Eigenschaft eines Trägersignals verändert wird.
         </p>
+      </section>
+
+      <section class="section-heading">
+        <p class="eyebrow">New Notes</p>
+        <h1>IPv6 Address Notes</h1>
+      </section>
+
+      <section class="note-card wide">
+        <span class="pill">Grundstruktur</span>
+        <h2>Prefix /64 + Interface ID /64</h2>
+        <p>Eine IPv6-Adresse besteht in Aufgaben meistens aus zwei Teilen.</p>
+        <pre class="note-code">Prefix /64 + Interface ID /64
+
+2001:db8:1::/64 + abcd:1234:5678:9999</pre>
+        <p>
+          Der Prefix beschreibt das Netzwerk. Die Interface ID identifiziert das
+          Gerät bzw. Interface innerhalb dieses Netzwerks.
+        </p>
+      </section>
+
+      <section class="notes-grid" aria-label="IPv6 address methods">
+        <article class="note-card">
+          <span class="pill">Methode 1</span>
+          <h2>SLAAC mit Modified EUI-64</h2>
+          <p>
+            Verwende diese Methode, wenn die Aufgabe eine
+            <strong>MAC-Adresse</strong> gibt und automatische IPv6-Erzeugung
+            erwartet.
+          </p>
+          <pre class="note-code">1. MAC nehmen
+   04:7b:cb:c1:08:06
+
+2. In der Mitte teilen
+   04:7b:cb | c1:08:06
+
+3. ff:fe einfügen
+   04:7b:cb:ff:fe:c1:08:06
+
+4. U/L-Bit im ersten Byte flippen
+   04 -> 06
+
+5. Prefix ergänzen
+   fe80::/64 für link-local
+   oder gegebenen globalen Prefix</pre>
+          <p>Ergebnis mit Link-Local Prefix:</p>
+          <pre class="note-code">fe80::67b:cbff:fec1:806</pre>
+          <div class="transition-list">
+            <strong>Merke:</strong> U/L bit flip = first byte XOR 0x02.
+            Beispiele: 00 -> 02, 04 -> 06, c0 -> c2, a6 -> a4.
+          </div>
+        </article>
+
+        <article class="note-card">
+          <span class="pill">Methode 2</span>
+          <h2>SLAAC mit gegebenem Prefix</h2>
+          <p>
+            Wenn die Interface ID bereits gegeben ist, hängst du sie nur an den
+            Prefix an.
+          </p>
+          <pre class="note-code">Interface ID = 067b:cbff:fec1:0806
+Prefix       = 2001:db8:1::/64
+
+Adresse:
+2001:db8:1::67b:cbff:fec1:806
+
+Link-local:
+fe80::67b:cbff:fec1:806</pre>
+        </article>
+
+        <article class="note-card">
+          <span class="pill">Methode 3</span>
+          <h2>Manuell gesetzte IPv6-Adresse</h2>
+          <p>
+            Manchmal gibt die Aufgabe einfach eine gewählte Adresse an oder
+            erwartet eine typische manuelle Konfiguration, besonders bei Routern
+            und Servern.
+          </p>
+          <pre class="note-code">Router interface:
+2001:db8:1::1/64</pre>
+          <p>Dafür brauchst du kein EUI-64.</p>
+        </article>
+
+        <article class="note-card">
+          <span class="pill">Methode 4</span>
+          <h2>DHCPv6</h2>
+          <p>
+            Bei DHCPv6 weist ein Server die IPv6-Adresse zu. Du berechnest sie
+            nicht aus der MAC-Adresse, außer die Aufgabe gibt eine DHCP-Tabelle.
+          </p>
+          <pre class="note-code">DHCPv6 = Server gibt Adresse
+SLAAC  = Host baut Adresse selbst</pre>
+        </article>
+
+        <article class="note-card">
+          <span class="pill">Methode 5</span>
+          <h2>Privacy / Random Interface ID</h2>
+          <p>
+            Moderne Systeme verwenden oft keine MAC-basierte EUI-64-Adresse,
+            sondern eine zufällig wirkende Interface ID.
+          </p>
+          <pre class="note-code">2001:db8:1::8f3a:91ff:bc22:1009</pre>
+          <p>
+            Wenn die Interface ID nicht zur MAC passt, kann sie random/privacy,
+            manuell oder per DHCPv6 vergeben sein.
+          </p>
+        </article>
+
+        <article class="note-card">
+          <span class="pill">Exam Memory</span>
+          <h2>Wichtige Prüfungsregeln</h2>
+          <pre class="note-code">Link-local prefix:
+fe80::/64
+
+Global prefix:
+gegeben durch Router Advertisement
+oder direkt in der Aufgabe
+z. B. 2001:db8:ff::/64
+
+Neighbor Solicitation multicast:
+ff02::1:ffXX:XXXX
+XX:XXXX = letzte 24 Bits der Ziel-IPv6
+
+IPv6 multicast MAC:
+33:33 + letzte 32 Bits der Multicast-IPv6</pre>
+        </article>
+      </section>
+
+      <section class="note-card wide">
+        <span class="pill">Quick Decision</span>
+        <h2>Welche Methode nehme ich?</h2>
+        <pre class="note-code">Given MAC + asks SLAAC/link-local:
+-> use modified EUI-64
+
+Given prefix + already have interface ID:
+-> prefix + interface ID
+
+Given DHCP/table:
+-> use assigned address
+
+Given router/server manual config:
+-> use stated/manual address
+
+Modern real-life address looks random:
+-> privacy/DHCP/manual, not EUI-64</pre>
       </section>
     </main>
     <script src="./notes-diagrams.js"></script>
