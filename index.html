@@ -4,60 +4,73 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>GRNVS MCQ Practice</title>
-    <meta
-      name="description"
-      content="Practice GRNVS exam multiple-choice questions with official solution marks."
-    />
+    <meta name="description" content="Practice GRNVS exam MCQs as clean quiz cards." />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <main class="shell">
-      <aside class="sidebar" aria-label="Exam list">
+    <main class="app">
+      <aside class="side">
         <div class="brand">
-          <span class="brand-mark">G</span>
+          <span>G</span>
           <div>
             <h1>GRNVS MCQ Practice</h1>
-            <p id="question-total">Loading questions</p>
+            <p id="total-label">Loading questions</p>
           </div>
         </div>
 
-        <div class="progress-card">
-          <div>
-            <span>Checked</span>
-            <strong id="progress-value">0</strong>
-          </div>
-          <meter id="progress-meter" min="0" max="1" value="0"></meter>
-        </div>
-
-        <label class="search">
-          <span>Search</span>
-          <input id="search" placeholder="DNS, TCP, 2024..." />
+        <label class="field">
+          <span>Year</span>
+          <select id="year-filter"></select>
         </label>
 
-        <nav id="exam-list" class="exam-list"></nav>
+        <label class="field">
+          <span>Search</span>
+          <input id="search" placeholder="DNS, TCP, IPv6..." />
+        </label>
+
+        <div class="stats">
+          <div><strong id="score-label">0/0</strong><span>score</span></div>
+          <div><strong id="answered-label">0</strong><span>answered</span></div>
+        </div>
+
+        <div class="actions vertical">
+          <button id="shuffle-button" class="secondary">Shuffle</button>
+          <button id="reset-button" class="secondary">Reset Answers</button>
+        </div>
       </aside>
 
-      <section class="workspace" aria-label="Practice area">
-        <header class="toolbar">
+      <section class="quiz">
+        <header class="topbar">
           <div>
-            <p id="source-file" class="eyebrow"></p>
-            <h2 id="exam-title"></h2>
+            <p class="eyebrow">Mixed exam-year questionnaire</p>
+            <h2 id="question-position">Question</h2>
           </div>
-
-          <div class="toolbar-actions">
-            <div id="section-tabs" class="segmented" role="group" aria-label="Section"></div>
-            <button id="check-button" class="primary">Check</button>
-            <button id="reveal-button" class="secondary">Reveal</button>
-            <button id="reset-button" class="secondary">Reset</button>
+          <div class="actions">
+            <button id="prev-button" class="secondary">Previous</button>
+            <button id="next-button" class="secondary">Next</button>
           </div>
         </header>
 
-        <div id="result-bar" class="result-bar"></div>
-        <div id="page-stack" class="page-stack"></div>
+        <article class="card">
+          <div class="card-head">
+            <span id="type-pill" class="pill">Multiple choice</span>
+            <span id="source-pill" class="pill muted">Source</span>
+          </div>
+          <h3 id="question-text"></h3>
+          <div id="option-list" class="options"></div>
+          <footer class="footnote" id="year-footnote"></footer>
+        </article>
+
+        <div id="feedback" class="feedback"></div>
+
+        <div class="actions bottom">
+          <button id="check-button" class="primary">Check Answer</button>
+          <button id="show-button" class="secondary">Show Answer</button>
+        </div>
       </section>
     </main>
 
-    <script src="./page-data.js"></script>
+    <script src="./questions-data.js"></script>
     <script src="./app.js"></script>
   </body>
 </html>

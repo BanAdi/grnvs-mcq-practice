@@ -1,281 +1,233 @@
-const exams = window.PAGE_QUIZ_DATA || [];
-const totalOptions = exams.reduce((sum, exam) => {
-  return sum + exam.sections.reduce((sectionSum, section) => sectionSum + section.optionCount, 0);
-}, 0);
+const allQuestions = window.QUESTION_DATA || [];
+const stateKey = "grnvs-card-answers-v1";
 
-let activeExamId = exams[0]?.id || "";
-let activeSectionIndex = 0;
-let query = "";
-let revealed = false;
+let answers = {};
+let current = 0;
+let year = "all";
+let search = "";
+let order = allQuestions.map((_, index) => index);
 let checked = false;
-let selected = {};
-
-const list = document.querySelector("#exam-list");
-const stack = document.querySelector("#page-stack");
-const title = document.querySelector("#exam-title");
-const source = document.querySelector("#source-file");
-const search = document.querySelector("#search");
-const checkButton = document.querySelector("#check-button");
-const revealButton = document.querySelector("#reveal-button");
-const resetButton = document.querySelector("#reset-button");
-const total = document.querySelector("#question-total");
-const progressValue = document.querySelector("#progress-value");
-const progressMeter = document.querySelector("#progress-meter");
-const resultBar = document.querySelector("#result-bar");
-const sectionTabs = document.querySelector("#section-tabs");
 
 try {
-  selected = JSON.parse(localStorage.getItem("grnvs-mcq-selections") || "{}");
+  answers = JSON.parse(localStorage.getItem(stateKey) || "{}");
 } catch {
-  selected = {};
+  answers = {};
 }
 
-total.textContent = `${totalOptions} selectable options from official solution sheets`;
+const el = {
+  total: document.querySelector("#total-label"),
+  year: document.querySelector("#year-filter"),
+  search: document.querySelector("#search"),
+  score: document.querySelector("#score-label"),
+  answered: document.querySelector("#answered-label"),
+  pos: document.querySelector("#question-position"),
+  type: document.querySelector("#type-pill"),
+  source: document.querySelector("#source-pill"),
+  q: document.querySelector("#question-text"),
+  options: document.querySelector("#option-list"),
+  footnote: document.querySelector("#year-footnote"),
+  feedback: document.querySelector("#feedback"),
+  prev: document.querySelector("#prev-button"),
+  next: document.querySelector("#next-button"),
+  check: document.querySelector("#check-button"),
+  show: document.querySelector("#show-button"),
+  shuffle: document.querySelector("#shuffle-button"),
+  reset: document.querySelector("#reset-button"),
+};
+
+const years = [...new Set(allQuestions.map((q) => q.year))].sort();
+el.year.innerHTML = `<option value="all">All years</option>${years
+  .map((value) => `<option value="${value}">${value}</option>`)
+  .join("")}`;
+el.total.textContent = `${allQuestions.length} questions`;
 
 function save() {
-  localStorage.setItem("grnvs-mcq-selections", JSON.stringify(selected));
+  localStorage.setItem(stateKey, JSON.stringify(answers));
 }
 
-function activeExam() {
-  return exams.find((exam) => exam.id === activeExamId) || exams[0];
+function filteredIndexes() {
+  const needle = search.trim().toLowerCase();
+  return order.filter((index) => {
+    const q = allQuestions[index];
+    if (year !== "all" && q.year !== year) return false;
+    if (!needle) return true;
+    return `${q.question} ${q.options.join(" ")} ${q.source}`.toLowerCase().includes(needle);
+  });
 }
 
-function activeSection() {
-  return activeExam().sections[activeSectionIndex] || activeExam().sections[0];
+function activeIndex() {
+  const list = filteredIndexes();
+  if (current >= list.length) current = Math.max(0, list.length - 1);
+  return list[current];
 }
 
-function sectionKey(exam = activeExam(), section = activeSection()) {
-  return `${exam.id}--${section.task}`;
+function activeQuestion() {
+  return allQuestions[activeIndex()];
 }
 
-function selectedForCurrent() {
-  return selected[sectionKey()] || {};
+function isSameSet(a, b) {
+  return a.length === b.length && a.every((value) => b.includes(value));
 }
 
-function setSelectedForCurrent(next) {
-  selected[sectionKey()] = next;
+function selectedFor(q) {
+  return answers[q.id] || [];
+}
+
+function setSelected(q, values) {
+  answers[q.id] = values;
+  if (values.length === 0) delete answers[q.id];
   save();
 }
 
-function filteredExams() {
-  const normalized = query.trim().toLowerCase();
-  if (!normalized) return exams;
-  return exams.filter((exam) => {
-    return (
-      exam.title.toLowerCase().includes(normalized) ||
-      exam.file.toLowerCase().includes(normalized)
-    );
-  });
-}
-
-function sectionStats(exam, section) {
-  const answers = selected[`${exam.id}--${section.task}`] || {};
-  let chosen = 0;
-  for (const page of section.pages) {
-    for (const widget of page.widgets) {
-      if (answers[widget.id]) chosen += 1;
-    }
+function renderStats() {
+  let answered = 0;
+  let correct = 0;
+  for (const q of allQuestions) {
+    const selected = selectedFor(q);
+    if (selected.length) answered += 1;
+    if (selected.length && isSameSet(selected, q.answers)) correct += 1;
   }
-  return chosen;
-}
-
-function scoreCurrent() {
-  const answers = selectedForCurrent();
-  let correctChosen = 0;
-  let wrongChosen = 0;
-  let missed = 0;
-  let untouched = 0;
-
-  for (const page of activeSection().pages) {
-    for (const widget of page.widgets) {
-      const isChosen = Boolean(answers[widget.id]);
-      if (isChosen && widget.correct) correctChosen += 1;
-      if (isChosen && !widget.correct) wrongChosen += 1;
-      if (!isChosen && widget.correct) missed += 1;
-      if (!isChosen && !widget.correct) untouched += 1;
-    }
-  }
-
-  return { correctChosen, wrongChosen, missed, untouched };
-}
-
-function updateProgress() {
-  let chosen = 0;
-  for (const exam of exams) {
-    for (const section of exam.sections) {
-      chosen += sectionStats(exam, section);
-    }
-  }
-  progressValue.textContent = `${chosen}/${totalOptions}`;
-  progressMeter.max = totalOptions;
-  progressMeter.value = chosen;
-}
-
-function renderList() {
-  list.innerHTML = "";
-  for (const exam of filteredExams()) {
-    const optionCount = exam.sections.reduce((sum, section) => sum + section.optionCount, 0);
-    const chosen = exam.sections.reduce((sum, section) => sum + sectionStats(exam, section), 0);
-    const button = document.createElement("button");
-    button.className = exam.id === activeExamId ? "exam active" : "exam";
-    button.innerHTML = `
-      <span>
-        <strong>${escapeHtml(exam.title)}</strong>
-        <small>${exam.sections.length} section${exam.sections.length === 1 ? "" : "s"} · ${optionCount} options</small>
-      </span>
-      <span class="${chosen > 0 ? "status done" : "status"}">${chosen}</span>
-    `;
-    button.addEventListener("click", () => {
-      activeExamId = exam.id;
-      activeSectionIndex = 0;
-      checked = false;
-      revealed = false;
-      render();
-    });
-    list.appendChild(button);
-  }
-}
-
-function renderTabs() {
-  sectionTabs.innerHTML = "";
-  const exam = activeExam();
-  sectionTabs.style.display = exam.sections.length > 1 ? "inline-grid" : "none";
-  sectionTabs.style.gridTemplateColumns = `repeat(${exam.sections.length}, 1fr)`;
-  exam.sections.forEach((section, index) => {
-    const button = document.createElement("button");
-    button.className = index === activeSectionIndex ? "selected" : "";
-    button.textContent = section.title;
-    button.addEventListener("click", () => {
-      activeSectionIndex = index;
-      checked = false;
-      revealed = false;
-      render();
-    });
-    sectionTabs.appendChild(button);
-  });
-}
-
-function renderResult() {
-  const score = scoreCurrent();
-  resultBar.className = checked || revealed ? "result-bar visible" : "result-bar";
-  if (!checked && !revealed) {
-    resultBar.textContent = "";
-    return;
-  }
-  resultBar.innerHTML = `
-    <strong>${score.correctChosen} correct selected</strong>
-    <span>${score.missed} missed</span>
-    <span>${score.wrongChosen} wrong selected</span>
-  `;
-}
-
-function renderPages() {
-  const exam = activeExam();
-  const section = activeSection();
-  const answers = selectedForCurrent();
-  title.textContent = `${exam.title} · ${section.title}`;
-  source.textContent = exam.file;
-  revealButton.textContent = revealed ? "Hide" : "Reveal";
-  stack.innerHTML = "";
-
-  for (const page of section.pages) {
-    const viewer = document.createElement("article");
-    viewer.className = "page-viewer";
-    viewer.innerHTML = `
-      <div class="page-header">
-        <strong>Page ${page.pageNumber}</strong>
-        <span>${section.answerCount} official correct selections in this section</span>
-      </div>
-      <div class="page-canvas">
-        <img src="${page.image}" alt="${escapeHtml(exam.title)} ${section.title} page ${page.pageNumber}" />
-      </div>
-    `;
-
-    const canvas = viewer.querySelector(".page-canvas");
-    for (const cover of page.covers) {
-      canvas.appendChild(positioned("span", "solution-cover", cover));
-    }
-
-    for (const widget of page.widgets) {
-      const button = positioned("button", "choice", widget);
-      const chosen = Boolean(answers[widget.id]);
-      button.type = "button";
-      button.setAttribute("aria-label", `Toggle answer ${widget.id}`);
-      button.classList.toggle("chosen", chosen);
-      if (checked || revealed) {
-        button.classList.toggle("correct", widget.correct);
-        button.classList.toggle("wrong", chosen && !widget.correct);
-        button.classList.toggle("missed", !chosen && widget.correct);
-      }
-      if (revealed && widget.correct) {
-        button.classList.add("chosen");
-      }
-      button.addEventListener("click", () => {
-        const next = { ...selectedForCurrent(), [widget.id]: !chosen };
-        if (!next[widget.id]) delete next[widget.id];
-        setSelectedForCurrent(next);
-        checked = false;
-        render();
-      });
-      canvas.appendChild(button);
-    }
-
-    stack.appendChild(viewer);
-  }
-}
-
-function positioned(tag, className, widget) {
-  const element = document.createElement(tag);
-  element.className = className;
-  element.style.left = `${widget.left}%`;
-  element.style.top = `${widget.top}%`;
-  element.style.width = `${widget.width}%`;
-  element.style.height = `${widget.height}%`;
-  return element;
+  el.score.textContent = `${correct}/${allQuestions.length}`;
+  el.answered.textContent = String(answered);
 }
 
 function render() {
-  renderList();
-  renderTabs();
-  renderResult();
-  renderPages();
-  updateProgress();
+  const list = filteredIndexes();
+  if (!list.length) {
+    el.pos.textContent = "No questions found";
+    el.q.textContent = "Try a different year or search term.";
+    el.options.innerHTML = "";
+    el.footnote.textContent = "";
+    el.feedback.className = "feedback";
+    el.feedback.textContent = "";
+    renderStats();
+    return;
+  }
+
+  const q = activeQuestion();
+  const selected = selectedFor(q);
+  el.pos.textContent = `Question ${current + 1} of ${list.length}`;
+  el.type.textContent = q.multiple ? "Multiple answers" : "Single answer";
+  el.source.textContent = `${q.source}, ${q.label})`;
+  el.q.textContent = q.question;
+  el.footnote.textContent = `Asked in ${q.year} (${q.exam}).`;
+  el.prev.disabled = current === 0;
+  el.next.disabled = current === list.length - 1;
+  el.options.innerHTML = "";
+
+  q.options.forEach((option, index) => {
+    const button = document.createElement("button");
+    const chosen = selected.includes(index);
+    button.className = "option";
+    if (chosen) button.classList.add("selected");
+    if (checked) {
+      if (q.answers.includes(index)) button.classList.add("correct");
+      if (chosen && !q.answers.includes(index)) button.classList.add("wrong");
+      if (!chosen && q.answers.includes(index)) button.classList.add("missed");
+    }
+    button.innerHTML = `<span>${String.fromCharCode(65 + index)}</span><strong>${escapeHtml(option)}</strong>`;
+    button.addEventListener("click", () => {
+      const next = q.multiple
+        ? toggle(selected, index)
+        : selected.includes(index)
+          ? []
+          : [index];
+      checked = false;
+      setSelected(q, next);
+      render();
+    });
+    el.options.appendChild(button);
+  });
+
+  renderFeedback(q);
+  renderStats();
+}
+
+function renderFeedback(q) {
+  const selected = selectedFor(q);
+  if (!checked) {
+    el.feedback.className = "feedback";
+    el.feedback.textContent = "";
+    return;
+  }
+  const ok = isSameSet(selected, q.answers);
+  el.feedback.className = ok ? "feedback visible good" : "feedback visible bad";
+  const answerText = q.answers.map((index) => String.fromCharCode(65 + index)).join(", ");
+  el.feedback.textContent = ok
+    ? "Correct."
+    : `Not quite. Correct answer${q.answers.length > 1 ? "s" : ""}: ${answerText}.`;
+}
+
+function toggle(values, index) {
+  return values.includes(index)
+    ? values.filter((value) => value !== index)
+    : [...values, index].sort((a, b) => a - b);
+}
+
+function shuffle() {
+  order = order
+    .map((value) => ({ value, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map((item) => item.value);
+  current = 0;
+  checked = false;
+  render();
 }
 
 function escapeHtml(value) {
-  return String(value).replace(/[&<>"']/g, (char) => {
-    return {
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#039;",
-    }[char];
-  });
+  return String(value).replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;",
+  })[char]);
 }
 
-search.addEventListener("input", (event) => {
-  query = event.target.value;
-  renderList();
-});
-
-checkButton.addEventListener("click", () => {
-  checked = true;
-  revealed = false;
-  render();
-});
-
-revealButton.addEventListener("click", () => {
-  revealed = !revealed;
-  checked = revealed;
-  render();
-});
-
-resetButton.addEventListener("click", () => {
-  delete selected[sectionKey()];
-  save();
+el.year.addEventListener("change", (event) => {
+  year = event.target.value;
+  current = 0;
   checked = false;
-  revealed = false;
+  render();
+});
+
+el.search.addEventListener("input", (event) => {
+  search = event.target.value;
+  current = 0;
+  checked = false;
+  render();
+});
+
+el.prev.addEventListener("click", () => {
+  current = Math.max(0, current - 1);
+  checked = false;
+  render();
+});
+
+el.next.addEventListener("click", () => {
+  current = Math.min(filteredIndexes().length - 1, current + 1);
+  checked = false;
+  render();
+});
+
+el.check.addEventListener("click", () => {
+  checked = true;
+  render();
+});
+
+el.show.addEventListener("click", () => {
+  const q = activeQuestion();
+  setSelected(q, [...q.answers]);
+  checked = true;
+  render();
+});
+
+el.shuffle.addEventListener("click", shuffle);
+
+el.reset.addEventListener("click", () => {
+  answers = {};
+  checked = false;
+  save();
   render();
 });
 

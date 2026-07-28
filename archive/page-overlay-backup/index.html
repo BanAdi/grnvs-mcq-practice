@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GRNVS MCQ Practice</title>
+    <meta
+      name="description"
+      content="Practice GRNVS exam multiple-choice questions with official solution marks."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <aside class="sidebar" aria-label="Exam list">
+        <div class="brand">
+          <span class="brand-mark">G</span>
+          <div>
+            <h1>GRNVS MCQ Practice</h1>
+            <p id="question-total">Loading questions</p>
+          </div>
+        </div>
+
+        <div class="progress-card">
+          <div>
+            <span>Checked</span>
+            <strong id="progress-value">0</strong>
+          </div>
+          <meter id="progress-meter" min="0" max="1" value="0"></meter>
+        </div>
+
+        <label class="search">
+          <span>Search</span>
+          <input id="search" placeholder="DNS, TCP, 2024..." />
+        </label>
+
+        <nav id="exam-list" class="exam-list"></nav>
+      </aside>
+
+      <section class="workspace" aria-label="Practice area">
+        <header class="toolbar">
+          <div>
+            <p id="source-file" class="eyebrow"></p>
+            <h2 id="exam-title"></h2>
+          </div>
+
+          <div class="toolbar-actions">
+            <div id="section-tabs" class="segmented" role="group" aria-label="Section"></div>
+            <button id="check-button" class="primary">Check</button>
+            <button id="reveal-button" class="secondary">Reveal</button>
+            <button id="reset-button" class="secondary">Reset</button>
+          </div>
+        </header>
+
+        <div id="result-bar" class="result-bar"></div>
+        <div id="page-stack" class="page-stack"></div>
+      </section>
+    </main>
+
+    <script src="./page-data.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
