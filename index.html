@@ -19,6 +19,19 @@
         </div>
 
         <label class="field">
+          <span>Section</span>
+          <select id="source-filter">
+            <option value="original">Original Exams</option>
+            <option value="extra">Extra Questions</option>
+          </select>
+        </label>
+
+        <label class="field" id="topic-field">
+          <span>Topic</span>
+          <select id="topic-filter"></select>
+        </label>
+
+        <label class="field" id="year-field">
           <span>Year</span>
           <select id="year-filter"></select>
         </label>
@@ -34,6 +47,7 @@
         </div>
 
         <div class="actions vertical">
+          <a class="secondary link-button" href="./notes.html">Open Notes</a>
           <button id="shuffle-button" class="secondary">Shuffle</button>
           <button id="reset-button" class="secondary">Reset Answers</button>
         </div>
@@ -42,7 +56,7 @@
       <section class="quiz">
         <header class="topbar">
           <div>
-            <p class="eyebrow">Mixed exam-year questionnaire</p>
+            <p class="eyebrow" id="mode-label">Mixed exam-year questionnaire</p>
             <h2 id="question-position">Question</h2>
           </div>
           <div class="actions">
@@ -71,6 +85,7 @@
     </main>
 
     <script src="./questions-data.js"></script>
+    <script src="./extra-questions-data.js"></script>
     <script src="./app.js"></script>
   </body>
 </html>

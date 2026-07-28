@@ -1,9 +1,20 @@
-const allQuestions = window.QUESTION_DATA || [];
+const originalQuestions = (window.QUESTION_DATA || []).map((q) => ({
+  ...q,
+  section: "original",
+  topic: q.topic || "Original Exams",
+}));
+const extraQuestions = (window.EXTRA_QUESTION_DATA || []).map((q) => ({
+  ...q,
+  section: "extra",
+}));
+let allQuestions = originalQuestions;
 const stateKey = "grnvs-card-answers-v1";
 
 let answers = {};
 let current = 0;
 let year = "all";
+let topic = "all";
+let section = "original";
 let search = "";
 let order = allQuestions.map((_, index) => index);
 let checked = false;
@@ -16,6 +27,11 @@ try {
 
 const el = {
   total: document.querySelector("#total-label"),
+  sourceFilter: document.querySelector("#source-filter"),
+  modeLabel: document.querySelector("#mode-label"),
+  topicField: document.querySelector("#topic-field"),
+  topic: document.querySelector("#topic-filter"),
+  yearField: document.querySelector("#year-field"),
   year: document.querySelector("#year-filter"),
   search: document.querySelector("#search"),
   score: document.querySelector("#score-label"),
@@ -35,11 +51,40 @@ const el = {
   reset: document.querySelector("#reset-button"),
 };
 
-const years = [...new Set(allQuestions.map((q) => q.year))].sort();
-el.year.innerHTML = `<option value="all">All years</option>${years
-  .map((value) => `<option value="${value}">${value}</option>`)
-  .join("")}`;
-el.total.textContent = `${allQuestions.length} questions`;
+function configureFilters() {
+  const years = [...new Set(originalQuestions.map((q) => q.year))].sort();
+  el.year.innerHTML = `<option value="all">All years</option>${years
+    .map((value) => `<option value="${value}">${value}</option>`)
+    .join("")}`;
+
+  const topics = [...new Set(extraQuestions.map((q) => q.topic))].sort();
+  el.topic.innerHTML = `<option value="all">All topics</option>${topics
+    .map((value) => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`)
+    .join("")}`;
+}
+
+function setQuestionSet(nextSection) {
+  section = nextSection;
+  allQuestions = section === "extra" ? extraQuestions : originalQuestions;
+  order = allQuestions.map((_, index) => index);
+  current = 0;
+  checked = false;
+  search = "";
+  el.search.value = "";
+  el.yearField.hidden = section === "extra";
+  el.topicField.hidden = section !== "extra";
+  el.modeLabel.textContent =
+    section === "extra"
+      ? "Extra Questions by topic"
+      : "Mixed exam-year questionnaire";
+  el.total.textContent =
+    section === "extra"
+      ? `${allQuestions.length} extra questions`
+      : `${allQuestions.length} original questions`;
+  render();
+}
+
+configureFilters();
 
 function save() {
   localStorage.setItem(stateKey, JSON.stringify(answers));
@@ -49,9 +94,10 @@ function filteredIndexes() {
   const needle = search.trim().toLowerCase();
   return order.filter((index) => {
     const q = allQuestions[index];
-    if (year !== "all" && q.year !== year) return false;
+    if (section === "original" && year !== "all" && q.year !== year) return false;
+    if (section === "extra" && topic !== "all" && q.topic !== topic) return false;
     if (!needle) return true;
-    return `${q.question} ${q.options.join(" ")} ${q.source}`.toLowerCase().includes(needle);
+    return `${q.question} ${q.options.join(" ")} ${q.source} ${q.topic || ""}`.toLowerCase().includes(needle);
   });
 }
 
@@ -108,9 +154,13 @@ function render() {
   const selected = selectedFor(q);
   el.pos.textContent = `Question ${current + 1} of ${list.length}`;
   el.type.textContent = q.multiple ? "Multiple answers" : "Single answer";
-  el.source.textContent = `${q.source}, ${q.label})`;
+  el.source.textContent =
+    q.section === "extra" ? `Extra Questions · ${q.topic}` : `${q.source}, ${q.label})`;
   el.q.textContent = q.question;
-  el.footnote.textContent = `Asked in ${q.year} (${q.exam}).`;
+  el.footnote.textContent =
+    q.section === "extra"
+      ? `Zusatzfrage - nicht aus einem Prüfungsjahr. Thema: ${q.topic}.`
+      : `Asked in ${q.year} (${q.exam}).`;
   el.prev.disabled = current === 0;
   el.next.disabled = current === list.length - 1;
   el.options.innerHTML = "";
@@ -191,6 +241,17 @@ el.year.addEventListener("change", (event) => {
   render();
 });
 
+el.sourceFilter.addEventListener("change", (event) => {
+  setQuestionSet(event.target.value);
+});
+
+el.topic.addEventListener("change", (event) => {
+  topic = event.target.value;
+  current = 0;
+  checked = false;
+  render();
+});
+
 el.search.addEventListener("input", (event) => {
   search = event.target.value;
   current = 0;
@@ -231,4 +292,4 @@ el.reset.addEventListener("click", () => {
   render();
 });
 
-render();
+setQuestionSet("original");

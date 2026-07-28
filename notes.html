@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GRNVS Notes</title>
+    <meta name="description" content="Kurznotizen zu Leitungscodierung und Modulationsverfahren." />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="notes-shell">
+      <header class="notes-hero">
+        <div>
+          <p class="eyebrow">GRNVS Kurznotizen</p>
+          <h1>Codierung & Modulation</h1>
+          <p>
+            Eine kompakte Leseseite für die Begriffe, die in MCQs gerne als
+            kurze Theoriefragen auftauchen.
+          </p>
+        </div>
+        <a class="secondary link-button" href="./index.html">Back to Practice</a>
+      </header>
+
+      <section class="notes-grid" aria-label="Leitungscodierung">
+        <article class="note-card">
+          <span class="pill">Leitungscode</span>
+          <h2>NRZ</h2>
+          <p>
+            Bei <strong>Non-Return-to-Zero</strong> werden 0 und 1 durch zwei
+            konstante Pegel dargestellt. Innerhalb eines Bits muss kein Wechsel
+            stattfinden.
+          </p>
+          <canvas class="diagram" data-diagram="nrz" width="760" height="260"></canvas>
+          <div class="transition-list">
+            <strong>Übergänge:</strong>
+            0->0: keiner, 1->1: keiner, 0->1: steigende Flanke,
+            1->0: fallende Flanke.
+          </div>
+          <ul>
+            <li>Einfach zu erzeugen und zu erkennen.</li>
+            <li>Lange Folgen gleicher Bits liefern kaum Taktinformation.</li>
+            <li>Kann einen Gleichanteil enthalten.</li>
+          </ul>
+        </article>
+
+        <article class="note-card">
+          <span class="pill">Leitungscode</span>
+          <h2>Manchester</h2>
+          <p>
+            Bei Manchester gibt es in jedem Bitintervall einen Wechsel in der
+            Mitte. Die Richtung des Wechsels kodiert den Bitwert.
+          </p>
+          <canvas class="diagram" data-diagram="manchester" width="760" height="260"></canvas>
+          <div class="transition-list">
+            <strong>Übergänge:</strong>
+            Jedes Bit hat eine mittlere Flanke. Bei gleichen Nachbarbits gibt es
+            zusätzlich eine Flanke an der Bitgrenze; bei wechselnden Bits nicht.
+          </div>
+          <ul>
+            <li>Gut für Taktrückgewinnung, weil jedes Bit einen Übergang hat.</li>
+            <li>Benötigt mehr Bandbreite als NRZ.</li>
+            <li>Wird oft als selbsttaktender Code beschrieben.</li>
+          </ul>
+        </article>
+
+        <article class="note-card">
+          <span class="pill">Leitungscode</span>
+          <h2>MLT-3</h2>
+          <p>
+            <strong>Multi-Level-Transmit-3</strong> nutzt drei Pegel:
+            -1, 0 und +1. Eine 1 führt zum nächsten Pegel in der Folge, eine 0
+            hält den aktuellen Pegel.
+          </p>
+          <canvas class="diagram" data-diagram="mlt3" width="760" height="260"></canvas>
+          <div class="transition-list">
+            <strong>Übergänge:</strong>
+            0: Pegel bleibt. 1: nächster Pegel in der Folge
+            0 -> +1 -> 0 -> -1 -> 0 -> ...
+          </div>
+          <ul>
+            <li>Reduziert die maximale Signalfrequenz gegenüber NRZ.</li>
+            <li>Allein nicht ideal bei langen Nullfolgen.</li>
+            <li>Wird deshalb gerne mit 4B5B kombiniert.</li>
+          </ul>
+        </article>
+
+        <article class="note-card">
+          <span class="pill">Blockcode</span>
+          <h2>4B5B</h2>
+          <p>
+            4B5B bildet 4 Datenbits auf 5 Codebits ab. Die Codewörter werden so
+            gewählt, dass genügend Übergänge entstehen und zusätzliche
+            Kontrollsymbole möglich sind.
+          </p>
+          <canvas class="diagram" data-diagram="4b5b" width="760" height="260"></canvas>
+          <div class="transition-list">
+            <strong>Übergänge:</strong>
+            4B5B erzeugt Codewörter mit mehr Übergängen als rohe Daten und
+            begrenzt lange Nullfolgen; danach folgt häufig ein Leitungscode wie
+            NRZI oder MLT-3.
+          </div>
+          <ul>
+            <li>Erhöht die Bitrate auf der Leitung um den Faktor 5/4.</li>
+            <li>Hilft gegen zu lange Folgen ohne Übergang.</li>
+            <li>Ist Codierung, nicht Modulation.</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="notes-grid" aria-label="Modulation">
+        <article class="note-card">
+          <span class="pill">Modulation</span>
+          <h2>ASK</h2>
+          <p>
+            Bei <strong>Amplitude Shift Keying</strong> wird die Amplitude des
+            Trägersignals verändert. Unterschiedliche Amplituden stehen für
+            unterschiedliche Symbole.
+          </p>
+          <canvas class="diagram" data-diagram="ask" width="760" height="260"></canvas>
+          <div class="transition-list">
+            <strong>Veränderung:</strong>
+            Die Amplitude wechselt; Frequenz und Phase bleiben im einfachen
+            Modell gleich.
+          </div>
+          <ul>
+            <li>Einfaches Prinzip.</li>
+            <li>Empfindlich gegenüber Amplitudenrauschen.</li>
+            <li>2-ASK hat zwei unterscheidbare Amplituden.</li>
+          </ul>
+        </article>
+
+        <article class="note-card">
+          <span class="pill">Modulation</span>
+          <h2>PSK</h2>
+          <p>
+            Bei <strong>Phase Shift Keying</strong> wird die Phase des
+            Trägersignals verändert. Die Amplitude kann dabei konstant bleiben.
+          </p>
+          <canvas class="diagram" data-diagram="psk" width="760" height="260"></canvas>
+          <div class="transition-list">
+            <strong>Veränderung:</strong>
+            Die Phase springt zwischen Symbolpunkten; bei 2-PSK typischerweise
+            um 180 Grad.
+          </div>
+          <ul>
+            <li>2-PSK nutzt zwei Phasenlagen.</li>
+            <li>Mehr Phasenlagen bedeuten mehr Bits pro Symbol.</li>
+            <li>Die Punkte liegen im Signalraum oft auf einem Kreis.</li>
+          </ul>
+        </article>
+
+        <article class="note-card">
+          <span class="pill">Modulation</span>
+          <h2>QAM</h2>
+          <p>
+            <strong>Quadrature Amplitude Modulation</strong> verändert zwei
+            orthogonale Komponenten: I und Q. Dadurch werden Amplitude und Phase
+            kombiniert genutzt.
+          </p>
+          <canvas class="diagram" data-diagram="qam" width="760" height="260"></canvas>
+          <div class="transition-list">
+            <strong>Veränderung:</strong>
+            Symbolwechsel können I, Q, Amplitude und Phase verändern. 16-QAM
+            hat 16 Signalraumpunkte.
+          </div>
+          <ul>
+            <li>M-QAM überträgt log2(M) Bits pro Symbol.</li>
+            <li>16-QAM überträgt 4 Bits pro Symbol.</li>
+            <li>Höhere Ordnung braucht besseres SNR.</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="note-card wide">
+        <span class="pill">Prüfungstipp</span>
+        <h2>Schnelle Unterscheidung</h2>
+        <p>
+          <strong>NRZ, Manchester, MLT-3 und 4B5B</strong> sind
+          Leitungscodierungs- bzw. Blockcodierungsverfahren. Sie beschreiben,
+          wie Bits auf Leitungssignale oder Codewörter abgebildet werden.
+          <strong>ASK, PSK und QAM</strong> sind Modulationsverfahren. Sie
+          beschreiben, welche Eigenschaft eines Trägersignals verändert wird.
+        </p>
+      </section>
+    </main>
+    <script src="./notes-diagrams.js"></script>
+  </body>
+</html>
