@@ -8,24 +8,33 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <main class="notes-shell">
+    <main class="notes-layout">
+      <aside class="notes-sidebar" aria-label="Notes sections">
+        <details class="notes-dropdown" open>
+          <summary>Notes Home</summary>
+          <nav class="notes-side-list" aria-label="Notes topics">
+          <a class="notes-side-link" href="./notes.html">Notes Home</a>
+          <a class="notes-side-link" href="./notes-coding.html">Coding & Modulation</a>
+          <a class="notes-side-link" href="./notes-ipv6.html">IPv6 Address Notes</a>
+          <a class="notes-side-link" href="./notes-layers.html">Layers & Encapsulation</a>
+          <a class="notes-side-link" href="./notes-physical-theory.html">Physical Layer</a>
+          <a class="notes-side-link" href="./notes-datalink-theory.html">Data Link Layer</a>
+          <a class="notes-side-link" href="./notes-network-theory.html">Network Layer</a>
+          <a class="notes-side-link active" href="./notes-transport-application.html" aria-current="page">Transport & Application</a>
+          <a class="notes-side-link" href="./notes-paper-checklist.html">Paper Checklist</a>
+          </nav>
+        </details>
+        <a class="notes-practice-link" href="./index.html">Practice</a>
+      </aside>
+      <div class="notes-content">
       <header class="notes-hero">
         <div>
           <p class="eyebrow">GRNVS Kurznotizen</p>
           <h1>Transport &amp; Application Theory</h1>
           <p>UDP, TCP, congestion control, NAT, DNS, HTTP, TLS, and sockets.</p>
         </div>
-        <nav class="note-nav" aria-label="Notes navigation">
-          <a class="secondary link-button" href="./notes.html">Notes Home</a>
-<a class="secondary link-button" href="./index.html">Practice</a>
-<a class="secondary link-button" href="./notes-coding.html">Coding Notes</a>
-<a class="secondary link-button" href="./notes-ipv6.html">IPv6 Notes</a>
-<a class="secondary link-button" href="./notes-layers.html">Layers</a>
-<a class="secondary link-button" href="./notes-physical-theory.html">Physical</a>
-<a class="secondary link-button" href="./notes-datalink-theory.html">Data Link</a>
-<a class="secondary link-button" href="./notes-network-theory.html">Network</a>
-<a class="secondary link-button" href="./notes-transport-application.html">Transport/App</a>
-<a class="secondary link-button" href="./notes-paper-checklist.html">Paper Checklist</a>
+        <nav class="note-nav" aria-label="Site navigation">
+          <a class="secondary link-button" href="./index.html">Practice</a>
         </nav>
       </header>
 <section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Theory Questions and Answers</h1></section>
@@ -155,6 +164,7 @@
 <li>DNS recursive query asks the resolver to finish the lookup; iterative query returns the best referral or answer known by that server.</li>
 <li>HTTPS certificate checks include a valid trust chain and that the requested domain is covered by the certificate.</li>
 </ul></section>
+      </div>
     </main>
     
   </body>

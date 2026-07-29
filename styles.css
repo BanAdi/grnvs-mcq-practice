@@ -352,10 +352,81 @@ h3 {
   color: var(--bad);
 }
 
-.notes-shell {
-  width: min(1120px, calc(100% - 40px));
+.notes-shell,
+.notes-layout {
+  width: min(1280px, calc(100% - 40px));
   margin: 0 auto;
   padding: 34px 0 54px;
+}
+
+.notes-layout {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  align-items: start;
+  gap: 22px;
+}
+
+.notes-content {
+  min-width: 0;
+}
+
+.notes-sidebar {
+  position: sticky;
+  top: 24px;
+  display: grid;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--shadow);
+}
+
+.notes-dropdown {
+  display: grid;
+  gap: 12px;
+}
+
+.notes-dropdown summary {
+  min-height: 42px;
+  border-radius: 8px;
+  padding: 11px 12px;
+  background: var(--ink);
+  color: #ffffff;
+  font-weight: 800;
+  list-style-position: inside;
+  cursor: pointer;
+}
+
+.notes-side-list {
+  display: grid;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.notes-side-link,
+.notes-practice-link {
+  display: block;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: var(--ink);
+  font-weight: 700;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.notes-side-link:hover,
+.notes-practice-link:hover,
+.notes-side-link.active {
+  border-color: rgba(15, 124, 119, 0.28);
+  background: rgba(15, 124, 119, 0.1);
+  color: var(--accent-dark);
+}
+
+.notes-practice-link {
+  border-color: var(--line);
+  text-align: center;
 }
 
 .notes-hero {
@@ -515,6 +586,19 @@ h3 {
     height: auto;
   }
 
+  .notes-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .notes-sidebar {
+    position: relative;
+    top: 0;
+  }
+
+  .notes-side-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .topbar,
   .actions,
   .notes-hero,
@@ -537,6 +621,16 @@ h3 {
   .side,
   .quiz {
     padding: 16px;
+  }
+
+  .notes-shell,
+  .notes-layout {
+    width: min(100% - 24px, 1280px);
+    padding-top: 18px;
+  }
+
+  .notes-side-list {
+    grid-template-columns: 1fr;
   }
 
   h2 {

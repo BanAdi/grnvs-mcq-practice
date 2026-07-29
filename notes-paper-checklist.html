@@ -8,24 +8,33 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <main class="notes-shell">
+    <main class="notes-layout">
+      <aside class="notes-sidebar" aria-label="Notes sections">
+        <details class="notes-dropdown" open>
+          <summary>Notes Home</summary>
+          <nav class="notes-side-list" aria-label="Notes topics">
+          <a class="notes-side-link" href="./notes.html">Notes Home</a>
+          <a class="notes-side-link" href="./notes-coding.html">Coding & Modulation</a>
+          <a class="notes-side-link" href="./notes-ipv6.html">IPv6 Address Notes</a>
+          <a class="notes-side-link" href="./notes-layers.html">Layers & Encapsulation</a>
+          <a class="notes-side-link" href="./notes-physical-theory.html">Physical Layer</a>
+          <a class="notes-side-link" href="./notes-datalink-theory.html">Data Link Layer</a>
+          <a class="notes-side-link" href="./notes-network-theory.html">Network Layer</a>
+          <a class="notes-side-link" href="./notes-transport-application.html">Transport & Application</a>
+          <a class="notes-side-link active" href="./notes-paper-checklist.html" aria-current="page">Paper Checklist</a>
+          </nav>
+        </details>
+        <a class="notes-practice-link" href="./index.html">Practice</a>
+      </aside>
+      <div class="notes-content">
       <header class="notes-hero">
         <div>
           <p class="eyebrow">GRNVS Kurznotizen</p>
           <h1>Complete Paper Checklist</h1>
           <p>Paper-by-paper theory prompts and short answer ideas from the added notes.</p>
         </div>
-        <nav class="note-nav" aria-label="Notes navigation">
-          <a class="secondary link-button" href="./notes.html">Notes Home</a>
-<a class="secondary link-button" href="./index.html">Practice</a>
-<a class="secondary link-button" href="./notes-coding.html">Coding Notes</a>
-<a class="secondary link-button" href="./notes-ipv6.html">IPv6 Notes</a>
-<a class="secondary link-button" href="./notes-layers.html">Layers</a>
-<a class="secondary link-button" href="./notes-physical-theory.html">Physical</a>
-<a class="secondary link-button" href="./notes-datalink-theory.html">Data Link</a>
-<a class="secondary link-button" href="./notes-network-theory.html">Network</a>
-<a class="secondary link-button" href="./notes-transport-application.html">Transport/App</a>
-<a class="secondary link-button" href="./notes-paper-checklist.html">Paper Checklist</a>
+        <nav class="note-nav" aria-label="Site navigation">
+          <a class="secondary link-button" href="./index.html">Practice</a>
         </nav>
       </header>
 <section class="section-heading"><p class="eyebrow">Paper Checklist</p><h1>Complete Non-MCQ Paper Notes</h1></section>
@@ -341,6 +350,7 @@
 <p>TCP congestion and socket API. Congestion control protects the network; the sender adjusts <code>cwnd</code>. Flow control protects the receiver; the receiver advertises a window. Slow start grows exponentially, 3 duplicate ACKs usually indicate one lost segment, and Reno halves window/sets threshold before linear growth. Timeout may be caused by severe loss or no ACK arriving before RTO. A TCP server for incoming clients uses <code>socket()</code>, <code>bind()</code>, <code>listen()</code>, then <code>accept()</code> for each connection. description</p>
 </article>
 </section>
+      </div>
     </main>
     
   </body>
