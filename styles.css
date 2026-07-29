@@ -575,9 +575,19 @@ h3 {
   padding-left: 2px;
 }
 
-.qa-answer-label {
-  display: inline-block;
-  margin-top: 8px;
+.qa-block {
+  display: grid;
+  gap: 8px;
+}
+
+.qa-question,
+.qa-answer {
+  margin: 0;
+}
+
+.qa-answer {
+  padding-top: 8px;
+  border-top: 1px solid rgba(15, 124, 119, 0.14);
 }
 
 @media (max-width: 900px) {

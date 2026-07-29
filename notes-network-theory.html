@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Network Layer: IPv4, IPv6, ICMP, Fragmentation, and Routing</title>
     <meta name="description" content="GRNVS study notes." />
-    <link rel="stylesheet" href="./styles.css?v=5" />
+    <link rel="stylesheet" href="./styles.css?v=6" />
   </head>
   <body>
     <main class="notes-shell">
@@ -153,83 +153,143 @@
 <section class="note-list">
 <article class="note-card wide">
 <span class="pill muted">Midterm 2020, Aufgabe 1</span>
-<p><strong>Question:</strong> Which IP and MAC destination are used when sending to another host?<br><strong class="qa-answer-label">Answer:</strong> The IP destination is the final host; the MAC destination is the next L2 receiver on the current link, e.g. gateway/AP/final host depending on topology.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Which IP and MAC destination are used when sending to another host?</p>
+<p class="qa-answer"><strong>Answer:</strong> The IP destination is the final host; the MAC destination is the next L2 receiver on the current link, e.g. gateway/AP/final host depending on topology.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Endterm 2022, Aufgabe 1</span>
-<p><strong>Question:</strong> How long is an IPv6 address and how are link-local addresses shortened?<br><strong class="qa-answer-label">Answer:</strong> IPv6 is 128 bits; remove leading zeroes per group and compress one longest zero run with <code>::</code>.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> How long is an IPv6 address and how are link-local addresses shortened?</p>
+<p class="qa-answer"><strong>Answer:</strong> IPv6 is 128 bits; remove leading zeroes per group and compress one longest zero run with <code>::</code>.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Endterm 2022, Aufgabe 4</span>
-<p><strong>Question:</strong> Send ICMP Echo through a residential IPv4 network.<br><strong class="qa-answer-label">Answer:</strong> ARP is needed for each next-hop MAC if caches are empty; L2 MACs change at each hop; IP source/destination stay end-to-end; TTL decreases per router.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Send ICMP Echo through a residential IPv4 network.</p>
+<p class="qa-answer"><strong>Answer:</strong> ARP is needed for each next-hop MAC if caches are empty; L2 MACs change at each hop; IP source/destination stay end-to-end; TTL decreases per router.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Endterm 2022, Aufgabe 5</span>
-<p><strong>Question:</strong> Interpret Ethernet + IPv4 + TCP/SMTP frame.<br><strong class="qa-answer-label">Answer:</strong> Ethertype 0x0800 means IPv4, IHL 5 means 20 B IPv4 header, Protocol 0x06 means TCP, TCP destination port 25 means SMTP.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Interpret Ethernet + IPv4 + TCP/SMTP frame.</p>
+<p class="qa-answer"><strong>Answer:</strong> Ethertype 0x0800 means IPv4, IHL 5 means 20 B IPv4 header, Protocol 0x06 means TCP, TCP destination port 25 means SMTP.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Endterm 2023, Aufgabe 2</span>
-<p><strong>Question:</strong> Configure IP routing in a lab topology.<br><strong class="qa-answer-label">Answer:</strong> Assign addresses from the correct prefixes, set gateways/routes so each destination has a next hop, and remember routers separate broadcast domains.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Configure IP routing in a lab topology.</p>
+<p class="qa-answer"><strong>Answer:</strong> Assign addresses from the correct prefixes, set gateways/routes so each destination has a next hop, and remember routers separate broadcast domains.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Endterm 2023, Aufgabe 3</span>
-<p><strong>Question:</strong> MC on domains and addressing.<br><strong class="qa-answer-label">Answer:</strong> Switches split collision domains, routers split broadcast domains, and IP routing is required across subnets.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> MC on domains and addressing.</p>
+<p class="qa-answer"><strong>Answer:</strong> Switches split collision domains, routers split broadcast domains, and IP routing is required across subnets.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Endterm 2024, Aufgabe 3</span>
-<p><strong>Question:</strong> Use longest-prefix matching in a routing table.<br><strong class="qa-answer-label">Answer:</strong> Select the route with the longest matching prefix; UDP likely explains out-of-order chat messages because UDP provides no ordering guarantee.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Use longest-prefix matching in a routing table.</p>
+<p class="qa-answer"><strong>Answer:</strong> Select the route with the longest matching prefix; UDP likely explains out-of-order chat messages because UDP provides no ordering guarantee.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Endterm 2024, Aufgabe 4</span>
-<p><strong>Question:</strong> Analyze an IPv6/TCP hexdump.<br><strong class="qa-answer-label">Answer:</strong> IPv6 base header is 40 B; Next Header 0x06 is TCP; Hop Limit is decremented by routers; source/destination IPv6 addresses occupy 16 B each.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Analyze an IPv6/TCP hexdump.</p>
+<p class="qa-answer"><strong>Answer:</strong> IPv6 base header is 40 B; Next Header 0x06 is TCP; Hop Limit is decremented by routers; source/destination IPv6 addresses occupy 16 B each.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Endterm 2025, Aufgabe 2</span>
-<p><strong>Question:</strong> IPv6 Wohnheim network with empty caches.<br><strong class="qa-answer-label">Answer:</strong> Hosts use NDP to learn MAC addresses, can form addresses from prefix plus interface identifier when SLAAC applies, and send off-link traffic to the gateway.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> IPv6 Wohnheim network with empty caches.</p>
+<p class="qa-answer"><strong>Answer:</strong> Hosts use NDP to learn MAC addresses, can form addresses from prefix plus interface identifier when SLAAC applies, and send off-link traffic to the gateway.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Endterm 2025, Aufgabe 3</span>
-<p><strong>Question:</strong> Identify ICMP in a frame.<br><strong class="qa-answer-label">Answer:</strong> IPv4 Protocol 1 identifies ICMP; ICMP type/code state whether it is Echo, TTL exceeded, unreachable, etc.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Identify ICMP in a frame.</p>
+<p class="qa-answer"><strong>Answer:</strong> IPv4 Protocol 1 identifies ICMP; ICMP type/code state whether it is Echo, TTL exceeded, unreachable, etc.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Retake 2022, Aufgabe 1</span>
-<p><strong>Question:</strong> Which routes does one AS announce to a peer?<br><strong class="qa-answer-label">Answer:</strong> An AS typically announces its own and customer prefixes to peers/providers, but not routes learned from one peer/provider to another peer/provider.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Which routes does one AS announce to a peer?</p>
+<p class="qa-answer"><strong>Answer:</strong> An AS typically announces its own and customer prefixes to peers/providers, but not routes learned from one peer/provider to another peer/provider.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Retake 2022, Aufgabe 2</span>
-<p><strong>Question:</strong> Give IPv4 PTR name and detect invalid subnet.<br><strong class="qa-answer-label">Answer:</strong> Reverse IPv4 uses reversed octets under <code>in-addr.arpa</code>; e.g. 203.0.113.4 becomes <code>4.113.0.203.in-addr.arpa</code>. A subnet address must have host bits zero.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Give IPv4 PTR name and detect invalid subnet.</p>
+<p class="qa-answer"><strong>Answer:</strong> Reverse IPv4 uses reversed octets under <code>in-addr.arpa</code>; e.g. 203.0.113.4 becomes <code>4.113.0.203.in-addr.arpa</code>. A subnet address must have host bits zero.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Retake 2022, Aufgabe 6</span>
-<p><strong>Question:</strong> IPv4 network with NAT.<br><strong class="qa-answer-label">Answer:</strong> NAT rewrites private source IP/port to public IP/port on outgoing packets and uses its mapping table for incoming replies.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> IPv4 network with NAT.</p>
+<p class="qa-answer"><strong>Answer:</strong> NAT rewrites private source IP/port to public IP/port on outgoing packets and uses its mapping table for incoming replies.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Retake 2023, Aufgabe 5</span>
-<p><strong>Question:</strong> Home network with NAT-capable router.<br><strong class="qa-answer-label">Answer:</strong> Inside hosts use private addresses and default route to the NAT router; the router translates addresses/ports for Internet traffic.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Home network with NAT-capable router.</p>
+<p class="qa-answer"><strong>Answer:</strong> Inside hosts use private addresses and default route to the NAT router; the router translates addresses/ports for Internet traffic.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Retake 2023, Aufgabe 6</span>
-<p><strong>Question:</strong> MTU and maximum Ethernet frame size.<br><strong class="qa-answer-label">Answer:</strong> MTU 1500 B is L3 packet size; Ethernet frame with header and FCS is 1518 B. Propagation and serialization are separate delays.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> MTU and maximum Ethernet frame size.</p>
+<p class="qa-answer"><strong>Answer:</strong> MTU 1500 B is L3 packet size; Ethernet frame with header and FCS is 1518 B. Propagation and serialization are separate delays.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Retake 2024, Aufgabe 3</span>
-<p><strong>Question:</strong> Fill source/destination MAC and IP at points across NAT.<br><strong class="qa-answer-label">Answer:</strong> MACs change every hop; IP destination is rewritten by NAT when entering the private side; public-to-private mapping determines the final private IP/port.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Fill source/destination MAC and IP at points across NAT.</p>
+<p class="qa-answer"><strong>Answer:</strong> MACs change every hop; IP destination is rewritten by NAT when entering the private side; public-to-private mapping determines the final private IP/port.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Retake 2024, Aufgabe 7</span>
-<p><strong>Question:</strong> Derive IPv6 solicited-node address and multicast MAC.<br><strong class="qa-answer-label">Answer:</strong> Use last 24 bits of the IPv6 address: solicited-node is <code>ff02::1:ffXX:XXXX</code>; Ethernet multicast MAC is <code>33:33:ff:XX:XX:XX</code>.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Derive IPv6 solicited-node address and multicast MAC.</p>
+<p class="qa-answer"><strong>Answer:</strong> Use last 24 bits of the IPv6 address: solicited-node is <code>ff02::1:ffXX:XXXX</code>; Ethernet multicast MAC is <code>33:33:ff:XX:XX:XX</code>.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Retake 2025, Aufgabe 1</span>
-<p><strong>Question:</strong> Which IPv6 address is fully shortened?<br><strong class="qa-answer-label">Answer:</strong> Remove all leading zeroes and compress exactly one longest zero run; do not use <code>::</code> twice.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Which IPv6 address is fully shortened?</p>
+<p class="qa-answer"><strong>Answer:</strong> Remove all leading zeroes and compress exactly one longest zero run; do not use <code>::</code> twice.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Retake 2025, Aufgabe 3</span>
-<p><strong>Question:</strong> Forward IPv4 packets across routers.<br><strong class="qa-answer-label">Answer:</strong> Each router forwards based on LPM, decrements TTL, and sends the packet in a new L2 frame to the next-hop MAC.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Forward IPv4 packets across routers.</p>
+<p class="qa-answer"><strong>Answer:</strong> Each router forwards based on LPM, decrements TTL, and sends the packet in a new L2 frame to the next-hop MAC.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Retake 2025, Aufgabe 5</span>
-<p><strong>Question:</strong> IPv4, UDP, and NAT hole punching.<br><strong class="qa-answer-label">Answer:</strong> UDP hole punching relies on both peers creating NAT mappings by sending outbound packets, so later inbound packets match existing NAT table entries.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> IPv4, UDP, and NAT hole punching.</p>
+<p class="qa-answer"><strong>Answer:</strong> UDP hole punching relies on both peers creating NAT mappings by sending outbound packets, so later inbound packets match existing NAT table entries.</p>
+</div>
 </article>
 </section>
 <section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Exam Answer Checklist</h1></section>

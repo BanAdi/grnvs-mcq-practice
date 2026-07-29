@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Data Link Layer: MAC, Frames, Switching, and Error Detection</title>
     <meta name="description" content="GRNVS study notes." />
-    <link rel="stylesheet" href="./styles.css?v=5" />
+    <link rel="stylesheet" href="./styles.css?v=6" />
   </head>
   <body>
     <main class="notes-shell">
@@ -128,51 +128,87 @@
 <section class="note-list">
 <article class="note-card wide">
 <span class="pill muted">Midterm 2020, Aufgabe 1</span>
-<p><strong>Question:</strong> Which MAC address is used when sending to a notebook through an AP/switch topology?<br><strong class="qa-answer-label">Answer:</strong> The L2 destination is the next receiver on that L2 technology; in WLAN the AP may be explicitly addressed, while the final IP destination remains the notebook.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Which MAC address is used when sending to a notebook through an AP/switch topology?</p>
+<p class="qa-answer"><strong>Answer:</strong> The L2 destination is the next receiver on that L2 technology; in WLAN the AP may be explicitly addressed, while the final IP destination remains the notebook.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Midterm 2021, Aufgabe 4</span>
-<p><strong>Question:</strong> Analyze WLAN plus switch/AP forwarding and domains.<br><strong class="qa-answer-label">Answer:</strong> The switch learns from source MACs and floods unknown destinations; the AP translates between 802.11 and Ethernet; switches split collision domains, routers split broadcast domains.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Analyze WLAN plus switch/AP forwarding and domains.</p>
+<p class="qa-answer"><strong>Answer:</strong> The switch learns from source MACs and floods unknown destinations; the AP translates between 802.11 and Ethernet; switches split collision domains, routers split broadcast domains.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Midterm 2022, Aufgabe 2</span>
-<p><strong>Question:</strong> Why does WLAN often use three MAC addresses while Ethernet uses two?<br><strong class="qa-answer-label">Answer:</strong> The AP is not transparent on the wireless link, so WLAN must encode receiver/transmitter and original source/final destination information.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Why does WLAN often use three MAC addresses while Ethernet uses two?</p>
+<p class="qa-answer"><strong>Answer:</strong> The AP is not transparent on the wireless link, so WLAN must encode receiver/transmitter and original source/final destination information.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Midterm 2022, Aufgabe 3</span>
-<p><strong>Question:</strong> Work with a CRC reduction polynomial.<br><strong class="qa-answer-label">Answer:</strong> Use polynomial division over <code>GF(2)</code>; irreducibility is not strictly required for CRC, because practical polynomials are chosen for useful error-detection properties.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Work with a CRC reduction polynomial.</p>
+<p class="qa-answer"><strong>Answer:</strong> Use polynomial division over <code>GF(2)</code>; irreducibility is not strictly required for CRC, because practical polynomials are chosen for useful error-detection properties.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Midterm 2023, Aufgabe 3</span>
-<p><strong>Question:</strong> What is CRC used for in Ethernet and how is the checksum computed?<br><strong class="qa-answer-label">Answer:</strong> CRC detects bit errors in frames; append the polynomial remainder so receiver division yields zero if no error is detected.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> What is CRC used for in Ethernet and how is the checksum computed?</p>
+<p class="qa-answer"><strong>Answer:</strong> CRC detects bit errors in frames; append the polynomial remainder so receiver division yields zero if no error is detected.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Midterm 2023, Aufgabe 4</span>
-<p><strong>Question:</strong> Predict frame forwarding in a layer-2 topology.<br><strong class="qa-answer-label">Answer:</strong> Hubs repeat to all ports, switches learn source MACs and flood unknown destinations, then forward known destinations selectively.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Predict frame forwarding in a layer-2 topology.</p>
+<p class="qa-answer"><strong>Answer:</strong> Hubs repeat to all ports, switches learn source MACs and flood unknown destinations, then forward known destinations selectively.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Endterm 2024, Aufgabe 1</span>
-<p><strong>Question:</strong> What does a switch do for unknown destination MAC?<br><strong class="qa-answer-label">Answer:</strong> It floods the frame to all ports except the ingress port; it does not ARP, wait, or send it back.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> What does a switch do for unknown destination MAC?</p>
+<p class="qa-answer"><strong>Answer:</strong> It floods the frame to all ports except the ingress port; it does not ARP, wait, or send it back.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Retake 2023, Aufgabe 1</span>
-<p><strong>Question:</strong> Count broadcast and collision domains.<br><strong class="qa-answer-label">Answer:</strong> Each switch port is its own collision domain in full-duplex Ethernet; routers separate broadcast domains; switches alone do not.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Count broadcast and collision domains.</p>
+<p class="qa-answer"><strong>Answer:</strong> Each switch port is its own collision domain in full-duplex Ethernet; routers separate broadcast domains; switches alone do not.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Retake 2024, Aufgabe 7</span>
-<p><strong>Question:</strong> Mark collision and broadcast domains.<br><strong class="qa-answer-label">Answer:</strong> Mark shared hub/WLAN regions as collision-related areas, switch ports as separated collision domains, and router-separated regions as different broadcast domains.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Mark collision and broadcast domains.</p>
+<p class="qa-answer"><strong>Answer:</strong> Mark shared hub/WLAN regions as collision-related areas, switch ports as separated collision domains, and router-separated regions as different broadcast domains.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Retake 2023, Aufgabe 6</span>
-<p><strong>Question:</strong> How large is a maximum Ethernet frame for MTU 1500 B?<br><strong class="qa-answer-label">Answer:</strong> <code>1500</code> B L3 payload plus 14 B Ethernet header plus 4 B FCS equals 1518 B.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> How large is a maximum Ethernet frame for MTU 1500 B?</p>
+<p class="qa-answer"><strong>Answer:</strong> <code>1500</code> B L3 payload plus 14 B Ethernet header plus 4 B FCS equals 1518 B.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Retake 2024, Aufgabe 5</span>
-<p><strong>Question:</strong> Analyze an Ethernet frame without FCS.<br><strong class="qa-answer-label">Answer:</strong> First 14 B are Ethernet header; remaining bytes begin with the L3 packet selected by Ethertype.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Analyze an Ethernet frame without FCS.</p>
+<p class="qa-answer"><strong>Answer:</strong> First 14 B are Ethernet header; remaining bytes begin with the L3 packet selected by Ethertype.</p>
+</div>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Endterm 2023, Aufgabe 1</span>
-<p><strong>Question:</strong> Reconstruct Ethernet/IPv4/TCP frame fields.<br><strong class="qa-answer-label">Answer:</strong> Use current-hop MACs, end-to-end IPs, TCP ports, header lengths, total length, and FCS/checksum information to fill the hexdump.</p>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Reconstruct Ethernet/IPv4/TCP frame fields.</p>
+<p class="qa-answer"><strong>Answer:</strong> Use current-hop MACs, end-to-end IPs, TCP ports, header lengths, total length, and FCS/checksum information to fill the hexdump.</p>
+</div>
 </article>
 </section>
 <section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Exam Answer Checklist</h1></section>
