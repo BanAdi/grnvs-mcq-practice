@@ -5,28 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>GRNVS Notes</title>
     <meta name="description" content="GRNVS study notes index." />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=3" />
   </head>
   <body>
-    <main class="notes-layout">
-      <aside class="notes-sidebar" aria-label="Notes sections">
-        <details class="notes-dropdown" open>
-          <summary>Notes Home</summary>
-          <nav class="notes-side-list" aria-label="Notes topics">
-          <a class="notes-side-link active" href="./notes.html" aria-current="page">Notes Home</a>
-          <a class="notes-side-link" href="./notes-coding.html">Coding & Modulation</a>
-          <a class="notes-side-link" href="./notes-ipv6.html">IPv6 Address Notes</a>
-          <a class="notes-side-link" href="./notes-layers.html">Layers & Encapsulation</a>
-          <a class="notes-side-link" href="./notes-physical-theory.html">Physical Layer</a>
-          <a class="notes-side-link" href="./notes-datalink-theory.html">Data Link Layer</a>
-          <a class="notes-side-link" href="./notes-network-theory.html">Network Layer</a>
-          <a class="notes-side-link" href="./notes-transport-application.html">Transport & Application</a>
-          <a class="notes-side-link" href="./notes-paper-checklist.html">Paper Checklist</a>
-          </nav>
-        </details>
-        <a class="notes-practice-link" href="./index.html">Practice</a>
-      </aside>
-      <div class="notes-content">
+    <main class="notes-shell">
       <header class="notes-hero">
         <div>
           <p class="eyebrow">GRNVS Kurznotizen</p>
@@ -37,6 +19,20 @@
           </p>
         </div>
         <nav class="note-nav" aria-label="Site navigation">
+          <details class="note-menu-dropdown">
+            <summary>Notes Home</summary>
+            <div class="note-menu-panel">
+              <a class="note-menu-item active" href="./notes.html" aria-current="page">Notes Home</a>
+              <a class="note-menu-item" href="./notes-coding.html">Coding & Modulation</a>
+              <a class="note-menu-item" href="./notes-ipv6.html">IPv6 Address Notes</a>
+              <a class="note-menu-item" href="./notes-layers.html">Layers & Encapsulation</a>
+              <a class="note-menu-item" href="./notes-physical-theory.html">Physical Layer</a>
+              <a class="note-menu-item" href="./notes-datalink-theory.html">Data Link Layer</a>
+              <a class="note-menu-item" href="./notes-network-theory.html">Network Layer</a>
+              <a class="note-menu-item" href="./notes-transport-application.html">Transport & Application</a>
+              <a class="note-menu-item" href="./notes-paper-checklist.html">Paper Checklist</a>
+            </div>
+          </details>
           <a class="secondary link-button" href="./index.html">Practice</a>
         </nav>
       </header>
@@ -122,7 +118,6 @@
           <strong>Open notes</strong>
         </a>
       </section>
-      </div>
     </main>
   </body>
 </html>
