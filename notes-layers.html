@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Introduction, Layer Models, and Encapsulation</title>
     <meta name="description" content="GRNVS study notes." />
-    <link rel="stylesheet" href="./styles.css?v=3" />
+    <link rel="stylesheet" href="./styles.css?v=5" />
   </head>
   <body>
     <main class="notes-shell">
@@ -45,7 +45,15 @@
 </article>
 <article class="note-card"><span class="pill">Question</span>
 <h2>In the ISO/OSI model, name the main responsibility of each layer from physical to application layer.</h2>
-<p>L1 transmits signals/bits. L2 frames data on a direct link, handles MAC addressing and error detection. L3 provides logical addressing and routing. L4 provides end-to-end transport such as UDP/TCP. L5 handles sessions, L6 representation/encryption/compression, and L7 application protocols.</p>
+<ul class="answer-list">
+<li><strong>L1 Physical:</strong> bits/signals</li>
+<li><strong>L2 Data Link:</strong> frames, Ethernet, MAC addressing, direct-link access, error detection</li>
+<li><strong>L3 Network:</strong> IPv4, IPv6, ICMP, logical addressing, routing</li>
+<li><strong>L4 Transport:</strong> TCP, UDP, end-to-end transport between processes</li>
+<li><strong>L5 Session:</strong> session management in the OSI model</li>
+<li><strong>L6 Presentation:</strong> representation, encryption, compression</li>
+<li><strong>L7 Application:</strong> DNS, HTTP and other application protocols</li>
+</ul>
 </article>
 <article class="note-card"><span class="pill">Question</span>
 <h2>Distinguish horizontal communication from vertical communication.</h2>
@@ -53,7 +61,13 @@
 </article>
 <article class="note-card"><span class="pill">Question</span>
 <h2>For Ethernet, IPv4, and TCP, which layer adds which header?</h2>
-<p>TCP adds a TCP header to application data, producing a TCP segment. IPv4 adds an IP header, producing an IP packet. Ethernet adds an Ethernet header and FCS, producing an Ethernet frame. For Ethernet, the whole IP packet is L2 payload.</p>
+<ul class="answer-list">
+<li><strong>Application data:</strong> payload handed to TCP.</li>
+<li><strong>TCP:</strong> adds a TCP header, producing a TCP segment.</li>
+<li><strong>IPv4:</strong> adds an IP header, producing an IP packet.</li>
+<li><strong>Ethernet:</strong> adds Ethernet header and FCS, producing an Ethernet frame.</li>
+<li><strong>Ethernet payload:</strong> the whole IP packet is the L2 payload.</li>
+</ul>
 </article>
 <article class="note-card"><span class="pill">Question</span>
 <h2>Explain host byte order versus network byte order.</h2>
@@ -61,47 +75,61 @@
 </article>
 <article class="note-card"><span class="pill">Question</span>
 <h2>Classify Ethernet, ARP, IPv4, IPv6, ICMP, UDP, TCP, DNS, HTTP, and TLS by layer.</h2>
-<p>Ethernet is L2. ARP sits between L2 and L3 for IPv4 address resolution. IPv4, IPv6, and ICMP/ICMPv6 are network-layer related. UDP and TCP are L4. DNS and HTTP are application protocols. TLS is commonly between transport and application and can be described as session/presentation-layer functionality in OSI terms.</p>
+<ul class="answer-list">
+<li><strong>L1 Physical:</strong> bits/signals</li>
+<li><strong>L2 Data Link:</strong> Ethernet, MAC</li>
+<li><strong>L2/L3 helper:</strong> ARP for IPv4 address resolution on the local link</li>
+<li><strong>L3 Network:</strong> IPv4, IPv6, ICMP/ICMPv6, routing</li>
+<li><strong>L4 Transport:</strong> TCP, UDP</li>
+<li><strong>L7 Application:</strong> DNS, HTTP</li>
+<li><strong>TLS:</strong> between transport and application; often described as session/presentation functionality in OSI terms</li>
+</ul>
 </article>
 <article class="note-card"><span class="pill">Question</span>
 <h2>How do you analyze a hexdump?</h2>
-<p>Start at byte 0. For Ethernet, read 6 B destination MAC, 6 B source MAC, 2 B Ethertype. Ethertype tells you the L3 parser, e.g. 0x0800 IPv4, 0x86dd IPv6, 0x0806 ARP. Then use IPv4 IHL or IPv6 fixed header and Next Header/Protocol to locate L4.</p>
+<ul class="answer-list">
+<li><strong>Start at byte 0.</strong></li>
+<li><strong>Ethernet:</strong> read 6 B destination MAC, 6 B source MAC, 2 B Ethertype.</li>
+<li><strong>Ethertype:</strong> <code>0x0800</code> IPv4, <code>0x86dd</code> IPv6, <code>0x0806</code> ARP.</li>
+<li><strong>IPv4:</strong> use IHL to find the L3 header length.</li>
+<li><strong>IPv6:</strong> base header is 40 B; use Next Header.</li>
+<li><strong>L4:</strong> use Protocol/Next Header to locate TCP, UDP, or ICMP.</li>
+</ul>
 </article>
 </section>
-<section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Old Exam Questions and Answers</h1></section>
 <section class="section-heading"><p class="eyebrow">Old Exams</p><h1>Old Exam Questions and Answers</h1></section>
 <section class="note-list">
 <article class="note-card wide">
 <span class="pill muted">Midterm 2021, Aufgabe 1</span>
-<p><strong>Question:</strong> Which terms describe the payload/control units around layer 3? <strong>Answer:</strong> The L3 PDU is a packet. The L3 SDU is the payload received from above before the L3 header is added.</p>
+<p><strong>Question:</strong> Which terms describe the payload/control units around layer 3?<br><strong class="qa-answer-label">Answer:</strong> The L3 PDU is a packet. The L3 SDU is the payload received from above before the L3 header is added.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Midterm 2020, Aufgabe 1</span>
-<p><strong>Question:</strong> Which OSI layer does ICMP belong to? <strong>Answer:</strong> ICMP is network-layer related, i.e. layer 3, because it reports IP-layer control and error information.</p>
+<p><strong>Question:</strong> Which OSI layer does ICMP belong to?<br><strong class="qa-answer-label">Answer:</strong> ICMP is network-layer related, i.e. layer 3, because it reports IP-layer control and error information.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Retake 2024, Aufgabe 1</span>
-<p><strong>Question:</strong> Interpret a hex value under byte-order conventions. <strong>Answer:</strong> Network byte order is big-endian; little-endian stores the least significant byte first.</p>
+<p><strong>Question:</strong> Interpret a hex value under byte-order conventions.<br><strong class="qa-answer-label">Answer:</strong> Network byte order is big-endian; little-endian stores the least significant byte first.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Endterm 2022, Aufgabe 5</span>
-<p><strong>Question:</strong> Identify Ethernet, IPv4, TCP, and payload fields in a hexdump. <strong>Answer:</strong> Use Ethertype 0x0800 for IPv4, IPv4 IHL for L3 header length, Protocol 0x06 for TCP, TCP data offset for L4 header length, then the remaining bytes are payload.</p>
+<p><strong>Question:</strong> Identify Ethernet, IPv4, TCP, and payload fields in a hexdump.<br><strong class="qa-answer-label">Answer:</strong> Use Ethertype 0x0800 for IPv4, IPv4 IHL for L3 header length, Protocol 0x06 for TCP, TCP data offset for L4 header length, then the remaining bytes are payload.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Endterm 2023, Aufgabe 1</span>
-<p><strong>Question:</strong> Reconstruct a frame from topology and protocol facts. <strong>Answer:</strong> L2 source/destination MAC addresses are for the current hop; IP source/destination remain the original endpoints; header lengths and checksums determine offsets and missing bytes.</p>
+<p><strong>Question:</strong> Reconstruct a frame from topology and protocol facts.<br><strong class="qa-answer-label">Answer:</strong> L2 source/destination MAC addresses are for the current hop; IP source/destination remain the original endpoints; header lengths and checksums determine offsets and missing bytes.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Retake 2023, Aufgabe 2</span>
-<p><strong>Question:</strong> Analyze an Ethernet/IPv6/TCP hexdump. <strong>Answer:</strong> Ethertype 0x86dd selects IPv6; IPv6 has a fixed 40 B base header; Next Header 0x06 means TCP.</p>
+<p><strong>Question:</strong> Analyze an Ethernet/IPv6/TCP hexdump.<br><strong class="qa-answer-label">Answer:</strong> Ethertype 0x86dd selects IPv6; IPv6 has a fixed 40 B base header; Next Header 0x06 means TCP.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Endterm 2024, Aufgabe 4</span>
-<p><strong>Question:</strong> Identify Ethernet/IPv6 fields and derive embedded addresses. <strong>Answer:</strong> Read Ethernet addresses first, then IPv6 version/traffic class/flow label, payload length, next header, hop limit, source and destination addresses.</p>
+<p><strong>Question:</strong> Identify Ethernet/IPv6 fields and derive embedded addresses.<br><strong class="qa-answer-label">Answer:</strong> Read Ethernet addresses first, then IPv6 version/traffic class/flow label, payload length, next header, hop limit, source and destination addresses.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Endterm 2025, Aufgabe 3</span>
-<p><strong>Question:</strong> Analyze an Ethernet frame carrying ICMP. <strong>Answer:</strong> Ethertype 0x0800 gives IPv4; IPv4 Protocol 0x01 gives ICMP; ICMP type/code identify the concrete ICMP message.</p>
+<p><strong>Question:</strong> Analyze an Ethernet frame carrying ICMP.<br><strong class="qa-answer-label">Answer:</strong> Ethertype 0x0800 gives IPv4; IPv4 Protocol 0x01 gives ICMP; ICMP type/code identify the concrete ICMP message.</p>
 </article>
 </section>
 <section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Exam Answer Checklist</h1></section>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Physical Layer: Signals, Information, Coding, and Modulation</title>
     <meta name="description" content="GRNVS study notes." />
-    <link rel="stylesheet" href="./styles.css?v=3" />
+    <link rel="stylesheet" href="./styles.css?v=5" />
   </head>
   <body>
     <main class="notes-shell">
@@ -49,7 +49,14 @@
 </article>
 <article class="note-card"><span class="pill">Question</span>
 <h2>Distinguish time/value continuity.</h2>
-<p>Time-continuous means defined for every time instant; time-discrete means only at sample instants. Value-continuous means arbitrary amplitudes; value-discrete means only fixed levels. A sampled but unquantized signal is time-discrete and value-continuous; a digital bit stream is time-discrete and value-discrete.</p>
+<ul class="answer-list">
+<li><strong>Time-continuous:</strong> defined for every time instant.</li>
+<li><strong>Time-discrete:</strong> defined only at sample instants.</li>
+<li><strong>Value-continuous:</strong> arbitrary amplitudes are possible.</li>
+<li><strong>Value-discrete:</strong> only fixed amplitude levels are possible.</li>
+<li><strong>Sampled but unquantized:</strong> time-discrete and value-continuous.</li>
+<li><strong>Digital bit stream:</strong> time-discrete and value-discrete.</li>
+</ul>
 </article>
 <article class="note-card"><span class="pill">Question</span>
 <h2>Fourier series or Fourier transform?</h2>
@@ -73,15 +80,31 @@
 </article>
 <article class="note-card"><span class="pill">Question</span>
 <h2>Source coding, channel coding, line coding?</h2>
-<p>Source coding removes redundancy, e.g. Huffman compression. Channel coding adds structured redundancy for error detection/correction. Line coding maps bits or code words to physical signal shapes suitable for the medium.</p>
+<ul class="answer-list">
+<li><strong>Source coding:</strong> removes redundancy, e.g. Huffman compression.</li>
+<li><strong>Channel coding:</strong> adds structured redundancy for error detection/correction.</li>
+<li><strong>Line coding:</strong> maps bits or code words to physical signal shapes suitable for the medium.</li>
+</ul>
 </article>
 <article class="note-card"><span class="pill">Question</span>
 <h2>Manchester, NRZ, MLT-3, ASK, PSK, and QAM?</h2>
-<p>NRZ and Manchester are line codes. MLT-3 is a multi-level line code. ASK changes amplitude, PSK changes phase, and QAM uses amplitude in two quadrature components, often visualized as a constellation.</p>
+<ul class="answer-list">
+<li><strong>NRZ:</strong> line code.</li>
+<li><strong>Manchester:</strong> line code with a transition in every bit interval.</li>
+<li><strong>MLT-3:</strong> multi-level line code.</li>
+<li><strong>ASK:</strong> changes amplitude.</li>
+<li><strong>PSK:</strong> changes phase.</li>
+<li><strong>QAM:</strong> uses amplitude in two quadrature components and is often visualized as a constellation.</li>
+</ul>
 </article>
 <article class="note-card"><span class="pill">Question</span>
 <h2>For <code>M</code>-QAM, how many bits are transmitted per symbol?</h2>
-<p><code>_2 M</code> bits per symbol. 16-QAM gives 4 bits/symbol, 32-QAM gives 5 bits/symbol, and 1024-QAM gives 10 bits/symbol.</p>
+<ul class="answer-list">
+<li><strong>General rule:</strong> <code>log2(M)</code> bits per symbol.</li>
+<li><strong>16-QAM:</strong> 4 bits/symbol.</li>
+<li><strong>32-QAM:</strong> 5 bits/symbol.</li>
+<li><strong>1024-QAM:</strong> 10 bits/symbol.</li>
+</ul>
 </article>
 <article class="note-card"><span class="pill">Question</span>
 <h2>Why does higher-order modulation need better SNR?</h2>
@@ -89,99 +112,102 @@
 </article>
 <article class="note-card"><span class="pill">Question</span>
 <h2>Compare electrical, optical, and wireless media.</h2>
-<p>Electrical copper is cheap and common but affected by attenuation and electromagnetic interference, so shielding/twisting matters. Optical fiber supports high rates and long distances and is immune to electromagnetic interference. Wireless is flexible and mobile but shared, noisy, and collision/interference-prone.</p>
+<ul class="answer-list">
+<li><strong>Electrical copper:</strong> cheap and common, but affected by attenuation and electromagnetic interference.</li>
+<li><strong>Optical fiber:</strong> high rates, long distances, immune to electromagnetic interference.</li>
+<li><strong>Wireless:</strong> flexible and mobile, but shared, noisy, and collision/interference-prone.</li>
+</ul>
 </article>
 <article class="note-card"><span class="pill">Question</span>
 <h2>Propagation delay versus serialization delay?</h2>
 <p>Propagation delay is travel time through the medium: <code>t_p=d/v</code>. Serialization delay is time to put all bits on the link: <code>t_s=L/R</code>. Long distances increase propagation delay; large frames or low bitrates increase serialization delay.</p>
 </article>
 </section>
-<section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Old Exam Questions and Answers</h1></section>
 <section class="section-heading"><p class="eyebrow">Old Exams</p><h1>Old Exam Questions and Answers</h1></section>
 <section class="note-list">
 <article class="note-card wide">
 <span class="pill muted">Midterm 2020, Aufgabe 2</span>
-<p><strong>Question:</strong> Explain Shannon versus Hartley capacity and quantization. <strong>Answer:</strong> Shannon capacity is noise-limited using <code>B</code> and SNR; Hartley capacity uses bandwidth and distinguishable symbols. Quantization maps continuous amplitudes to discrete levels and introduces bounded error inside the quantization interval.</p>
+<p><strong>Question:</strong> Explain Shannon versus Hartley capacity and quantization.<br><strong class="qa-answer-label">Answer:</strong> Shannon capacity is noise-limited using <code>B</code> and SNR; Hartley capacity uses bandwidth and distinguishable symbols. Quantization maps continuous amplitudes to discrete levels and introduces bounded error inside the quantization interval.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Midterm 2020, Aufgabe 4</span>
-<p><strong>Question:</strong> Encode a message and protect packets with CRC. <strong>Answer:</strong> Choose the source representation, e.g. BCD for digits or ASCII otherwise, split into packets, append CRC checksum, and validate by polynomial division at the receiver.</p>
+<p><strong>Question:</strong> Encode a message and protect packets with CRC.<br><strong class="qa-answer-label">Answer:</strong> Choose the source representation, e.g. BCD for digits or ASCII otherwise, split into packets, append CRC checksum, and validate by polynomial division at the receiver.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Midterm 2021, Aufgabe 2</span>
-<p><strong>Question:</strong> Use 4-ASK with Manchester coding in a frame format. <strong>Answer:</strong> 4-ASK carries 2 raw bits per modulation symbol; Manchester introduces transitions for clock recovery and typically doubles the required signaling effort for the same payload bits.</p>
+<p><strong>Question:</strong> Use 4-ASK with Manchester coding in a frame format.<br><strong class="qa-answer-label">Answer:</strong> 4-ASK carries 2 raw bits per modulation symbol; Manchester introduces transitions for clock recovery and typically doubles the required signaling effort for the same payload bits.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Midterm 2021, Aufgabe 3</span>
-<p><strong>Question:</strong> Determine signal levels from a 16-bit converter. <strong>Answer:</strong> A 16-bit value can represent <code>2^16=65536</code> different levels.</p>
+<p><strong>Question:</strong> Determine signal levels from a 16-bit converter.<br><strong class="qa-answer-label">Answer:</strong> A 16-bit value can represent <code>2^16=65536</code> different levels.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Midterm 2022, Aufgabe 1</span>
-<p><strong>Question:</strong> Match signals to spectra and reason about Fourier series. <strong>Answer:</strong> Periodic time-domain signals have discrete line spectra; pulse shape determines spectral envelope.</p>
+<p><strong>Question:</strong> Match signals to spectra and reason about Fourier series.<br><strong class="qa-answer-label">Answer:</strong> Periodic time-domain signals have discrete line spectra; pulse shape determines spectral envelope.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Midterm 2022, Aufgabe 4</span>
-<p><strong>Question:</strong> Compute end-to-end delay in a transmission chain. <strong>Answer:</strong> Add serialization, propagation, processing, and waiting times; for pipelined segments, account for overlap instead of multiplying blindly.</p>
+<p><strong>Question:</strong> Compute end-to-end delay in a transmission chain.<br><strong class="qa-answer-label">Answer:</strong> Add serialization, propagation, processing, and waiting times; for pipelined segments, account for overlap instead of multiplying blindly.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Midterm 2023, Aufgabe 1</span>
-<p><strong>Question:</strong> Identify time-discrete/value-continuous signals and highest-information symbols. <strong>Answer:</strong> Time-discrete signals exist only at sample instants; value-continuous signals can take arbitrary amplitudes. Highest information belongs to the least frequent symbol.</p>
+<p><strong>Question:</strong> Identify time-discrete/value-continuous signals and highest-information symbols.<br><strong class="qa-answer-label">Answer:</strong> Time-discrete signals exist only at sample instants; value-continuous signals can take arbitrary amplitudes. Highest information belongs to the least frequent symbol.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Midterm 2023, Aufgabe 2</span>
-<p><strong>Question:</strong> Decide whether Fourier series applies. <strong>Answer:</strong> It applies when the given signal is periodic; otherwise use the Fourier transform.</p>
+<p><strong>Question:</strong> Decide whether Fourier series applies.<br><strong class="qa-answer-label">Answer:</strong> It applies when the given signal is periodic; otherwise use the Fourier transform.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Endterm 2023, Aufgabe 5</span>
-<p><strong>Question:</strong> Analyze a periodically repeated ground pulse. <strong>Answer:</strong> Draw one period, repeat it with period <code>T</code>, then use Fourier-series coefficients for periodic frequency analysis.</p>
+<p><strong>Question:</strong> Analyze a periodically repeated ground pulse.<br><strong class="qa-answer-label">Answer:</strong> Draw one period, repeat it with period <code>T</code>, then use Fourier-series coefficients for periodic frequency analysis.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Endterm 2023, Aufgabe 6</span>
-<p><strong>Question:</strong> Explain channel codes and line codes. <strong>Answer:</strong> Channel codes add redundancy to detect/correct errors; line codes map bits/codewords to physical signal waveforms.</p>
+<p><strong>Question:</strong> Explain channel codes and line codes.<br><strong class="qa-answer-label">Answer:</strong> Channel codes add redundancy to detect/correct errors; line codes map bits/codewords to physical signal waveforms.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Endterm 2024, Aufgabe 1</span>
-<p><strong>Question:</strong> Answer MC on sampling, quantization, QAM, serialization, propagation, and CRC. <strong>Answer:</strong> Sampling discretizes time, quantization discretizes values, 1024-QAM carries 10 bits/symbol, serialization is <code>L/R</code>, propagation is <code>d/v</code>, and CRC detects but does not repair errors.</p>
+<p><strong>Question:</strong> Answer MC on sampling, quantization, QAM, serialization, propagation, and CRC.<br><strong class="qa-answer-label">Answer:</strong> Sampling discretizes time, quantization discretizes values, 1024-QAM carries 10 bits/symbol, serialization is <code>L/R</code>, propagation is <code>d/v</code>, and CRC detects but does not repair errors.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Endterm 2024, Aufgabe 2</span>
-<p><strong>Question:</strong> Complete a transmission chain with Huffman, coding, and CRC. <strong>Answer:</strong> Source coding compresses, channel/CRC redundancy protects against errors, line/modulation maps bits to signals.</p>
+<p><strong>Question:</strong> Complete a transmission chain with Huffman, coding, and CRC.<br><strong class="qa-answer-label">Answer:</strong> Source coding compresses, channel/CRC redundancy protects against errors, line/modulation maps bits to signals.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Endterm 2025, Aufgabe 1</span>
-<p><strong>Question:</strong> Compute sampling interval for <code>f_A=20 kHz</code> and entropy. <strong>Answer:</strong> <code>T_A=1/20000=50 µ s</code>; entropy is <code>- p_i_2 p_i</code>.</p>
+<p><strong>Question:</strong> Compute sampling interval for <code>f_A=20 kHz</code> and entropy.<br><strong class="qa-answer-label">Answer:</strong> <code>T_A=1/20000=50 µ s</code>; entropy is <code>- p_i_2 p_i</code>.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Endterm 2025, Aufgabe 6</span>
-<p><strong>Question:</strong> Infer modulation and bitrate from a constellation and basisband signal. <strong>Answer:</strong> Count constellation points for bits/symbol, combine with symbol rate and coding rate for effective data rate.</p>
+<p><strong>Question:</strong> Infer modulation and bitrate from a constellation and basisband signal.<br><strong class="qa-answer-label">Answer:</strong> Count constellation points for bits/symbol, combine with symbol rate and coding rate for effective data rate.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Retake 2022, Aufgabe 3</span>
-<p><strong>Question:</strong> Recognize and use Manchester coding. <strong>Answer:</strong> Manchester represents bits by transitions inside a bit interval, supporting clock recovery at the cost of more bandwidth.</p>
+<p><strong>Question:</strong> Recognize and use Manchester coding.<br><strong class="qa-answer-label">Answer:</strong> Manchester represents bits by transitions inside a bit interval, supporting clock recovery at the cost of more bandwidth.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Retake 2022, Aufgabe 4</span>
-<p><strong>Question:</strong> Determine information content and delay/rate tradeoffs. <strong>Answer:</strong> Use <code>I(x)=-_2 p(x)</code>, and compute delay from serialization plus propagation over each hop.</p>
+<p><strong>Question:</strong> Determine information content and delay/rate tradeoffs.<br><strong class="qa-answer-label">Answer:</strong> Use <code>I(x)=-_2 p(x)</code>, and compute delay from serialization plus propagation over each hop.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Retake 2024, Aufgabe 1</span>
-<p><strong>Question:</strong> Select known digital modulation methods and highest-information symbol. <strong>Answer:</strong> ASK, PSK, QAM are modulation methods; the rarest symbol has highest information content.</p>
+<p><strong>Question:</strong> Select known digital modulation methods and highest-information symbol.<br><strong class="qa-answer-label">Answer:</strong> ASK, PSK, QAM are modulation methods; the rarest symbol has highest information content.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Retake 2024, Aufgabe 2</span>
-<p><strong>Question:</strong> Analyze periodic EKG-like signal. <strong>Answer:</strong> Draw the periodic waveform and compute Fourier-series terms using the period and ground pulse.</p>
+<p><strong>Question:</strong> Analyze periodic EKG-like signal.<br><strong class="qa-answer-label">Answer:</strong> Draw the periodic waveform and compute Fourier-series terms using the period and ground pulse.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Retake 2024, Aufgabe 4</span>
-<p><strong>Question:</strong> Compute satellite transmission performance. <strong>Answer:</strong> Propagation dominates for astronomical distances; throughput depends on frame size, bitrate, and error probability/retransmission assumptions.</p>
+<p><strong>Question:</strong> Compute satellite transmission performance.<br><strong class="qa-answer-label">Answer:</strong> Propagation dominates for astronomical distances; throughput depends on frame size, bitrate, and error probability/retransmission assumptions.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Retake 2025, Aufgabe 1</span>
-<p><strong>Question:</strong> State correct properties of optical conductors. <strong>Answer:</strong> Optical links support high data rates and long distances and do not need electrical shielding; RJ45 is for twisted-pair copper, not fiber.</p>
+<p><strong>Question:</strong> State correct properties of optical conductors.<br><strong class="qa-answer-label">Answer:</strong> Optical links support high data rates and long distances and do not need electrical shielding; RJ45 is for twisted-pair copper, not fiber.</p>
 </article>
 <article class="note-card wide">
 <span class="pill muted">Retake 2025, Aufgabe 2</span>
-<p><strong>Question:</strong> Digital radio with collision probability and modulation/coding. <strong>Answer:</strong> Treat independent retries geometrically and combine symbol rate, bits/symbol, and coding overhead for useful data rate.</p>
+<p><strong>Question:</strong> Digital radio with collision probability and modulation/coding.<br><strong class="qa-answer-label">Answer:</strong> Treat independent retries geometrically and combine symbol rate, bits/symbol, and coding overhead for useful data rate.</p>
 </article>
 </section>
 <section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Exam Answer Checklist</h1></section>
