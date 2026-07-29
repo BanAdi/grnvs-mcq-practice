@@ -448,6 +448,21 @@ h3 {
   color: var(--accent-dark);
 }
 
+.notes-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 28px;
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+}
+
+.notes-bottom-nav .note-menu-panel {
+  top: auto;
+  bottom: 100%;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
 .note-menu {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

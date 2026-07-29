@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Complete Paper Notes</title>
     <meta name="description" content="GRNVS study notes." />
-    <link rel="stylesheet" href="./styles.css?v=6" />
+    <link rel="stylesheet" href="./styles.css?v=7" />
   </head>
   <body>
     <main class="notes-shell">
@@ -346,6 +346,25 @@
 <p>TCP congestion and socket API. Congestion control protects the network; the sender adjusts <code>cwnd</code>. Flow control protects the receiver; the receiver advertises a window. Slow start grows exponentially, 3 duplicate ACKs usually indicate one lost segment, and Reno halves window/sets threshold before linear growth. Timeout may be caused by severe loss or no ACK arriving before RTO. A TCP server for incoming clients uses <code>socket()</code>, <code>bind()</code>, <code>listen()</code>, then <code>accept()</code> for each connection. description</p>
 </article>
 </section>
+      <footer class="notes-footer" aria-label="Bottom navigation">
+        <nav class="note-nav notes-bottom-nav" aria-label="Bottom site navigation">
+          <details class="note-menu-dropdown">
+            <summary>Notes Home</summary>
+            <div class="note-menu-panel">
+              <a class="note-menu-item" href="./notes.html">Notes Home</a>
+              <a class="note-menu-item" href="./notes-coding.html">Coding & Modulation</a>
+              <a class="note-menu-item" href="./notes-ipv6.html">IPv6 Address Notes</a>
+              <a class="note-menu-item" href="./notes-layers.html">Layers & Encapsulation</a>
+              <a class="note-menu-item" href="./notes-physical-theory.html">Physical Layer</a>
+              <a class="note-menu-item" href="./notes-datalink-theory.html">Data Link Layer</a>
+              <a class="note-menu-item" href="./notes-network-theory.html">Network Layer</a>
+              <a class="note-menu-item" href="./notes-transport-application.html">Transport & Application</a>
+              <a class="note-menu-item active" href="./notes-paper-checklist.html" aria-current="page">Paper Checklist</a>
+            </div>
+          </details>
+          <a class="secondary link-button" href="./index.html">Practice</a>
+        </nav>
+      </footer>
     </main>
     
   </body>
