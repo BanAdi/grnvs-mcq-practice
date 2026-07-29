@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Network Layer: IPv4, IPv6, ICMP, Fragmentation, and Routing</title>
+    <meta name="description" content="GRNVS study notes." />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="notes-shell">
+      <header class="notes-hero">
+        <div>
+          <p class="eyebrow">GRNVS Kurznotizen</p>
+          <h1>Network Layer Theory</h1>
+          <p>IPv4, IPv6, ICMP, fragmentation, routing, NDP, and NAT-related addressing.</p>
+        </div>
+        <nav class="note-nav" aria-label="Notes navigation">
+          <a class="secondary link-button" href="./notes.html">Notes Home</a>
+<a class="secondary link-button" href="./index.html">Practice</a>
+<a class="secondary link-button" href="./notes-coding.html">Coding Notes</a>
+<a class="secondary link-button" href="./notes-ipv6.html">IPv6 Notes</a>
+<a class="secondary link-button" href="./notes-layers.html">Layers</a>
+<a class="secondary link-button" href="./notes-physical-theory.html">Physical</a>
+<a class="secondary link-button" href="./notes-datalink-theory.html">Data Link</a>
+<a class="secondary link-button" href="./notes-network-theory.html">Network</a>
+<a class="secondary link-button" href="./notes-transport-application.html">Transport/App</a>
+<a class="secondary link-button" href="./notes-paper-checklist.html">Paper Checklist</a>
+        </nav>
+      </header>
+<section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Theory Questions and Answers</h1></section>
+<section class="notes-grid compact">
+<article class="note-card"><span class="pill">Question</span>
+<h2>Why is the network layer needed even with Ethernet switching?</h2>
+<p>Ethernet MAC addresses are flat and local to a broadcast domain. The network layer provides logical hierarchical addressing, subnetting, routing across multiple links, and interconnection of different L2 networks.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Compare circuit, message, and packet switching.</h2>
+<p>Circuit switching reserves a path before transmission. Message switching forwards complete messages hop by hop. Packet switching splits data into packets, each with a header, allowing multiplexing and independent forwarding.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Forwarding versus routing?</h2>
+<p>Forwarding is the local action of sending one packet to the selected next hop/interface. Routing is the process of building the routing table and deciding which paths should be used.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain IPv4 prefix, network address, broadcast address, and usable host range.</h2>
+<p>The prefix length says how many leading bits identify the network. The network address has host bits all 0. The broadcast address has host bits all 1. Usable host addresses are normally between them, excluding network and broadcast.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>How do you compute IPv4 subnet information?</h2>
+<p>Apply the subnet mask to the IP address to get the network. Set all host bits to 1 for broadcast. First usable is network plus one; last usable is broadcast minus one, except for special cases such as point-to-point /31 depending on assumptions.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain longest-prefix matching.</h2>
+<p>A router chooses the matching route with the most specific prefix, i.e. the largest prefix length. Only if specificity ties do metrics/administrative preferences become relevant.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Important IPv4 header fields?</h2>
+<p>Version identifies IPv4, IHL gives header length, Total Length gives packet size, Identification/Flags/Fragment Offset support fragmentation, TTL limits lifetime, Protocol selects L4/ICMP, Header Checksum protects the IPv4 header, and source/destination are end-to-end IP addresses.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain IPv4 fragmentation.</h2>
+<p>If an IPv4 packet exceeds the outgoing MTU and DF is not set, a router may split it. All fragments share Identification. Fragment Offset is in 8-byte units. MF is set on all fragments except the last. Fragment payload except the last must be a multiple of 8 bytes.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>MTU, path MTU, IP packet size, segment size, application payload?</h2>
+<p>MTU is the maximum L3 packet size on one L2 link. Path MTU is the minimum MTU along the path. IP packet size includes IP header plus IP payload. TCP segment size includes TCP header plus TCP payload. Application payload is what remains after IP and transport headers.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain IPv6 address concepts.</h2>
+<p>IPv6 addresses are 128 bits. Leading zeroes in each 16-bit group may be omitted. One longest run of zero groups may be compressed with <code>::</code>. Link-local addresses start with <code>fe80::/10</code>. Global unicast addresses are globally routable. Solicited-node multicast is used by Neighbor Discovery.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>ARP versus Neighbor Discovery?</h2>
+<p>ARP maps IPv4 addresses to MAC addresses using L2 broadcast. IPv6 uses ICMPv6 Neighbor Solicitation and Neighbor Advertisement, usually sent to solicited-node multicast rather than broadcast.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain SLAAC.</h2>
+<p>Stateless Address Autoconfiguration lets a host create its own IPv6 address from an advertised prefix plus an interface identifier. Privacy extensions randomize/change interface identifiers to reduce tracking.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>IPv4 versus IPv6 fragmentation?</h2>
+<p>IPv4 routers may fragment packets. IPv6 routers do not fragment normal packets; the source must send suitably sized packets or use the IPv6 Fragment extension header.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>ICMP/ICMPv6 messages?</h2>
+<p>Echo Request/Reply support ping-style reachability tests. TTL/Hop-Limit exceeded is sent when a router decrements TTL/Hop Limit to zero. ICMP also carries error information such as destination unreachable or packet too big.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Static, distance-vector, link-state, and path-vector routing?</h2>
+<p>Static routes are configured manually. Distance-vector routers exchange distances to destinations. Link-state routers flood topology information and compute shortest paths. Path-vector protocols advertise paths, e.g. AS paths in BGP.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Count-to-infinity?</h2>
+<p>It is a distance-vector failure mode where routers slowly increase a metric due to stale mutual information. Split horizon avoids advertising a route back where it was learned; path-vector carries the path so loops can be detected.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain AS relationships and BGP policy.</h2>
+<p>An AS is a network under one administrative control. Customer/provider/peer relationships affect which routes are announced. Providers sell transit, customers buy transit, peers exchange traffic between their own/customer networks. BGP is policy-driven, not just shortest-path routing.</p>
+</article>
+</section>
+<section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Old Exam Questions and Answers</h1></section>
+<section class="section-heading"><p class="eyebrow">Old Exams</p><h1>Old Exam Questions and Answers</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 1</span>
+<p><strong>Question:</strong> Which IP and MAC destination are used when sending to another host? <strong>Answer:</strong> The IP destination is the final host; the MAC destination is the next L2 receiver on the current link, e.g. gateway/AP/final host depending on topology.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2022, Aufgabe 1</span>
+<p><strong>Question:</strong> How long is an IPv6 address and how are link-local addresses shortened? <strong>Answer:</strong> IPv6 is 128 bits; remove leading zeroes per group and compress one longest zero run with <code>::</code>.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2022, Aufgabe 4</span>
+<p><strong>Question:</strong> Send ICMP Echo through a residential IPv4 network. <strong>Answer:</strong> ARP is needed for each next-hop MAC if caches are empty; L2 MACs change at each hop; IP source/destination stay end-to-end; TTL decreases per router.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2022, Aufgabe 5</span>
+<p><strong>Question:</strong> Interpret Ethernet + IPv4 + TCP/SMTP frame. <strong>Answer:</strong> Ethertype 0x0800 means IPv4, IHL 5 means 20 B IPv4 header, Protocol 0x06 means TCP, TCP destination port 25 means SMTP.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2023, Aufgabe 2</span>
+<p><strong>Question:</strong> Configure IP routing in a lab topology. <strong>Answer:</strong> Assign addresses from the correct prefixes, set gateways/routes so each destination has a next hop, and remember routers separate broadcast domains.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2023, Aufgabe 3</span>
+<p><strong>Question:</strong> MC on domains and addressing. <strong>Answer:</strong> Switches split collision domains, routers split broadcast domains, and IP routing is required across subnets.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2024, Aufgabe 3</span>
+<p><strong>Question:</strong> Use longest-prefix matching in a routing table. <strong>Answer:</strong> Select the route with the longest matching prefix; UDP likely explains out-of-order chat messages because UDP provides no ordering guarantee.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2024, Aufgabe 4</span>
+<p><strong>Question:</strong> Analyze an IPv6/TCP hexdump. <strong>Answer:</strong> IPv6 base header is 40 B; Next Header 0x06 is TCP; Hop Limit is decremented by routers; source/destination IPv6 addresses occupy 16 B each.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2025, Aufgabe 2</span>
+<p><strong>Question:</strong> IPv6 Wohnheim network with empty caches. <strong>Answer:</strong> Hosts use NDP to learn MAC addresses, can form addresses from prefix plus interface identifier when SLAAC applies, and send off-link traffic to the gateway.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2025, Aufgabe 3</span>
+<p><strong>Question:</strong> Identify ICMP in a frame. <strong>Answer:</strong> IPv4 Protocol 1 identifies ICMP; ICMP type/code state whether it is Echo, TTL exceeded, unreachable, etc.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2022, Aufgabe 1</span>
+<p><strong>Question:</strong> Which routes does one AS announce to a peer? <strong>Answer:</strong> An AS typically announces its own and customer prefixes to peers/providers, but not routes learned from one peer/provider to another peer/provider.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2022, Aufgabe 2</span>
+<p><strong>Question:</strong> Give IPv4 PTR name and detect invalid subnet. <strong>Answer:</strong> Reverse IPv4 uses reversed octets under <code>in-addr.arpa</code>; e.g. 203.0.113.4 becomes <code>4.113.0.203.in-addr.arpa</code>. A subnet address must have host bits zero.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2022, Aufgabe 6</span>
+<p><strong>Question:</strong> IPv4 network with NAT. <strong>Answer:</strong> NAT rewrites private source IP/port to public IP/port on outgoing packets and uses its mapping table for incoming replies.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2023, Aufgabe 5</span>
+<p><strong>Question:</strong> Home network with NAT-capable router. <strong>Answer:</strong> Inside hosts use private addresses and default route to the NAT router; the router translates addresses/ports for Internet traffic.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2023, Aufgabe 6</span>
+<p><strong>Question:</strong> MTU and maximum Ethernet frame size. <strong>Answer:</strong> MTU 1500 B is L3 packet size; Ethernet frame with header and FCS is 1518 B. Propagation and serialization are separate delays.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2024, Aufgabe 3</span>
+<p><strong>Question:</strong> Fill source/destination MAC and IP at points across NAT. <strong>Answer:</strong> MACs change every hop; IP destination is rewritten by NAT when entering the private side; public-to-private mapping determines the final private IP/port.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2024, Aufgabe 7</span>
+<p><strong>Question:</strong> Derive IPv6 solicited-node address and multicast MAC. <strong>Answer:</strong> Use last 24 bits of the IPv6 address: solicited-node is <code>ff02::1:ffXX:XXXX</code>; Ethernet multicast MAC is <code>33:33:ff:XX:XX:XX</code>.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2025, Aufgabe 1</span>
+<p><strong>Question:</strong> Which IPv6 address is fully shortened? <strong>Answer:</strong> Remove all leading zeroes and compress exactly one longest zero run; do not use <code>::</code> twice.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2025, Aufgabe 3</span>
+<p><strong>Question:</strong> Forward IPv4 packets across routers. <strong>Answer:</strong> Each router forwards based on LPM, decrements TTL, and sends the packet in a new L2 frame to the next-hop MAC.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2025, Aufgabe 5</span>
+<p><strong>Question:</strong> IPv4, UDP, and NAT hole punching. <strong>Answer:</strong> UDP hole punching relies on both peers creating NAT mappings by sending outbound packets, so later inbound packets match existing NAT table entries.</p>
+</article>
+</section>
+<section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Exam Answer Checklist</h1></section>
+<section class="note-card wide"><span class="pill">Checklist</span><h2>Exam Answer Checklist</h2><ul>
+<li>L2 addresses change at every hop; L3 source/destination normally stay end-to-end unless NAT is involved.</li>
+<li>TTL/Hop Limit decreases by one at each router.</li>
+<li>IPv4 routers may fragment; IPv6 routers do not fragment normal packets. IPv6 uses source fragmentation plus Fragment extension header.</li>
+<li>Fragment offset is counted in 8-byte units.</li>
+<li>Longest-prefix match beats lower metric among less-specific alternatives.</li>
+<li>IPv6 abbreviation: remove leading zeroes in groups and compress one longest all-zero run with <code>::</code>; use <code>::</code> at most once.</li>
+</ul></section>
+    </main>
+    
+  </body>
+</html>

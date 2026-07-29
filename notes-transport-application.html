@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Transport and Application Topics Appearing in Old Exams</title>
+    <meta name="description" content="GRNVS study notes." />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="notes-shell">
+      <header class="notes-hero">
+        <div>
+          <p class="eyebrow">GRNVS Kurznotizen</p>
+          <h1>Transport &amp; Application Theory</h1>
+          <p>UDP, TCP, congestion control, NAT, DNS, HTTP, TLS, and sockets.</p>
+        </div>
+        <nav class="note-nav" aria-label="Notes navigation">
+          <a class="secondary link-button" href="./notes.html">Notes Home</a>
+<a class="secondary link-button" href="./index.html">Practice</a>
+<a class="secondary link-button" href="./notes-coding.html">Coding Notes</a>
+<a class="secondary link-button" href="./notes-ipv6.html">IPv6 Notes</a>
+<a class="secondary link-button" href="./notes-layers.html">Layers</a>
+<a class="secondary link-button" href="./notes-physical-theory.html">Physical</a>
+<a class="secondary link-button" href="./notes-datalink-theory.html">Data Link</a>
+<a class="secondary link-button" href="./notes-network-theory.html">Network</a>
+<a class="secondary link-button" href="./notes-transport-application.html">Transport/App</a>
+<a class="secondary link-button" href="./notes-paper-checklist.html">Paper Checklist</a>
+        </nav>
+      </header>
+<section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Theory Questions and Answers</h1></section>
+<section class="notes-grid compact">
+<article class="note-card"><span class="pill">Question</span>
+<h2>Compare UDP and TCP.</h2>
+<p>UDP is connectionless, datagram-oriented, unreliable, and does not guarantee ordering. TCP is connection-oriented, stream-oriented, reliable, ordered, and includes flow and congestion control.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Why can UDP datagrams arrive out of order?</h2>
+<p>IP packets may take different paths or experience different delays, and UDP does not reorder or retransmit. TCP numbers bytes and delivers them to the application in order.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain the TCP three-way handshake.</h2>
+<p>Client sends SYN with initial sequence number. Server replies SYN-ACK with its own sequence number and acknowledgement of the client SYN. Client sends ACK. MSS may be announced as a TCP option during SYN exchange.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>How do you compute MSS from MTU?</h2>
+<p>MSS is maximum TCP payload, not the full IP packet. For IPv4 without options on Ethernet: <code>1500-20-20=1460</code> B. Subtract TCP options if present. For IPv6 without extension headers: <code>1500-40-20=1440</code> B.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain TCP teardown.</h2>
+<p>Each direction is closed independently with FIN and ACK. A common graceful close is FIN, ACK, FIN, ACK, though FINs can sometimes be combined with data/ACKs.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain TCP congestion control.</h2>
+<p>The sender controls a congestion window to avoid overloading the network. Slow start increases quickly, congestion avoidance increases more cautiously, and packet loss reduces the window. The goal is network stability and fair sharing.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain NAT/PAT.</h2>
+<p>NAT rewrites IP addresses; PAT additionally rewrites transport ports so many internal hosts can share one public IP. The NAT table maps internal tuple to external tuple and uses it to translate replies.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Why is NAT harder for ICMP?</h2>
+<p>TCP/UDP have ports that identify flows. ICMP often lacks ports; error messages may include part of the original packet, so the NAT must inspect embedded headers to find the internal flow.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain UDP hole punching.</h2>
+<p>Both peers send outbound UDP packets so their NATs create mappings. A coordination server tells each peer the other's public endpoint. Incoming packets can then match existing NAT state.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Recursive versus iterative DNS?</h2>
+<p>In a recursive query, the resolver is asked to obtain the final answer. In an iterative query, a server returns the best information it has, often a referral to another nameserver.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>DNS lookup roles?</h2>
+<p>The stub resolver asks a recursive resolver. The recursive resolver queries root servers, then TLD servers, then authoritative nameservers until it obtains the requested record.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain common DNS records.</h2>
+<p>A maps name to IPv4. AAAA maps name to IPv6. NS delegates/identifies nameservers. CNAME aliases one name to another. PTR maps address to name in reverse DNS. SOA gives zone authority metadata. MX names mail exchangers.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Reverse DNS for IPv4 and IPv6?</h2>
+<p>IPv4 reverses octets under <code>in-addr.arpa</code>. IPv6 reverses nibbles under <code>ip6.arpa</code>. Example: 203.0.113.4 becomes <code>4.113.0.203.in-addr.arpa</code>.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Which HTTP method loads a simple file/video?</h2>
+<p>Usually <code>GET</code>. It requests representation of the resource identified by the URL.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Where does TLS fit and what do X.509 certificates prove?</h2>
+<p>TLS sits above TCP and below applications like HTTP; in OSI terms it provides session/presentation functions such as authentication, key agreement, encryption, and integrity. X.509 validation checks the certificate chain to a trusted root and that the requested domain is covered by the certificate.</p>
+</article>
+</section>
+<section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Old Exam Questions and Answers</h1></section>
+<section class="section-heading"><p class="eyebrow">Old Exams</p><h1>Old Exam Questions and Answers</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Endterm 2022, Aufgabe 3</span>
+<p><strong>Question:</strong> Compute TCP MSS over Ethernet/IPv4 and complete the TCP handshake. <strong>Answer:</strong> MSS is MTU minus IPv4 and TCP headers/options; with Ethernet MTU 1500 and IPv4/TCP base headers it is 1460 B, or 1456 B if a 4 B MSS option is included in the segment under consideration. Handshake is SYN, SYN-ACK, ACK.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2022, Aufgabe 6</span>
+<p><strong>Question:</strong> What happens with <code>listen()</code> on UDP and how many sockets does a TCP server need? <strong>Answer:</strong> <code>listen()</code> makes sense for connection-oriented sockets, not UDP. A TCP server has a listening socket and a connected socket for each accepted client.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2024, Aufgabe 3</span>
+<p><strong>Question:</strong> Chat messages arrive out of order; which transport protocol is likely? <strong>Answer:</strong> UDP, because it does not guarantee ordering. TCP would deliver an ordered byte stream.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2024, Aufgabe 5</span>
+<p><strong>Question:</strong> Download a video over HTTP/TCP/IPv6. <strong>Answer:</strong> Use HTTP <code>GET</code>; TCP payload per full packet is <code>MTU - 40</code> B IPv6 header <code>-20</code> B TCP header when no options are present.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2025, Aufgabe 1</span>
+<p><strong>Question:</strong> What must a browser check in an HTTPS X.509 certificate? <strong>Answer:</strong> The certificate must chain to a trusted root and cover the requested domain. The private signing key is not inside the certificate.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2025, Aufgabe 4</span>
+<p><strong>Question:</strong> Configure/understand DNS delegation to an authoritative nameserver. <strong>Answer:</strong> Parent zone contains NS records delegating the child zone, and often glue A/AAAA records if needed to reach in-bailiwick nameservers.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2025, Aufgabe 5</span>
+<p><strong>Question:</strong> Assign TLS to OSI layers and name functions. <strong>Answer:</strong> TLS can be explained as session/presentation-layer functionality: session establishment/key agreement, authentication, encryption, and integrity protection above TCP.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2022, Aufgabe 5</span>
+<p><strong>Question:</strong> Fill a DNS zonefile. <strong>Answer:</strong> Use SOA for zone metadata, NS for authoritative nameservers, A/AAAA for addresses, MX for mail, CNAME for aliases, and correct fully qualified names/trailing dots.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2022, Aufgabe 7</span>
+<p><strong>Question:</strong> Explain TCP Reno congestion control. <strong>Answer:</strong> The sender adjusts congestion window; slow start grows quickly, congestion avoidance grows linearly, and loss reduces the window/threshold.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2023, Aufgabe 3</span>
+<p><strong>Question:</strong> Critique DNS resolution with recursive and iterative queries. <strong>Answer:</strong> Stub to local resolver is usually recursive; resolver to root/TLD/authoritative servers is iterative, following NS referrals until the final RR is returned.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2025, Aufgabe 4</span>
+<p><strong>Question:</strong> Forward and reverse DNS with IPv6. <strong>Answer:</strong> Forward names use A/AAAA. IPv6 reverse DNS reverses hexadecimal nibbles under <code>ip6.arpa</code>, and delegation occurs on nibble boundaries unless special mechanisms are used.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2025, Aufgabe 5</span>
+<p><strong>Question:</strong> IPv4, UDP, and NAT hole punching. <strong>Answer:</strong> NAT maps private IP/port to public IP/port. Hole punching tries to create matching outbound NAT state at both ends so direct UDP packets are accepted.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2025, Aufgabe 6</span>
+<p><strong>Question:</strong> TCP congestion control under network problems. <strong>Answer:</strong> Loss/timeout indicates congestion; the sender reduces its congestion window and then grows it according to slow start/congestion avoidance rules.</p>
+</article>
+</section>
+<section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Exam Answer Checklist</h1></section>
+<section class="note-card wide"><span class="pill">Checklist</span><h2>Exam Answer Checklist</h2><ul>
+<li>UDP is datagram-oriented and connectionless; TCP is connection-oriented and stream-oriented.</li>
+<li>TCP MSS is not the MTU: subtract IP header, TCP header, and TCP options if present.</li>
+<li>NAT changes at least source or destination IP/port plus checksums; replies are mapped using the NAT table.</li>
+<li>DNS recursive query asks the resolver to finish the lookup; iterative query returns the best referral or answer known by that server.</li>
+<li>HTTPS certificate checks include a valid trust chain and that the requested domain is covered by the certificate.</li>
+</ul></section>
+    </main>
+    
+  </body>
+</html>

@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Data Link Layer: MAC, Frames, Switching, and Error Detection</title>
+    <meta name="description" content="GRNVS study notes." />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="notes-shell">
+      <header class="notes-hero">
+        <div>
+          <p class="eyebrow">GRNVS Kurznotizen</p>
+          <h1>Data Link Layer Theory</h1>
+          <p>MAC, frames, switching, WLAN, ARP, CRC, and domains.</p>
+        </div>
+        <nav class="note-nav" aria-label="Notes navigation">
+          <a class="secondary link-button" href="./notes.html">Notes Home</a>
+<a class="secondary link-button" href="./index.html">Practice</a>
+<a class="secondary link-button" href="./notes-coding.html">Coding Notes</a>
+<a class="secondary link-button" href="./notes-ipv6.html">IPv6 Notes</a>
+<a class="secondary link-button" href="./notes-layers.html">Layers</a>
+<a class="secondary link-button" href="./notes-physical-theory.html">Physical</a>
+<a class="secondary link-button" href="./notes-datalink-theory.html">Data Link</a>
+<a class="secondary link-button" href="./notes-network-theory.html">Network</a>
+<a class="secondary link-button" href="./notes-transport-application.html">Transport/App</a>
+<a class="secondary link-button" href="./notes-paper-checklist.html">Paper Checklist</a>
+        </nav>
+      </header>
+<section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Theory Questions and Answers</h1></section>
+<section class="notes-grid compact">
+<article class="note-card"><span class="pill">Question</span>
+<h2>What are the main tasks of the data link layer?</h2>
+<p>It handles communication over one direct link or broadcast domain: framing, L2 addressing, medium access control, and error detection such as FCS/CRC.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Why is medium access control needed?</h2>
+<p>On shared media, multiple stations can transmit at the same time. MAC rules coordinate access so collisions are avoided, detected, or recovered from.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Compare ALOHA, slotted ALOHA, CSMA, CSMA/CD, and CSMA/CA.</h2>
+<p>ALOHA sends without sensing and relies on retransmission. Slotted ALOHA restricts starts to slots. CSMA senses the channel first. CSMA/CD detects collisions while transmitting and aborts. CSMA/CA tries to avoid collisions with backoff and acknowledgements because wireless collision detection is difficult.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Why classic Ethernet CSMA/CD but WLAN CSMA/CA?</h2>
+<p>A wired Ethernet sender can listen while sending and detect a collision. A WLAN sender cannot reliably hear collisions while transmitting and hidden terminals exist, so WLAN reduces collision probability and uses ACKs.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Define collision domain and broadcast domain.</h2>
+<p>A collision domain is the set of nodes whose simultaneous transmissions can collide. A broadcast domain is the set of nodes receiving an L2 broadcast. Hubs extend collision and broadcast domains. Switches split collision domains but normally keep the broadcast domain. Routers split broadcast domains.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>How does a switch learn and forward?</h2>
+<p>It learns source MAC to ingress port mappings. For a known destination it forwards only to the learned port. For an unknown unicast or broadcast it floods to all other ports.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Why are switches transparent but WLAN APs explicitly addressed?</h2>
+<p>Ethernet hosts send frames directly to the final L2 peer; switches forward without changing source/destination MAC. In WLAN, the AP participates in the wireless frame exchange, so wireless frames include AP-related transmitter/receiver addresses.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Why can WLAN frames contain three MAC addresses?</h2>
+<p>WLAN needs to distinguish wireless receiver/transmitter from the original source/final destination across the distribution system. Ethernet usually needs only destination and source MAC.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>What are the Ethernet frame fields?</h2>
+<p>Destination MAC 6 B, source MAC 6 B, Ethertype/length 2 B, payload usually up to 1500 B, and FCS 4 B. Preamble and inter-frame gap are physical-layer/on-wire overhead, not part of the MAC frame length in typical exam calculations.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>What does Ethernet MTU 1500 B include?</h2>
+<p>It is the maximum L3 packet size in the Ethernet payload. It includes the IP header, transport header, and transport/application data. It excludes Ethernet header and FCS. The usual maximum Ethernet frame is <code>14+1500+4=1518</code> B.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain ARP.</h2>
+<p>ARP maps an IPv4 address in the local L2 network to a MAC address. The request is sent to broadcast MAC ff:ff:ff:ff:ff:ff; the reply is normally unicast back to the requester.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain CRC.</h2>
+<p>The sender treats the bit string as a polynomial, divides by a reduction polynomial, and appends the remainder as checksum. The receiver divides message plus checksum by the same polynomial; a zero remainder indicates no detected error.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Why is CRC not error correction?</h2>
+<p>CRC detects many error patterns but does not identify the exact bit positions to repair. It is primarily error detection, not correction.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Store-and-forward versus cut-through switching?</h2>
+<p>Store-and-forward receives the whole frame and can verify FCS before forwarding. Cut-through begins forwarding once the output port is known, reducing latency but possibly forwarding corrupted frames.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>In mixed hub/switch/AP topologies, how do you pick MAC addresses?</h2>
+<p>For Ethernet over switches, source/destination MAC stay the sender/final L2 receiver inside the broadcast domain. Across WLAN, the AP may be the receiver/transmitter address on the wireless hop. Across routers, the L2 addresses change per hop.</p>
+</article>
+</section>
+<section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Old Exam Questions and Answers</h1></section>
+<section class="section-heading"><p class="eyebrow">Old Exams</p><h1>Old Exam Questions and Answers</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 1</span>
+<p><strong>Question:</strong> Which MAC address is used when sending to a notebook through an AP/switch topology? <strong>Answer:</strong> The L2 destination is the next receiver on that L2 technology; in WLAN the AP may be explicitly addressed, while the final IP destination remains the notebook.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2021, Aufgabe 4</span>
+<p><strong>Question:</strong> Analyze WLAN plus switch/AP forwarding and domains. <strong>Answer:</strong> The switch learns from source MACs and floods unknown destinations; the AP translates between 802.11 and Ethernet; switches split collision domains, routers split broadcast domains.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2022, Aufgabe 2</span>
+<p><strong>Question:</strong> Why does WLAN often use three MAC addresses while Ethernet uses two? <strong>Answer:</strong> The AP is not transparent on the wireless link, so WLAN must encode receiver/transmitter and original source/final destination information.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2022, Aufgabe 3</span>
+<p><strong>Question:</strong> Work with a CRC reduction polynomial. <strong>Answer:</strong> Use polynomial division over <code>GF(2)</code>; irreducibility is not strictly required for CRC, because practical polynomials are chosen for useful error-detection properties.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2023, Aufgabe 3</span>
+<p><strong>Question:</strong> What is CRC used for in Ethernet and how is the checksum computed? <strong>Answer:</strong> CRC detects bit errors in frames; append the polynomial remainder so receiver division yields zero if no error is detected.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2023, Aufgabe 4</span>
+<p><strong>Question:</strong> Predict frame forwarding in a layer-2 topology. <strong>Answer:</strong> Hubs repeat to all ports, switches learn source MACs and flood unknown destinations, then forward known destinations selectively.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2024, Aufgabe 1</span>
+<p><strong>Question:</strong> What does a switch do for unknown destination MAC? <strong>Answer:</strong> It floods the frame to all ports except the ingress port; it does not ARP, wait, or send it back.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2023, Aufgabe 1</span>
+<p><strong>Question:</strong> Count broadcast and collision domains. <strong>Answer:</strong> Each switch port is its own collision domain in full-duplex Ethernet; routers separate broadcast domains; switches alone do not.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2024, Aufgabe 7</span>
+<p><strong>Question:</strong> Mark collision and broadcast domains. <strong>Answer:</strong> Mark shared hub/WLAN regions as collision-related areas, switch ports as separated collision domains, and router-separated regions as different broadcast domains.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2023, Aufgabe 6</span>
+<p><strong>Question:</strong> How large is a maximum Ethernet frame for MTU 1500 B? <strong>Answer:</strong> <code>1500</code> B L3 payload plus 14 B Ethernet header plus 4 B FCS equals 1518 B.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2024, Aufgabe 5</span>
+<p><strong>Question:</strong> Analyze an Ethernet frame without FCS. <strong>Answer:</strong> First 14 B are Ethernet header; remaining bytes begin with the L3 packet selected by Ethertype.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2023, Aufgabe 1</span>
+<p><strong>Question:</strong> Reconstruct Ethernet/IPv4/TCP frame fields. <strong>Answer:</strong> Use current-hop MACs, end-to-end IPs, TCP ports, header lengths, total length, and FCS/checksum information to fill the hexdump.</p>
+</article>
+</section>
+<section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Exam Answer Checklist</h1></section>
+<section class="note-card wide"><span class="pill">Checklist</span><h2>Exam Answer Checklist</h2><ul>
+<li>Unknown unicast on a switch is flooded to all other ports; known unicast is sent only to the learned port.</li>
+<li>Switches break collision domains but normally keep one broadcast domain. Routers break broadcast domains.</li>
+<li>Ethernet MTU 1500 B is the L3 packet in the Ethernet payload; Ethernet header and FCS are extra.</li>
+<li>Ethernet frame without preamble/inter-frame gap: 14 B header + up to 1500 B payload + 4 B FCS = 1518 B.</li>
+<li>ARP request uses broadcast destination MAC; ARP reply usually uses unicast.</li>
+</ul></section>
+    </main>
+    
+  </body>
+</html>

@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Complete Paper Notes</title>
+    <meta name="description" content="GRNVS study notes." />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="notes-shell">
+      <header class="notes-hero">
+        <div>
+          <p class="eyebrow">GRNVS Kurznotizen</p>
+          <h1>Complete Paper Checklist</h1>
+          <p>Paper-by-paper theory prompts and short answer ideas from the added notes.</p>
+        </div>
+        <nav class="note-nav" aria-label="Notes navigation">
+          <a class="secondary link-button" href="./notes.html">Notes Home</a>
+<a class="secondary link-button" href="./index.html">Practice</a>
+<a class="secondary link-button" href="./notes-coding.html">Coding Notes</a>
+<a class="secondary link-button" href="./notes-ipv6.html">IPv6 Notes</a>
+<a class="secondary link-button" href="./notes-layers.html">Layers</a>
+<a class="secondary link-button" href="./notes-physical-theory.html">Physical</a>
+<a class="secondary link-button" href="./notes-datalink-theory.html">Data Link</a>
+<a class="secondary link-button" href="./notes-network-theory.html">Network</a>
+<a class="secondary link-button" href="./notes-transport-application.html">Transport/App</a>
+<a class="secondary link-button" href="./notes-paper-checklist.html">Paper Checklist</a>
+        </nav>
+      </header>
+<section class="section-heading"><p class="eyebrow">Paper Checklist</p><h1>Complete Non-MCQ Paper Notes</h1></section>
+<section class="section-heading sub"><p class="eyebrow">Old Paper</p><h1>Midterm 2020</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 2a</span>
+<p>Shannon versus Hartley capacity. Shannon depends on bandwidth and noise/SNR: <code>C=B_2(1+SNR)</code>. Hartley depends on bandwidth and distinguishable signal levels: <code>C=2B_2(M)</code> in the common baseband formulation.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 2b</span>
+<p>Quantization levels for interval <code>[-3,3]</code> with 2 bit and minimized error. Two bits give 4 levels. For centered quantization bins over width 6, use <code>-2.25,-0.75,0.75,2.25</code>.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 2c</span>
+<p>MLT-3 for bit sequence <code>00010011</code>. In MLT-3, a 0 keeps the current level and a 1 moves to the next level in the cycle <code>0,+1,0,-1,0,...</code>. Starting at 0, only the 1 bits cause transitions.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 2d</span>
+<p>Draw all broadcast domains. Broadcast domains are separated by routers/VLANs. Switches and hubs normally remain in the same broadcast domain.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 2e</span>
+<p>CSMA/CD versus CSMA/CA binary exponential backoff. CSMA/CD backs off after a detected collision. CSMA/CA randomizes access even when the medium appears free, using a contention window, because WLAN cannot reliably detect collisions while transmitting.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 2f</span>
+<p>Why IEEE 802.11 often has three MAC-address fields. The AP is explicit on the wireless link. The frame may need receiver/transmitter plus original source/final destination information.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 2g</span>
+<p>Mark the L3 PDU inside an Ethernet frame. The Ethernet L2 payload/SDU is the L3 PDU. It starts after destination MAC, source MAC, and Ethertype, and ends before the FCS.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 2h</span>
+<p>Assign frame, packet, and segment to OSI layers. Frame is L2, packet is L3, segment is L4.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 2i</span>
+<p>Give signal-space assignments for ASK, PSK, and QAM. ASK varies amplitude on one axis. PSK uses equal-radius phase points. QAM varies amplitude and phase, giving points with multiple radii and phases.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 2j</span>
+<p>IPv4 fields changed by a forwarding router without fragmentation. TTL is decremented and IPv4 header checksum is recomputed. With fragmentation, Total Length, flags, and Fragment Offset may also change.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 3a-d</span>
+<p>IPoAC/physical transport calculations. An 8 GiB carrier holds <code>2^36</code> bit. Serialization over 256 s gives <code>2^28</code> bit/s, above 100 Mbit/s. Propagation over 50 km at 120 km/h is 1500 s. A 50 GiB archive needs 7 carriers, so delay is <code>7256+1500=3292</code> s.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 4a-c</span>
+<p>Encode <code>QRV?</code>, split into frames, and compute coding ratio. Since the text is not digits only, use 8-bit ASCII. <code>QRV?</code> is 32 payload bits. With 12 payload bits per 16-bit packet, 3 packets are required, so useful/transmitted ratio is <code>32/48=2/3</code>.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 4d-e</span>
+<p>CRC failure types and checksum. CRC misses errors that are multiples of the reduction polynomial; burst errors longer than the guaranteed degree are not always detected. For SDU <code>0x515</code> with <code>x^4+x^2+1</code>, checksum is <code>0101</code>.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 4f-j</span>
+<p>Transmission duration, message graph, and repeater media-access issue. 840 ASCII chars need <code>8408/12=560</code> packets; at 16 bit each and 512 bit/s, duration is 17.5 s. Senders to pagers form a directed graph. A same-frequency repeater introduces possible collisions; use time multiplexing or another frequency. description</p>
+</article>
+</section>
+<section class="section-heading sub"><p class="eyebrow">Old Paper</p><h1>Midterm 2021</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Midterm 2021, Aufgabe 2a-f</span>
+<p>GRNVS of the Air frame, CRC, Manchester, and 4-ASK. ASCII <code>toot</code> is <code>01110100 01101111 01101111 01110100</code>. With 6 payload bits per frame, 6 frames are needed. CRC uses the given polynomial and appends the padded remainder. Manchester provides clock transitions; 4-ASK has four amplitude levels and carries 2 bit per symbol.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2021, Aufgabe 3a-e</span>
+<p>Audio channel capacity and coding. A 16-bit DAC has <code>2^16=65536</code> levels. Hartley capacity uses <code>B=16000-70=15930</code> Hz and <code>M=2^16</code>, giving about 509.76 kbit/s without noise. If signal power is twice noise power, <code>SNR=3.01</code> dB and Shannon capacity is about 25.25 kbit/s. A code rate reduces useful data rate by the useful/transmitted ratio.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2021, Aufgabe 4a-b</span>
+<p>Mark broadcast and collision domains. One L2 LAN without routers is one broadcast domain. Collision domains are separated by switch ports; WLAN clients associated to the same AP share the wireless medium in the simplified exam model.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2021, Aufgabe 4c-d</span>
+<p>Is the AP transparent? For notebooks, no: the AP is addressed on WLAN. For wired PCs, yes in the simplified Ethernet view: the AP forwards frames to associated WLAN stations.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2021, Aufgabe 4e</span>
+<p>Why 802.3 has two addresses but 802.11 can have up to four. Ethernet identifies transmitter/source and receiver/destination without L2 relay ambiguity. WLAN may need transmitter, receiver, original source, and final destination across an AP or distribution system.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2021, Aufgabe 4f-i</span>
+<p>Address fields for NB1, AP, PC1, and NB2 reception. NB1 to AP uses TA=SA=NB1, RA=AP, DA=PC1. AP to PC1 on Ethernet uses TA/SA=NB1 and RA/DA=PC1 in the simplified answer. Other wireless clients may physically hear but discard frames not addressed to them.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2021, Aufgabe 4j</span>
+<p>Empty switch table forwarding. If PC2 sends to NB2 and the switch has not learned NB2, it floods to all ports except the ingress port. description</p>
+</article>
+</section>
+<section class="section-heading sub"><p class="eyebrow">Old Paper</p><h1>Midterm 2022</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Midterm 2022, Aufgabe 2a-e</span>
+<p>Short theory: WLAN addresses, CSMA, hub/switch, source coding, channel coding. WLAN often needs three MAC addresses because APs are not transparent to WLAN stations. CSMA/CA uses avoidance/backoff and L2 ACKs; CSMA/CD detects collisions while sending. Hubs repeat to all ports; switches learn and forward selectively. Source coding removes redundancy; channel coding adds redundancy for error detection/correction.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2022, Aufgabe 3a-f</span>
+<p>CRC theory. A reducible CRC polynomial can still be useful. CRC does not require a field; it requires useful error-detection properties. Ethernet receivers discard frames with detected bit errors. Undetected errors are exactly those divisible by the reduction polynomial.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2022, Aufgabe 3c-e</span>
+<p>CRC calculation and bit error. For <code>r(x)=x^4+x^2</code>, compute the remainder over <code>GF(2)</code> by XOR division and append it. A single-bit error <code>e(x)=x^11</code> is detected in the given solution because the received polynomial has nonzero remainder.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2022, Aufgabe 4a-l</span>
+<p>Krönende Übertragung delay comparison. Split 6 h into six 1 h parts. One film part at 3000 kbit/s is 1.35 GB; total is 8.1 GB. Physical transport of one finished part takes about 10.9 h after filming. First arrival from ceremony start is about 11.9 h; last about 16.9 h. For digital streaming, payload per 1518 B frame is <code>1518-46=1472</code> B, serialization at 200 Mbit/s is 60.72 microseconds, propagation over 5200 km fiber is about 26 ms, so live-stream latency is roughly one packet delay instead of many hours. description</p>
+</article>
+</section>
+<section class="section-heading sub"><p class="eyebrow">Old Paper</p><h1>Midterm 2023</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Midterm 2023, Aufgabe 2a-e</span>
+<p>WLAN/CSMA/hub/source-channel coding short answers. Same recurring theory as Midterm 2022: APs are explicit on WLAN, CSMA/CA avoids while CSMA/CD detects, switches learn while hubs repeat, source coding compresses, channel coding protects.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2023, Aufgabe 3a-f</span>
+<p>CRC with <code>r(x)=x^4+x^2</code>. Show reducibility by factoring <code>x^4+x^2=x^2(x^2+1)=x^2(x+1)^2</code>. A non-irreducible polynomial may be chosen because CRC cares about which error patterns are detected, not field construction. Undetected errors are multiples of <code>r(x)</code>.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2023, Aufgabe 4a-k</span>
+<p>Data-link topology. MAC addresses address nodes on a direct L2 network. A hub repeats frames to all other ports; a switch learns source MACs and forwards known destinations selectively. A host discards frames not addressed to it. A normal switch does not need a MAC address for forwarding. If a destination is unknown, the switch floods; after replies it learns additional table entries. Hubs create sniffing risk because other connected hosts can observe traffic. description</p>
+</article>
+</section>
+<section class="section-heading sub"><p class="eyebrow">Old Paper</p><h1>Endterm 2022</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Endterm 2022, Aufgabe 2a-e</span>
+<p>Short theory items from Aufgabe 2. Multiplexing methods include TDM, FDM, SDM, and CDM. An empty switch learns the source MAC and floods unknown destinations. DNS is application layer. Fourier spectrum drawing maps discrete harmonics back to a periodic time signal.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2022, Aufgabe 3a-d</span>
+<p>TCP data transfer. MSS over Ethernet/IPv4 with TCP MSS option is <code>1500-20-20-4=1456</code> B. A receive buffer for 7 full segments is <code>71456=10192</code> B. TCP handshake is SYN, SYN-ACK, ACK; SYN consumes one sequence number. The first client data segment carries the 980 B HTTP request; server full segments carry 1456 B.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2022, Aufgabe 4a-h</span>
+<p>Residential IPv4 network. Assign IPs according to prefixes; clients use low addresses and routers high/transport addresses as specified. With empty ARP cache, the ICMP Echo cannot be sent until the next-hop MAC is known. ARP Request uses broadcast destination MAC. Without routing entries, routers drop and may send ICMP Destination Unreachable. ARP is needed once per unknown next-hop L2 destination. TTL decreases per router; MAC addresses change per hop; IP source/destination stay end-to-end. Prefix sizing must leave enough host addresses.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2022, Aufgabe 5a-k</span>
+<p>Ethernet/IPv4/TCP/SMTP hexdump. L2 source and destination are the first two MAC fields. Ethertype <code>0x0800</code> means IPv4. IPv4 source is 131.159.20.214 and destination is 131.159.0.78. Protocol <code>0x06</code> means TCP. L4 starts after Ethernet 14 B plus IPv4 IHL 20 B. Destination port 25 suggests SMTP, used for mail exchange between MTAs. L7 starts after the TCP header; <code>45 48 4c 4f</code> is ASCII <code>EHLO</code>.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2022, Aufgabe 6b-f</span>
+<p>Socket programming theory. <code>bind()</code> associates a socket with local IP/port. <code>listen()</code> on UDP is meaningless and fails because UDP is connectionless. A TCP server communicating with one client uses a listening socket and a connected socket. UDP <code>connect()</code> sets a default peer/filter, not a TCP-style connection. <code>select()</code> waits for readiness in FD sets and returns ready descriptors or an error/timeout.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2022, Aufgabe 7a-g</span>
+<p>JWST physical/link calculations and modulation theory. Average travel speed is about 560 m/s. 68 GB storage at 235 Gbit/day lasts about 2.31 days. Four hours at 28 Mbit/s gives 50.40 GB/day. 4-PSK has four equal-radius phase points. Hartley gives 7 MHz for 28 Mbit/s with <code>M=4</code>; Shannon with <code>-20</code> dB SNR gives about 1.95 GHz, which is the limiting bandwidth because noise is decisive. description</p>
+</article>
+</section>
+<section class="section-heading sub"><p class="eyebrow">Old Paper</p><h1>Endterm 2023</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Endterm 2023, Aufgabe 1a-l</span>
+<p>Reconstruct IPv4/TCP frame. Current-hop MAC addresses come from the shown R1-to-PC link; Ethertype selects IPv4; IPv4 version/IHL is <code>0x45</code>; source/destination IPs are the end hosts; Protocol <code>0x06</code> selects TCP; TCP ports identify SSH/server-client roles; TCP offset locates L7; payload bytes are copied as given; FCS/checksum bytes go at the frame end.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2023, Aufgabe 2a-h</span>
+<p>IP routing testbed. DHCP can reuse previous leases only for the actually connected MAC; stale leases for other interfaces do not apply. Direct test links should use private non-overlapping subnets. S2 route table contains connected routes for both test subnets and management net plus default route via 10.1.176.1. Same-host communication can use <code>127.0.0.1</code>; a concrete process is addressed by IP address plus transport port. SLAAC creates IPv6 addresses from prefix plus interface identifier; privacy issue is stable interface identifiers tracking devices. Expanding an exhausted /20 requires a shorter prefix covering the old range.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2023, Aufgabe 5a-e</span>
+<p>Fourier analysis. A periodic repetition uses Fourier series. <code>=2/T</code>, and for <code>T=2</code>, <code>=</code>. The DC coefficient follows <code>a_0=(2/T)_T s(t)dt</code>; with <code>g(t)=1-t^2</code> on <code>[-1,1]</code>, <code>a_0=4/3</code>. The spectrum consists of discrete coefficients at harmonics.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2023, Aufgabe 6c-j</span>
+<p>4B5B, line coding, MLT-3, and entropy. Encode characters as 8-bit ASCII, then map 4-bit nibbles to 5-bit 4B5B code words. 4B5B is a line code because it prepares bit patterns for physical transmission and clock recovery, not error correction. Extra symbols serve control/framing. MLT-3 changes level only on 1 bits. Entropy is <code>H(X)=- p_i_2p_i</code>. description</p>
+</article>
+</section>
+<section class="section-heading sub"><p class="eyebrow">Old Paper</p><h1>Endterm 2024</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Endterm 2024, Aufgabe 2a-j</span>
+<p>Coding-chain task. Build Huffman tree from probabilities; most likely symbols get shortest code words. Name the transmission-chain steps: source coding/compression, channel coding/error protection, line coding/modulation as appropriate. The ground pulse/DC part is computed by integration over one symbol interval. QAM is identified by multiple amplitude and phase states. CRC validation divides received codeword by generator; zero remainder means no detected error. Entropy with checksum overhead counts source distribution and transmitted redundancy.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2024, Aufgabe 3a-f</span>
+<p>Transport symptoms, deployment, and routing. Out-of-order chat messages suggest UDP; TCP would deliver ordered byte stream. Global service should support IPv6 and often IPv4 for reachability; IPv4 behind NAT may need port forwarding for inbound connections, IPv6 global unicast usually does not need NAT. Longest-prefix matching determines the packet path; adjacent route entries can be aggregated only if they form a valid aligned prefix.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2024, Aufgabe 4a-l</span>
+<p>IPv6/TCP hexdump. Mark L2 source/destination first. Ethertype <code>0x86dd</code> means IPv6. IPv6 source may be SLAAC-derived if it embeds an interface identifier. Next Header <code>0x06</code> means TCP. L4 starts at Ethernet 14 B plus IPv6 base header 40 B. L7 protocol follows from TCP port. TCP data offset locates L7. ASCII payload must be decoded and its server-side effect explained.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2024, Aufgabe 5a-k</span>
+<p>HTTP/TCP/IPv6 video transfer and congestion/flow control. HTTP <code>GET</code> loads the video. Responses may include fields such as Content-Type, Date, Server, ETag, or Cache-Control. MSS over IPv6/Ethernet without extensions/options is <code>1500-40-20=1440</code> B. Complete the TCP handshake with SYN/SYN-ACK/ACK. Number server segments by content length divided by MSS. Congestion control reacts to loss by reducing <code>cwnd</code>; flow control protects a weak receiver by advertising a smaller receive window. description</p>
+</article>
+</section>
+<section class="section-heading sub"><p class="eyebrow">Old Paper</p><h1>Endterm 2025</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Endterm 2025, Aufgabe 2a-i</span>
+<p>IPv6 residential network and NDP. Assign link-local and global unicast addresses from the given prefixes/interface IDs. SLAAC privacy issue: stable MAC-derived identifiers allow tracking. Shorten IPv6 by removing leading zeroes and one longest zero run. Neighbor Solicitation is ICMPv6 and is sent to a solicited-node multicast address; the matching Ethernet multicast begins with <code>33:33</code>. Duplicate Address Detection uses the same NS/NA mechanism before using an address. Default routing points off-link traffic to the gateway.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2025, Aufgabe 3a-l</span>
+<p>IPv4/ICMP hexdump and FCS. L2 source/destination and FCS are marked in the Ethernet frame. FCS detects frame corruption; receivers discard bad frames. Ethertype <code>0x0800</code> means IPv4; Protocol <code>0x01</code> means ICMP. TTL/Hop Limit is read from L3. ICMP Echo Request/Reply supports ping; NDP-related ICMPv6 traffic is different. The reply swaps ICMP type and relevant addresses while using the current-hop MACs.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2025, Aufgabe 4a-h</span>
+<p>DNS zone and resolution. Add A and AAAA records for nameserver reachability. Delegate a child zone with NS records and glue if the nameserver is inside the delegated zone. MX records route mail. To find a mail server IP, resolve MX first, then A/AAAA for the returned exchange name. Draw recursive query from PC to resolver and iterative resolver queries to root/TLD/authoritative servers; final returned records are those answering the original name/type.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2025, Aufgabe 5a-e</span>
+<p>TCP plus TLS. TLS is above TCP and below application protocols; OSI mapping is often session/presentation because it provides authentication, key agreement, encryption, and integrity. TCP handshake consumes one RTT before TLS messages. Empty TCP payload segments after handshake are often ACKs. Reliability comes from TCP sequence numbers, ACKs, retransmission; confidentiality and integrity come from TLS cryptography and authenticated records.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2025, Aufgabe 6a-h</span>
+<p>Reverse modulation, coding rate, and framing. Identify the modulation from the signal-space constellation. Decode symbols to bits, then undo line/channel coding according to the given mapping. Coderate is useful input bits divided by transmitted coded bits. Effective data rate multiplies symbol rate, bits per symbol, and coderate. Transmission time is payload plus overhead divided by effective rate. Alternatives to explicit control characters include length fields, escape/byte stuffing, bit stuffing, or out-of-band framing. description</p>
+</article>
+</section>
+<section class="section-heading sub"><p class="eyebrow">Old Paper</p><h1>Retake 2022</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Retake 2022, Aufgabe 2a-d</span>
+<p>PTR, invalid subnet, aggregation, IPv6 shortening. IPv4 PTR for 203.0.113.4 is the reversed-octet name under <code>in-addr.arpa</code>: <code>4.113.0.203.</code> followed by that suffix. A network address must have all host bits zero; <code>192.168.240.15/20</code> is not a valid subnet address. Aggregation requires adjacent aligned prefixes. IPv6 shortening removes leading zeroes and compresses one longest zero run.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2022, Aufgabe 3a-h</span>
+<p>Sendeimpuls and spectrum. Name the common pulse shape from the graph, decide Fourier transform versus series by periodicity, give an analytic time-domain expression, and use magnitude spectrum when phase/sign is less relevant or the plotted spectrum is symmetric. Compute the transform by applying known pulse-transform pairs and simplification.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2022, Aufgabe 4a-j</span>
+<p>Clacks/message switching. Bits per symbol are <code>_2(M)</code>. Equal symbols have information content <code>_2(M)</code>. Data rate is symbol rate times bits per symbol. Packet switching splits messages into packets; it lowers latency for long messages and enables multiplexing compared with message/circuit switching.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2022, Aufgabe 5a-d</span>
+<p>DNS zonefile. Use A/AAAA for webserver addresses, CNAME for service aliases such as calendar/contacts, MX for outsourced mail, and TXT for ownership verification.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2022, Aufgabe 6a-k</span>
+<p>IPv4 NAT home network. Hosts can get addresses statically or with DHCP; IPv6 can also use SLAAC. NAT is needed for private IPv4 Internet access and saves public addresses. NAT table capacity is bounded by available transport ports per public address. HTTP likely uses TCP port 80 and GET. ICMP errors or unreachable hosts must be handled. Hosting an internal server needs port forwarding or a relay/reverse tunnel.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2022, Aufgabe 7a-g</span>
+<p>TCP Reno. Congestion control avoids overloading the network by sender-side <code>cwnd</code>. Flow control avoids overloading the receiver by receiver-advertised window. Loss causes window reduction; slow start grows exponentially, congestion avoidance linearly. Effective rate is average window per RTT. TCP suffers badly when lower layers lose many packets because it interprets loss as congestion. description</p>
+</article>
+</section>
+<section class="section-heading sub"><p class="eyebrow">Old Paper</p><h1>Retake 2023</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Retake 2023, Aufgabe 2a-l</span>
+<p>IPv6/TCP hexdump. Mark Ethernet addresses, identify IPv6 by Ethertype, read source and destination IPv6 addresses, infer SLAAC if the address contains an interface identifier, identify TCP by Next Header, locate L4 at byte 54, infer L7 from port, compute L7 length from payload length minus TCP header length, and map visible MAC/IP addresses to topology devices.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2023, Aufgabe 3a-b</span>
+<p>DNS resolution critique and AAAA. Typical errors: asking authoritative servers recursively, skipping root/TLD referrals, confusing NS names with their addresses, missing glue where needed, or querying the wrong RR type. For AAAA, return the IPv6 address associated with the queried name and type.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2023, Aufgabe 4a-e</span>
+<p>Fourier periodic signal. Draw the periodic signal, compute <code>=2/T</code>, justify Fourier series because the signal is periodic, compute <code>a_0</code> by integrating one period, then compute nonzero coefficients using symmetry and integrals.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2023, Aufgabe 5b-h</span>
+<p>HTTP before request, ARP, TCP/TLS handshakes, and ICMP. Before sending to a server, the host needs a next-hop MAC, learned via ARP for IPv4. First frame to discover it is broadcast. TCP and possibly TLS handshakes occur before HTTP data. Header fields use current-hop MACs and end-to-end IPs. ICMP Fragmentation Needed means the packet exceeded path MTU with DF set; reduce packet size/MSS.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2023, Aufgabe 6a-d</span>
+<p>Maximum Ethernet frame, latency, frame count, transfer completion. Maximum standard Ethernet frame is 1518 B including header and FCS, with 1500 B MTU payload. Total latency is serialization plus propagation and any stated processing. Number of frames is ceiling(file size / payload per frame). Completion time adds serialization of all frames and propagation of the last frame. description</p>
+</article>
+</section>
+<section class="section-heading sub"><p class="eyebrow">Old Paper</p><h1>Retake 2024</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Retake 2024, Aufgabe 2d-e</span>
+<p>Physical-layer statement justification and hidden calculation. Justify choices using the named formulas: serialization <code>L/R</code>, propagation <code>d/v</code>, Shannon <code>B_2(1+SNR)</code>, Hartley <code>2B_2M</code>, coding rate useful/transmitted, and modulation bits per symbol <code>_2M</code>.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2024, Aufgabe 3a-c</span>
+<p>MAC/IP fields, TTL, route aggregation. Across routers, MAC addresses are per-hop while IP addresses identify end-to-end endpoints unless NAT changes them. TTL 4 reaches only if hop count is at most 4 after decrements. <code>10.222.15.128/26</code> and <code>10.222.15.192/26</code> aggregate to <code>10.222.15.128/25</code>.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2024, Aufgabe 4a-g</span>
+<p>Satellite reliability, propagation, serialization, and satellite count. Packet success probability is <code>(1-p)^bits</code>. Decide whether 99 satellites is sensible from resulting success/failure probability and stated goal. Mark serialization, propagation, processing, and queuing at the correct places in a time diagram. Propagation is path length over signal speed; serialization is total transmitted bits over bitrate.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2024, Aufgabe 5a-l</span>
+<p>IPv4/TCP/HTTP hexdump. Same hexdump recipe: L2 fields, Ethertype, IPv4 addresses, likely address assignment mechanism, TCP via Protocol 6, TCP header length via data offset, L7 protocol via port, L7 start offset, ASCII command decoding, and explain the application protocol's purpose.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2024, Aufgabe 6a-h</span>
+<p>DNS resolution and zonefile. Draw recursive stub-to-resolver and iterative resolver-to-root/TLD/authoritative exchanges. Mark which components answer recursively or iteratively. Glue records let a resolver contact an in-bailiwick nameserver without separately resolving it first. Zonefile entries: NS for secondary nameserver, A for primary nameserver, A/AAAA for web, MX for mail, CNAME for shop alias.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2024, Aufgabe 7a-f</span>
+<p>IPv6 multicast, multiplexing, domains, TCP header, socket order. Solicited-node multicast uses the last 24 bits: <code>ff02::1:ffXX:XXXX</code>; Ethernet MAC is <code>33:33:ff:XX:XX:XX</code>. Multiplexing methods: TDM, FDM, SDM, CDM. Collision/broadcast domains follow hub/switch/router rules. A client HTTPS TCP header should have destination port 443, correct data offset/flags/window/checksum fields. TCP server call order: <code>socket, bind, listen, accept, read, close</code>; client: <code>socket, connect, write, close</code>. description</p>
+</article>
+</section>
+<section class="section-heading sub"><p class="eyebrow">Old Paper</p><h1>Retake 2025</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Retake 2025, Aufgabe 2a-k</span>
+<p>Radio channel, Shannon, coding, bit stuffing. More than three attempts means first three fail: <code>0.4^3=6.4%</code>. 876--880 MHz with 200 kHz channels gives 20 channels. SNR from 2 W/180 mW is about 10.46 dB. Shannon capacity with 200 kHz is about 719.65 kbit/s. 16-QAM carries 4 bit/symbol. Code rate <code>7/8</code> means 56 useful bits in a 64-bit codeword. Bit stuffing is used so reserved bit patterns/control delimiters do not appear accidentally in payload and to preserve synchronization.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2025, Aufgabe 3a-i</span>
+<p>RARP frame and modern replacement. RARP uses ARP-like payload with Ethertype <code>0x8035</code>. Request uses L2 broadcast destination and opcode 3; reply uses opcode 4. Padding is needed to reach minimum Ethernet frame size. The reply Ethernet header goes from R1 MAC to PC1 MAC with RARP Ethertype. Payload contains sender hardware/protocol address of R1 and target hardware/protocol address of PC1. RARP is obsolete; DHCP is the typical modern mechanism. A server not addressed by L2 will not receive the unicast reply.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2025, Aufgabe 4a-e</span>
+<p>DNS names, reverse DNS, SOA serial, and LLM critique. FQDN parts: labels, subdomain, second-level domain, TLD, and root. IPv6 reverse DNS reverses every hex nibble under <code>ip6.arpa</code>; the delegated /48 part is the reversed prefix portion. PTR maps the reverse name to the forward FQDN. After zone changes, increment SOA serial. Common LLM mistakes: reversing bytes/groups instead of nibbles for IPv6 reverse DNS, using A/AAAA instead of PTR, missing delegation boundary, or failing to use fully qualified names.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2025, Aufgabe 5a-h</span>
+<p>IPv4, UDP, NAT hole punching. NAT conserves public IPv4 addresses by mapping many private hosts through one public address. For 64 hosts choose at least 66 addresses, so /25. PC uses default route to R1; R1 has connected routes plus default route to ISP. PC1 needs R2 public IP because PC2 private IP is not globally routable. NAT table maps local <code>10.2.0.2:1234</code> to the chosen global port. Incoming packets are accepted only if they match NAT state; if PC1 sends before PC2 creates state, the packet is likely dropped.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2025, Aufgabe 6a-i</span>
+<p>TCP congestion and socket API. Congestion control protects the network; the sender adjusts <code>cwnd</code>. Flow control protects the receiver; the receiver advertises a window. Slow start grows exponentially, 3 duplicate ACKs usually indicate one lost segment, and Reno halves window/sets threshold before linear growth. Timeout may be caused by severe loss or no ACK arriving before RTO. A TCP server for incoming clients uses <code>socket()</code>, <code>bind()</code>, <code>listen()</code>, then <code>accept()</code> for each connection. description</p>
+</article>
+</section>
+    </main>
+    
+  </body>
+</html>
