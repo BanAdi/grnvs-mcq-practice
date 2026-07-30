@@ -587,6 +587,10 @@ h3 {
   font-size: 14px;
 }
 
+.compact-table {
+  min-width: 560px;
+}
+
 .notes-table tr:last-child td {
   border-bottom: 0;
 }

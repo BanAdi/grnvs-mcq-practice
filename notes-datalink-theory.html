@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Data Link Layer: MAC, Frames, Switching, and Error Detection</title>
     <meta name="description" content="GRNVS study notes." />
-    <link rel="stylesheet" href="./styles.css?v=11" />
+    <link rel="stylesheet" href="./styles.css?v=14" />
   </head>
   <body>
     <main class="notes-shell">
@@ -62,10 +62,45 @@
 <ul class="answer-list">
 <li><strong>Collision domain:</strong> nodes whose simultaneous transmissions can collide.</li>
 <li><strong>Broadcast domain:</strong> nodes receiving an L2 broadcast.</li>
-<li><strong>Hub:</strong> extends collision and broadcast domains.</li>
-<li><strong>Switch:</strong> splits collision domains, normally keeps the broadcast domain.</li>
-<li><strong>Router:</strong> splits broadcast domains.</li>
 </ul>
+<div class="table-wrap">
+<table class="notes-table compact-table">
+<thead>
+<tr>
+<th>Device</th>
+<th>Collision Domain</th>
+<th>Broadcast Domain</th>
+<th>Exam Memory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hub</strong></td>
+<td>One shared collision domain</td>
+<td>One shared broadcast domain</td>
+<td>Repeats bits to all ports; collisions can happen.</td>
+</tr>
+<tr>
+<td><strong>Switch</strong></td>
+<td>Splits collision domains, usually one per port</td>
+<td>Normally keeps one broadcast domain</td>
+<td>Forwards by MAC table; broadcasts are still flooded.</td>
+</tr>
+<tr>
+<td><strong>Access Point as L2 bridge</strong></td>
+<td>WLAN side is one shared collision/contention domain; each Ethernet cable/link is its own collision domain.</td>
+<td>Same broadcast domain as the connected LAN; forwards L2 broadcasts between Wi-Fi and wired LAN.</td>
+<td>Acts like a bridge for L2 broadcasts, but Wi-Fi airtime is still shared.</td>
+</tr>
+<tr>
+<td><strong>Router</strong></td>
+<td>Separates L2 links</td>
+<td>Splits broadcast domains</td>
+<td>Broadcasts do not cross routers by default.</td>
+</tr>
+</tbody>
+</table>
+</div>
 </article>
 <article class="note-card"><span class="pill">Question</span>
 <h2>How does a switch learn and forward?</h2>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Transport and Application Topics Appearing in Old Exams</title>
     <meta name="description" content="GRNVS study notes." />
-    <link rel="stylesheet" href="./styles.css?v=11" />
+    <link rel="stylesheet" href="./styles.css?v=14" />
   </head>
   <body>
     <main class="notes-shell">
@@ -94,6 +94,99 @@
 <li>Incoming packets can then match existing NAT state.</li>
 </ol>
 </article>
+</section>
+<section class="section-heading"><p class="eyebrow">Important Read</p><h1>Sockets / POSIX API</h1></section>
+<section class="note-card wide">
+<span class="pill">Sockets</span>
+<h2>Function Roles</h2>
+<pre class="note-code">socket(domain, type, protocol)
+creates socket
+domain: AF_INET / AF_INET6
+type: SOCK_STREAM = TCP, SOCK_DGRAM = UDP
+protocol usually 0 = choose default
+
+bind(sockfd, addr, addrlen)
+assigns local IP + local port to socket
+server usually binds
+client may bind, but often OS chooses ephemeral port
+
+listen(sockfd, backlog)
+marks TCP socket as passive/listening
+only for TCP server after bind
+
+accept(sockfd, addr, addrlen)
+blocks until incoming TCP connection
+returns NEW connected socket
+original listening socket stays open
+
+connect(sockfd, addr, addrlen)
+TCP: starts connection to remote IP/port
+UDP: sets default peer, no handshake
+
+send()/recv()
+send/receive on connected socket
+
+sendto()/recvfrom()
+send/receive with explicit address
+typical for UDP
+
+close(sockfd)
+closes socket / TCP connection teardown
+
+select()
+waits until one or more sockets are ready
+can monitor multiple sockets
+may block until event or timeout</pre>
+</section>
+<section class="notes-grid compact">
+<article class="note-card">
+<span class="pill">Order</span>
+<h2>TCP Server</h2>
+<pre class="note-code">socket()
+bind()
+listen()
+accept()
+recv()/send()
+close()</pre>
+</article>
+<article class="note-card">
+<span class="pill">Order</span>
+<h2>TCP Client</h2>
+<pre class="note-code">socket()
+connect()
+send()/recv()
+close()</pre>
+</article>
+<article class="note-card">
+<span class="pill">Order</span>
+<h2>UDP Server</h2>
+<pre class="note-code">socket()
+bind()
+recvfrom()/sendto()
+close()</pre>
+</article>
+<article class="note-card">
+<span class="pill">Order</span>
+<h2>UDP Client</h2>
+<pre class="note-code">socket()
+sendto()/recvfrom()
+close()</pre>
+</article>
+</section>
+<section class="note-card wide">
+<span class="pill">Common Exam Traps</span>
+<h2>Socket API Traps</h2>
+<ul class="answer-list">
+<li><code>listen()</code> does <strong>not</strong> accept a connection.</li>
+<li><code>accept()</code> returns a <strong>new</strong> connected socket.</li>
+<li><code>bind()</code> does <strong>not</strong> connect to a remote host.</li>
+<li><code>connect()</code> on TCP triggers the handshake.</li>
+<li><code>socket()</code> chooses protocol family/type, not local port.</li>
+<li><code>select()</code> does not send data; it waits for readiness.</li>
+<li>UDP has no <code>listen()</code> or <code>accept()</code>.</li>
+</ul>
+</section>
+<section class="notes-grid compact">
 <article class="note-card"><span class="pill">Question</span>
 <h2>Recursive versus iterative DNS?</h2>
 <p>In a recursive query, the resolver is asked to obtain the final answer. In an iterative query, a server returns the best information it has, often a referral to another nameserver.</p>
