@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Transport and Application Topics Appearing in Old Exams</title>
     <meta name="description" content="GRNVS study notes." />
-    <link rel="stylesheet" href="./styles.css?v=7" />
+    <link rel="stylesheet" href="./styles.css?v=11" />
   </head>
   <body>
     <main class="notes-shell">
@@ -135,6 +135,97 @@
 <h2>Where does TLS fit and what do X.509 certificates prove?</h2>
 <p>TLS sits above TCP and below applications like HTTP; in OSI terms it provides session/presentation functions such as authentication, key agreement, encryption, and integrity. X.509 validation checks the certificate chain to a trusted root and that the requested domain is covered by the certificate.</p>
 </article>
+</section>
+<section class="section-heading"><p class="eyebrow">Important Read</p><h1>Reliability and Security Properties</h1></section>
+<section class="note-card wide">
+<span class="pill">Exam Nuance</span>
+<h2>TCP/UDP Checksums Are Not Security Integrity</h2>
+<p>Use this in the exam by first naming the goal, then saying <strong>which mechanism provides it</strong>. Example: TCP provides reliability through sequence numbers, ACKs, retransmissions, and ordered delivery. TLS provides confidentiality, integrity, and authenticity through cryptographic protection and certificates.</p>
+<div class="table-wrap">
+<table class="notes-table">
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Reliability</th>
+<th>Confidentiality</th>
+<th>Integrity</th>
+<th>Authenticity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TCP</strong></td>
+<td><strong>Yes.</strong> Sequence numbers, ACKs, retransmissions, and ordered delivery repair lost or reordered data.</td>
+<td><strong>No.</strong> TCP does not encrypt payload.</td>
+<td><strong>No, for security.</strong> TCP checksum only detects accidental errors, not malicious manipulation.</td>
+<td><strong>No.</strong> TCP does not prove who the peer is.</td>
+</tr>
+<tr>
+<td><strong>UDP</strong></td>
+<td><strong>No.</strong> No ACKs, retransmissions, ordering, or connection state.</td>
+<td><strong>No.</strong> UDP payload is not encrypted.</td>
+<td><strong>No, for security.</strong> UDP checksum only detects accidental corruption.</td>
+<td><strong>No.</strong> UDP does not authenticate sender identity.</td>
+</tr>
+<tr>
+<td><strong>TLS</strong></td>
+<td><strong>No by itself.</strong> TLS relies on TCP or QUIC underneath for delivery.</td>
+<td><strong>Yes.</strong> TLS encrypts application data.</td>
+<td><strong>Yes.</strong> TLS detects tampering cryptographically.</td>
+<td><strong>Yes.</strong> TLS uses certificates, usually X.509, to authenticate the server.</td>
+</tr>
+<tr>
+<td><strong>HTTP</strong></td>
+<td><strong>Only via lower layer.</strong> HTTP itself has no reliability; usually TCP below it provides reliable byte delivery.</td>
+<td><strong>No.</strong> Plain HTTP is readable on the network.</td>
+<td><strong>No.</strong> Plain HTTP can be modified by an attacker on path.</td>
+<td><strong>No.</strong> Plain HTTP does not cryptographically prove server identity.</td>
+</tr>
+<tr>
+<td><strong>HTTPS</strong></td>
+<td><strong>Yes.</strong> Reliability comes from TCP or QUIC underneath.</td>
+<td><strong>Yes.</strong> TLS encrypts HTTP data.</td>
+<td><strong>Yes.</strong> TLS detects manipulation using cryptographic integrity protection.</td>
+<td><strong>Yes.</strong> TLS certificates authenticate the server; sometimes client certificates are also used.</td>
+</tr>
+<tr>
+<td><strong>QUIC</strong></td>
+<td><strong>Yes.</strong> ACKs, retransmissions, streams, and ordering per stream.</td>
+<td><strong>Yes.</strong> QUIC includes TLS 1.3 security.</td>
+<td><strong>Yes.</strong> Cryptographic integrity via TLS/QUIC.</td>
+<td><strong>Yes.</strong> TLS certificate authentication.</td>
+</tr>
+<tr>
+<td><strong>IPsec</strong></td>
+<td><strong>No, not normally.</strong> IPsec secures IP packets, but does not itself retransmit lost packets or guarantee ordering.</td>
+<td><strong>Yes.</strong> ESP can encrypt IP payloads.</td>
+<td><strong>Yes.</strong> IPsec can cryptographically protect packets against modification.</td>
+<td><strong>Yes.</strong> Peers are authenticated using keys, certificates, or security associations.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul class="answer-list">
+<li><strong>TCP provides reliability, but not security.</strong></li>
+<li><strong>TLS, QUIC, HTTPS, and IPsec provide security properties.</strong></li>
+<li><strong>UDP and plain HTTP alone provide almost none of these security guarantees.</strong></li>
+</ul>
+<div class="transition-list">
+<strong>Useful combinations:</strong>
+<ul class="answer-list compact-list">
+<li><strong>HTTP + TCP:</strong> reliable, not secure.</li>
+<li><strong>HTTP + TLS + TCP:</strong> HTTPS, reliable and secure.</li>
+<li><strong>HTTP + QUIC + UDP:</strong> HTTP/3, reliable and secure.</li>
+<li><strong>TCP + TLS:</strong> secure reliable channel.</li>
+<li><strong>UDP + QUIC:</strong> reliable secure transport.</li>
+<li><strong>IPsec + TCP/UDP:</strong> network-layer security underneath transport.</li>
+</ul>
+</div>
+<div class="transition-list">
+<strong>Best exam sentence:</strong> TCP gives reliability. TLS gives confidentiality, integrity, and authenticity. HTTPS combines HTTP with TLS, usually over TCP, so it gets both reliability and security.
+</div>
+<pre class="note-code">Checksum is not security integrity.
+Do not say TCP/UDP provide integrity in a security sense.</pre>
 </section>
 <section class="section-heading"><p class="eyebrow">Old Exams</p><h1>Old Exam Questions and Answers</h1></section>
 <section class="note-list">

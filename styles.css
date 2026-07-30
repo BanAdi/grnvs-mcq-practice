@@ -554,6 +554,43 @@ h3 {
   line-height: 1.5;
 }
 
+.table-wrap {
+  overflow-x: auto;
+  margin: 16px 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfa;
+}
+
+.notes-table {
+  width: 100%;
+  min-width: 920px;
+  border-collapse: collapse;
+}
+
+.notes-table th,
+.notes-table td {
+  border-bottom: 1px solid var(--line);
+  padding: 11px 12px;
+  text-align: left;
+  vertical-align: top;
+  line-height: 1.45;
+}
+
+.notes-table th {
+  background: rgba(15, 124, 119, 0.1);
+  color: var(--accent-dark);
+  font-size: 13px;
+}
+
+.notes-table td {
+  font-size: 14px;
+}
+
+.notes-table tr:last-child td {
+  border-bottom: 0;
+}
+
 .diagram {
   display: block;
   width: 100%;
@@ -588,6 +625,11 @@ h3 {
 
 .answer-list li {
   padding-left: 2px;
+}
+
+.compact-list {
+  gap: 5px;
+  margin-top: 8px;
 }
 
 .qa-block {
