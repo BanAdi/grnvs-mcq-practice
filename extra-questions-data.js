@@ -901,6 +901,26 @@ window.EXTRA_QUESTION_DATA = [
     "extra": true
   },
   {
+    "id": "extra-tier1-as",
+    "topic": "IPv4/IPv6/Routing",
+    "year": "Extra",
+    "exam": "Extra",
+    "source": "Extra Questions",
+    "label": "Tier-1",
+    "question": "Was beschreibt ein Tier-1 Autonomous System am besten?",
+    "options": [
+      "Ein AS, das alle anderen Internet-Netze ohne Kauf von Transit erreichen kann",
+      "Ein einzelner Router im lokalen Heimnetz",
+      "Ein AS, das nur private IPv4-Adressen verwendet",
+      "Ein DNS-Server, der alle Root-Zonen speichert"
+    ],
+    "answers": [
+      0
+    ],
+    "multiple": false,
+    "extra": true
+  },
+  {
     "id": "extra-046",
     "topic": "TCP/UDP/Transport",
     "year": "Extra",
