@@ -1,0 +1,1982 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>All GRNVS Notes</title>
+    <meta name="description" content="All GRNVS notes on one searchable page." />
+    <link rel="stylesheet" href="./styles.css?v=15" />
+  </head>
+  <body>
+    <main class="notes-shell">
+      <header class="notes-hero">
+        <div>
+          <p class="eyebrow">GRNVS Kurznotizen</p>
+          <h1>All Notes</h1>
+          <p>Alle Notizen auf einer Seite, damit du mit Cmd + F nach Begriffen und Subtopics suchen kannst.</p>
+        </div>
+        <nav class="note-nav" aria-label="Site navigation">
+          <details class="note-menu-dropdown">
+            <summary>Notes Home</summary>
+            <div class="note-menu-panel">
+              <a class="note-menu-item" href="./notes.html">Notes Home</a>
+              <a class="note-menu-item active" href="./notes-all.html" aria-current="page">All Notes</a>
+              <a class="note-menu-item" href="./notes-coding.html">Coding & Modulation</a>
+              <a class="note-menu-item" href="./notes-ipv6.html">IPv6 Address Notes</a>
+              <a class="note-menu-item" href="./notes-layers.html">Layers & Encapsulation</a>
+              <a class="note-menu-item" href="./notes-physical-theory.html">Physical Layer</a>
+              <a class="note-menu-item" href="./notes-datalink-theory.html">Data Link Layer</a>
+              <a class="note-menu-item" href="./notes-network-theory.html">Network Layer</a>
+              <a class="note-menu-item" href="./notes-transport-application.html">Transport & Application</a>
+              <a class="note-menu-item" href="./notes-paper-checklist.html">Paper Checklist</a>
+            </div>
+          </details>
+          <a class="secondary link-button" href="./index.html">Practice</a>
+        </nav>
+      </header>
+      <section class="section-heading all-notes-topic" id="notes-coding">
+        <p class="eyebrow">All Notes</p>
+        <h1>Coding & Modulation</h1>
+      </section>
+<section class="section-heading">
+        <p class="eyebrow">Old Notes</p>
+        <h1>Codierung & Modulation</h1>
+      </section>
+
+      <section class="notes-grid" aria-label="Leitungscodierung">
+        <article class="note-card">
+          <span class="pill">Leitungscode</span>
+          <h2>NRZ</h2>
+          <p>
+            Bei <strong>Non-Return-to-Zero</strong> werden 0 und 1 durch zwei
+            konstante Pegel dargestellt. Innerhalb eines Bits muss kein Wechsel
+            stattfinden.
+          </p>
+          <canvas class="diagram" data-diagram="nrz" width="760" height="260"></canvas>
+          <div class="transition-list">
+            <strong>Übergänge:</strong>
+            0->0: keiner, 1->1: keiner, 0->1: steigende Flanke,
+            1->0: fallende Flanke.
+          </div>
+          <ul>
+            <li>Einfach zu erzeugen und zu erkennen.</li>
+            <li>Lange Folgen gleicher Bits liefern kaum Taktinformation.</li>
+            <li>Kann einen Gleichanteil enthalten.</li>
+          </ul>
+        </article>
+
+        <article class="note-card">
+          <span class="pill">Leitungscode</span>
+          <h2>Manchester</h2>
+          <p>
+            Bei Manchester gibt es in jedem Bitintervall einen Wechsel in der
+            Mitte. Die Richtung des Wechsels kodiert den Bitwert.
+          </p>
+          <canvas class="diagram" data-diagram="manchester" width="760" height="260"></canvas>
+          <div class="transition-list">
+            <strong>Übergänge:</strong>
+            Jedes Bit hat eine mittlere Flanke. Bei gleichen Nachbarbits gibt es
+            zusätzlich eine Flanke an der Bitgrenze; bei wechselnden Bits nicht.
+          </div>
+          <ul>
+            <li>Gut für Taktrückgewinnung, weil jedes Bit einen Übergang hat.</li>
+            <li>Benötigt mehr Bandbreite als NRZ.</li>
+            <li>Wird oft als selbsttaktender Code beschrieben.</li>
+          </ul>
+        </article>
+
+        <article class="note-card">
+          <span class="pill">Leitungscode</span>
+          <h2>MLT-3</h2>
+          <p>
+            <strong>Multi-Level-Transmit-3</strong> nutzt drei Pegel:
+            -1, 0 und +1. Eine 1 führt zum nächsten Pegel in der Folge, eine 0
+            hält den aktuellen Pegel.
+          </p>
+          <canvas class="diagram" data-diagram="mlt3" width="760" height="260"></canvas>
+          <div class="transition-list">
+            <strong>Übergänge:</strong>
+            0: Pegel bleibt. 1: nächster Pegel in der Folge
+            0 -> +1 -> 0 -> -1 -> 0 -> ...
+          </div>
+          <ul>
+            <li>Reduziert die maximale Signalfrequenz gegenüber NRZ.</li>
+            <li>Allein nicht ideal bei langen Nullfolgen.</li>
+            <li>Wird deshalb gerne mit 4B5B kombiniert.</li>
+          </ul>
+        </article>
+
+        <article class="note-card">
+          <span class="pill">Blockcode</span>
+          <h2>4B5B</h2>
+          <p>
+            4B5B bildet 4 Datenbits auf 5 Codebits ab. Die Codewörter werden so
+            gewählt, dass genügend Übergänge entstehen und zusätzliche
+            Kontrollsymbole möglich sind.
+          </p>
+          <canvas class="diagram" data-diagram="4b5b" width="760" height="260"></canvas>
+          <div class="transition-list">
+            <strong>Übergänge:</strong>
+            4B5B erzeugt Codewörter mit mehr Übergängen als rohe Daten und
+            begrenzt lange Nullfolgen; danach folgt häufig ein Leitungscode wie
+            NRZI oder MLT-3.
+          </div>
+          <ul>
+            <li>Erhöht die Bitrate auf der Leitung um den Faktor 5/4.</li>
+            <li>Hilft gegen zu lange Folgen ohne Übergang.</li>
+            <li>Ist Codierung, nicht Modulation.</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="notes-grid" aria-label="Modulation">
+        <article class="note-card">
+          <span class="pill">Modulation</span>
+          <h2>ASK</h2>
+          <p>
+            Bei <strong>Amplitude Shift Keying</strong> wird die Amplitude des
+            Trägersignals verändert. Unterschiedliche Amplituden stehen für
+            unterschiedliche Symbole.
+          </p>
+          <canvas class="diagram" data-diagram="ask" width="760" height="260"></canvas>
+          <div class="transition-list">
+            <strong>Veränderung:</strong>
+            Die Amplitude wechselt; Frequenz und Phase bleiben im einfachen
+            Modell gleich.
+          </div>
+          <ul>
+            <li>Einfaches Prinzip.</li>
+            <li>Empfindlich gegenüber Amplitudenrauschen.</li>
+            <li>2-ASK hat zwei unterscheidbare Amplituden.</li>
+          </ul>
+        </article>
+
+        <article class="note-card">
+          <span class="pill">Modulation</span>
+          <h2>PSK</h2>
+          <p>
+            Bei <strong>Phase Shift Keying</strong> wird die Phase des
+            Trägersignals verändert. Die Amplitude kann dabei konstant bleiben.
+          </p>
+          <canvas class="diagram" data-diagram="psk" width="760" height="260"></canvas>
+          <div class="transition-list">
+            <strong>Veränderung:</strong>
+            Die Phase springt zwischen Symbolpunkten; bei 2-PSK typischerweise
+            um 180 Grad.
+          </div>
+          <ul>
+            <li>2-PSK nutzt zwei Phasenlagen.</li>
+            <li>Mehr Phasenlagen bedeuten mehr Bits pro Symbol.</li>
+            <li>Die Punkte liegen im Signalraum oft auf einem Kreis.</li>
+          </ul>
+        </article>
+
+        <article class="note-card">
+          <span class="pill">Modulation</span>
+          <h2>QAM</h2>
+          <p>
+            <strong>Quadrature Amplitude Modulation</strong> verändert zwei
+            orthogonale Komponenten: I und Q. Dadurch werden Amplitude und Phase
+            kombiniert genutzt.
+          </p>
+          <canvas class="diagram" data-diagram="qam" width="760" height="260"></canvas>
+          <div class="transition-list">
+            <strong>Veränderung:</strong>
+            Symbolwechsel können I, Q, Amplitude und Phase verändern. 16-QAM
+            hat 16 Signalraumpunkte.
+          </div>
+          <ul>
+            <li>M-QAM überträgt log2(M) Bits pro Symbol.</li>
+            <li>16-QAM überträgt 4 Bits pro Symbol.</li>
+            <li>Höhere Ordnung braucht besseres SNR.</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="note-card wide">
+        <span class="pill">Prüfungstipp</span>
+        <h2>Schnelle Unterscheidung</h2>
+        <p>
+          <strong>NRZ, Manchester, MLT-3 und 4B5B</strong> sind
+          Leitungscodierungs- bzw. Blockcodierungsverfahren. Sie beschreiben,
+          wie Bits auf Leitungssignale oder Codewörter abgebildet werden.
+          <strong>ASK, PSK und QAM</strong> sind Modulationsverfahren. Sie
+          beschreiben, welche Eigenschaft eines Trägersignals verändert wird.
+        </p>
+      </section>
+      <section class="section-heading all-notes-topic" id="notes-ipv6">
+        <p class="eyebrow">All Notes</p>
+        <h1>IPv6 Address Notes</h1>
+      </section>
+<section class="section-heading">
+        <p class="eyebrow">New Notes</p>
+        <h1>IPv6 Address Notes</h1>
+      </section>
+
+      <section class="note-card wide">
+        <span class="pill">Grundstruktur</span>
+        <h2>Prefix /64 + Interface ID /64</h2>
+        <p>Eine IPv6-Adresse besteht in Aufgaben meistens aus zwei Teilen.</p>
+        <pre class="note-code">Prefix /64 + Interface ID /64
+
+2001:db8:1::/64 + abcd:1234:5678:9999</pre>
+        <p>
+          Der Prefix beschreibt das Netzwerk. Die Interface ID identifiziert das
+          Gerät bzw. Interface innerhalb dieses Netzwerks.
+        </p>
+      </section>
+
+      <section class="notes-grid" aria-label="IPv6 address methods">
+        <article class="note-card">
+          <span class="pill">Methode 1</span>
+          <h2>SLAAC mit Modified EUI-64</h2>
+          <p>
+            Verwende diese Methode, wenn die Aufgabe eine
+            <strong>MAC-Adresse</strong> gibt und automatische IPv6-Erzeugung
+            erwartet.
+          </p>
+          <pre class="note-code">1. MAC nehmen
+   04:7b:cb:c1:08:06
+
+2. In der Mitte teilen
+   04:7b:cb | c1:08:06
+
+3. ff:fe einfügen
+   04:7b:cb:ff:fe:c1:08:06
+
+4. U/L-Bit im ersten Byte flippen
+   04 -> 06
+
+5. Prefix ergänzen
+   fe80::/64 für link-local
+   oder gegebenen globalen Prefix</pre>
+          <p>Ergebnis mit Link-Local Prefix:</p>
+          <pre class="note-code">fe80::67b:cbff:fec1:806</pre>
+          <div class="transition-list">
+            <strong>Merke:</strong> U/L bit flip = first byte XOR 0x02.
+            Beispiele: 00 -> 02, 04 -> 06, c0 -> c2, a6 -> a4.
+          </div>
+        </article>
+
+        <article class="note-card">
+          <span class="pill">Methode 2</span>
+          <h2>SLAAC mit gegebenem Prefix</h2>
+          <p>
+            Wenn die Interface ID bereits gegeben ist, hängst du sie nur an den
+            Prefix an.
+          </p>
+          <pre class="note-code">Interface ID = 067b:cbff:fec1:0806
+Prefix       = 2001:db8:1::/64
+
+Adresse:
+2001:db8:1::67b:cbff:fec1:806
+
+Link-local:
+fe80::67b:cbff:fec1:806</pre>
+        </article>
+
+        <article class="note-card">
+          <span class="pill">Methode 3</span>
+          <h2>Manuell gesetzte IPv6-Adresse</h2>
+          <p>
+            Manchmal gibt die Aufgabe einfach eine gewählte Adresse an oder
+            erwartet eine typische manuelle Konfiguration, besonders bei Routern
+            und Servern.
+          </p>
+          <pre class="note-code">Router interface:
+2001:db8:1::1/64</pre>
+          <p>Dafür brauchst du kein EUI-64.</p>
+        </article>
+
+        <article class="note-card">
+          <span class="pill">Methode 4</span>
+          <h2>DHCPv6</h2>
+          <p>
+            Bei DHCPv6 weist ein Server die IPv6-Adresse zu. Du berechnest sie
+            nicht aus der MAC-Adresse, außer die Aufgabe gibt eine DHCP-Tabelle.
+          </p>
+          <pre class="note-code">DHCPv6 = Server gibt Adresse
+SLAAC  = Host baut Adresse selbst</pre>
+        </article>
+
+        <article class="note-card">
+          <span class="pill">Methode 5</span>
+          <h2>Privacy / Random Interface ID</h2>
+          <p>
+            Moderne Systeme verwenden oft keine MAC-basierte EUI-64-Adresse,
+            sondern eine zufällig wirkende Interface ID.
+          </p>
+          <pre class="note-code">2001:db8:1::8f3a:91ff:bc22:1009</pre>
+          <p>
+            Wenn die Interface ID nicht zur MAC passt, kann sie random/privacy,
+            manuell oder per DHCPv6 vergeben sein.
+          </p>
+        </article>
+
+        <article class="note-card">
+          <span class="pill">Exam Memory</span>
+          <h2>Wichtige Prüfungsregeln</h2>
+          <pre class="note-code">Link-local prefix:
+fe80::/64
+
+Global prefix:
+gegeben durch Router Advertisement
+oder direkt in der Aufgabe
+z. B. 2001:db8:ff::/64
+
+Neighbor Solicitation multicast:
+ff02::1:ffXX:XXXX
+XX:XXXX = letzte 24 Bits der Ziel-IPv6
+
+IPv6 multicast MAC:
+33:33 + letzte 32 Bits der Multicast-IPv6</pre>
+        </article>
+      </section>
+
+      <section class="note-card wide">
+        <span class="pill">Quick Decision</span>
+        <h2>Welche Methode nehme ich?</h2>
+        <pre class="note-code">Given MAC + asks SLAAC/link-local:
+-> use modified EUI-64
+
+Given prefix + already have interface ID:
+-> prefix + interface ID
+
+Given DHCP/table:
+-> use assigned address
+
+Given router/server manual config:
+-> use stated/manual address
+
+Modern real-life address looks random:
+-> privacy/DHCP/manual, not EUI-64</pre>
+      </section>
+      <section class="section-heading all-notes-topic" id="notes-layers">
+        <p class="eyebrow">All Notes</p>
+        <h1>Layers & Encapsulation</h1>
+      </section>
+<section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Theory Questions and Answers</h1></section>
+<section class="notes-grid compact">
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain why computer networks are described with layered models. What is gained by separating services, interfaces, and protocols?</h2>
+<p>Layering reduces complexity. Each layer offers a service to the layer above, uses services from the layer below, and communicates with its peer by a protocol. This lets Ethernet, IP, TCP, DNS, HTTP, etc. evolve independently as long as the interfaces remain compatible.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Define PDU, SDU, PCI, and ICI.</h2>
+<ul class="answer-list">
+<li><strong>PCI:</strong> header/trailer, i.e. protocol control information added by the layer.</li>
+<li><strong>SDU:</strong> payload/data handed down from an upper layer.</li>
+<li><strong>PDU:</strong> complete thing at that layer, usually <code>PCI + SDU</code>.</li>
+<li><strong>ICI:</strong> local interface control information between adjacent layers, normally not transmitted.</li>
+</ul>
+<div class="transition-list">
+<strong>Merksatz:</strong> PCI = header/trailer, SDU = payload/data, PDU = complete thing at that layer.
+</div>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>In the ISO/OSI model, name the main responsibility of each layer from physical to application layer.</h2>
+<ul class="answer-list">
+<li><strong>L1 Physical:</strong> bits/signals</li>
+<li><strong>L2 Data Link:</strong> frames, Ethernet, MAC addressing, direct-link access, error detection</li>
+<li><strong>L3 Network:</strong> IPv4, IPv6, ICMP, logical addressing, routing</li>
+<li><strong>L4 Transport:</strong> TCP, UDP, end-to-end transport between processes</li>
+<li><strong>L5 Session:</strong> session management in the OSI model</li>
+<li><strong>L6 Presentation:</strong> representation, encryption, compression</li>
+<li><strong>L7 Application:</strong> DNS, HTTP and other application protocols</li>
+</ul>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Distinguish horizontal communication from vertical communication.</h2>
+<p>Horizontal communication is logical peer communication between the same layer on different hosts. Vertical communication is real local interaction between neighboring layers in the same host.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>For Ethernet, IPv4, and TCP, which layer adds which header?</h2>
+<ul class="answer-list">
+<li><strong>Application data:</strong> payload handed to TCP.</li>
+<li><strong>TCP:</strong> adds a TCP header, producing a TCP segment.</li>
+<li><strong>IPv4:</strong> adds an IP header, producing an IP packet.</li>
+<li><strong>Ethernet:</strong> adds Ethernet header and FCS, producing an Ethernet frame.</li>
+<li><strong>Ethernet payload:</strong> the whole IP packet is the L2 payload.</li>
+</ul>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain host byte order versus network byte order.</h2>
+<p>Host byte order depends on the CPU architecture. Network byte order is big-endian and is used in protocol fields so all machines interpret multi-byte numbers consistently.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Classify Ethernet, ARP, IPv4, IPv6, ICMP, UDP, TCP, DNS, HTTP, and TLS by layer.</h2>
+<ul class="answer-list">
+<li><strong>L1 Physical:</strong> bits/signals</li>
+<li><strong>L2 Data Link:</strong> Ethernet, MAC</li>
+<li><strong>L2/L3 helper:</strong> ARP for IPv4 address resolution on the local link</li>
+<li><strong>L3 Network:</strong> IPv4, IPv6, ICMP/ICMPv6, routing</li>
+<li><strong>L4 Transport:</strong> TCP, UDP</li>
+<li><strong>L7 Application:</strong> DNS, HTTP</li>
+<li><strong>TLS:</strong> between transport and application; often described as session/presentation functionality in OSI terms</li>
+</ul>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>How do you analyze a hexdump?</h2>
+<ul class="answer-list">
+<li><strong>Start at byte 0.</strong></li>
+<li><strong>Ethernet:</strong> read 6 B destination MAC, 6 B source MAC, 2 B Ethertype.</li>
+<li><strong>Ethertype:</strong> <code>0x0800</code> IPv4, <code>0x86dd</code> IPv6, <code>0x0806</code> ARP.</li>
+<li><strong>IPv4:</strong> use IHL to find the L3 header length.</li>
+<li><strong>IPv6:</strong> base header is 40 B; use Next Header.</li>
+<li><strong>L4:</strong> use Protocol/Next Header to locate TCP, UDP, or ICMP.</li>
+</ul>
+</article>
+</section>
+<section class="section-heading"><p class="eyebrow">Old Exams</p><h1>Old Exam Questions and Answers</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Midterm 2021, Aufgabe 1</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Which terms describe the payload/control units around layer 3?</p>
+<p class="qa-answer"><strong>Answer:</strong> The L3 PDU is a packet. The L3 SDU is the payload received from above before the L3 header is added.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 1</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Which OSI layer does ICMP belong to?</p>
+<p class="qa-answer"><strong>Answer:</strong> ICMP is network-layer related, i.e. layer 3, because it reports IP-layer control and error information.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2024, Aufgabe 1</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Interpret a hex value under byte-order conventions.</p>
+<p class="qa-answer"><strong>Answer:</strong> Network byte order is big-endian; little-endian stores the least significant byte first.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2022, Aufgabe 5</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Identify Ethernet, IPv4, TCP, and payload fields in a hexdump.</p>
+<p class="qa-answer"><strong>Answer:</strong> Use Ethertype 0x0800 for IPv4, IPv4 IHL for L3 header length, Protocol 0x06 for TCP, TCP data offset for L4 header length, then the remaining bytes are payload.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2023, Aufgabe 1</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Reconstruct a frame from topology and protocol facts.</p>
+<p class="qa-answer"><strong>Answer:</strong> L2 source/destination MAC addresses are for the current hop; IP source/destination remain the original endpoints; header lengths and checksums determine offsets and missing bytes.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2023, Aufgabe 2</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Analyze an Ethernet/IPv6/TCP hexdump.</p>
+<p class="qa-answer"><strong>Answer:</strong> Ethertype 0x86dd selects IPv6; IPv6 has a fixed 40 B base header; Next Header 0x06 means TCP.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2024, Aufgabe 4</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Identify Ethernet/IPv6 fields and derive embedded addresses.</p>
+<p class="qa-answer"><strong>Answer:</strong> Read Ethernet addresses first, then IPv6 version/traffic class/flow label, payload length, next header, hop limit, source and destination addresses.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2025, Aufgabe 3</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Analyze an Ethernet frame carrying ICMP.</p>
+<p class="qa-answer"><strong>Answer:</strong> Ethertype 0x0800 gives IPv4; IPv4 Protocol 0x01 gives ICMP; ICMP type/code identify the concrete ICMP message.</p>
+</div>
+</article>
+</section>
+<section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Exam Answer Checklist</h1></section>
+<section class="note-card wide"><span class="pill">Checklist</span><h2>Exam Answer Checklist</h2><ul>
+<li>PDU of layer <code>N</code> becomes SDU of layer <code>N-1</code>.</li>
+<li>PCI is the header/trailer added for peer communication at the same layer.</li>
+<li>Network byte order is big-endian.</li>
+<li>In hexdumps, first use fixed fields: Ethernet destination/source/type, then IP version/IHL or IPv6 fixed header, then protocol/next-header.</li>
+</ul></section>
+      <section class="section-heading all-notes-topic" id="notes-physical-theory">
+        <p class="eyebrow">All Notes</p>
+        <h1>Physical Layer</h1>
+      </section>
+<section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Theory Questions and Answers</h1></section>
+<section class="notes-grid compact">
+<article class="note-card"><span class="pill">Question</span>
+<h2>Define signal, symbol, information content, entropy, conditional entropy, and joint entropy.</h2>
+<p>A signal is a measurable physical quantity over time. A symbol is a defined signal state or change that represents information. Information content is <code>I(x)=-_2 p(x)</code>. Entropy is average information <code>H(X)=_x p(x)I(x)</code>. Conditional entropy measures remaining uncertainty when another variable is known. Joint entropy measures uncertainty of a pair of random variables.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Why does a rare symbol carry more information?</h2>
+<p>A rare symbol is less predictable, so observing it resolves more uncertainty. Since <code>-_2 p(x)</code> grows when <code>p(x)</code> becomes smaller, rare symbols have higher information content.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>When is entropy maximal?</h2>
+<p>Entropy is maximal when all symbols are equally likely. A binary source has maximum entropy <code>1</code> bit at <code>p(0)=p(1)=0.5</code>. An alphabet of <code>M</code> equally likely symbols has entropy <code>_2 M</code> bits per symbol.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Distinguish time/value continuity.</h2>
+<ul class="answer-list">
+<li><strong>Time-continuous:</strong> defined for every time instant.</li>
+<li><strong>Time-discrete:</strong> defined only at sample instants.</li>
+<li><strong>Value-continuous:</strong> arbitrary amplitudes are possible.</li>
+<li><strong>Value-discrete:</strong> only fixed amplitude levels are possible.</li>
+<li><strong>Sampled but unquantized:</strong> time-discrete and value-continuous.</li>
+<li><strong>Digital bit stream:</strong> time-discrete and value-discrete.</li>
+</ul>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Fourier series or Fourier transform?</h2>
+<p>Fourier series represents periodic signals as sums of harmonics. Fourier transform represents general aperiodic signals in the frequency domain. Use Fourier series when the signal is periodic or constructed by periodic repetition of a ground pulse.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>State the sampling theorem.</h2>
+<p>A signal bandlimited to <code>B</code> can be reconstructed from samples if <code>f_A  2B</code>. Below that, aliasing occurs: high-frequency components appear as wrong lower-frequency components and information is lost.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Sampling versus quantization?</h2>
+<p>Sampling discretizes time. Quantization discretizes amplitude. For linear quantization over interval <code>[a,b]</code> with <code>M</code> levels, the step width is approximately <code>=(b-a)/(M-1)</code> for levels including both endpoints; with rounding, the maximum error inside the interval is about <code>/2</code>.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain SNR and dB conversion.</h2>
+<p>Linear <code>SNR=P_S/P_N</code>. In dB, <code>SNR_dB=10_10(SNR)</code>. Convert back by <code>SNR=10^SNR_dB/10</code>.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Compare Hartley and Shannon-Hartley capacity.</h2>
+<p>Hartley depends on bandwidth and the number of distinguishable signal levels. Shannon-Hartley depends on bandwidth and noise: <code>C=B_2(1+SNR)</code>. Hartley focuses on symbol distinguishability; Shannon gives a noise-limited upper bound.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Source coding, channel coding, line coding?</h2>
+<ul class="answer-list">
+<li><strong>Source coding:</strong> removes redundancy, e.g. Huffman compression.</li>
+<li><strong>Channel coding:</strong> adds structured redundancy for error detection/correction.</li>
+<li><strong>Line coding:</strong> maps bits or code words to physical signal shapes suitable for the medium.</li>
+</ul>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Manchester, NRZ, MLT-3, ASK, PSK, and QAM?</h2>
+<ul class="answer-list">
+<li><strong>NRZ:</strong> line code.</li>
+<li><strong>Manchester:</strong> line code with a transition in every bit interval.</li>
+<li><strong>MLT-3:</strong> multi-level line code.</li>
+<li><strong>ASK:</strong> changes amplitude.</li>
+<li><strong>PSK:</strong> changes phase.</li>
+<li><strong>QAM:</strong> uses amplitude in two quadrature components and is often visualized as a constellation.</li>
+</ul>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>For <code>M</code>-QAM, how many bits are transmitted per symbol?</h2>
+<ul class="answer-list">
+<li><strong>General rule:</strong> <code>log2(M)</code> bits per symbol.</li>
+<li><strong>16-QAM:</strong> 4 bits/symbol.</li>
+<li><strong>32-QAM:</strong> 5 bits/symbol.</li>
+<li><strong>1024-QAM:</strong> 10 bits/symbol.</li>
+</ul>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Why does higher-order modulation need better SNR?</h2>
+<p>More constellation points are closer together, so noise can more easily move a received point across a decision boundary. Better SNR is needed to distinguish symbols reliably.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Compare electrical, optical, and wireless media.</h2>
+<ul class="answer-list">
+<li><strong>Electrical copper:</strong> cheap and common, but affected by attenuation and electromagnetic interference.</li>
+<li><strong>Optical fiber:</strong> high rates, long distances, immune to electromagnetic interference.</li>
+<li><strong>Wireless:</strong> flexible and mobile, but shared, noisy, and collision/interference-prone.</li>
+</ul>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Propagation delay versus serialization delay?</h2>
+<p>Propagation delay is travel time through the medium: <code>t_p=d/v</code>. Serialization delay is time to put all bits on the link: <code>t_s=L/R</code>. Long distances increase propagation delay; large frames or low bitrates increase serialization delay.</p>
+</article>
+</section>
+<section class="section-heading"><p class="eyebrow">Old Exams</p><h1>Old Exam Questions and Answers</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 2</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Explain Shannon versus Hartley capacity and quantization.</p>
+<p class="qa-answer"><strong>Answer:</strong> Shannon capacity is noise-limited using <code>B</code> and SNR; Hartley capacity uses bandwidth and distinguishable symbols. Quantization maps continuous amplitudes to discrete levels and introduces bounded error inside the quantization interval.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 4</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Encode a message and protect packets with CRC.</p>
+<p class="qa-answer"><strong>Answer:</strong> Choose the source representation, e.g. BCD for digits or ASCII otherwise, split into packets, append CRC checksum, and validate by polynomial division at the receiver.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2021, Aufgabe 2</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Use 4-ASK with Manchester coding in a frame format.</p>
+<p class="qa-answer"><strong>Answer:</strong> 4-ASK carries 2 raw bits per modulation symbol; Manchester introduces transitions for clock recovery and typically doubles the required signaling effort for the same payload bits.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2021, Aufgabe 3</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Determine signal levels from a 16-bit converter.</p>
+<p class="qa-answer"><strong>Answer:</strong> A 16-bit value can represent <code>2^16=65536</code> different levels.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2022, Aufgabe 1</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Match signals to spectra and reason about Fourier series.</p>
+<p class="qa-answer"><strong>Answer:</strong> Periodic time-domain signals have discrete line spectra; pulse shape determines spectral envelope.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2022, Aufgabe 4</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Compute end-to-end delay in a transmission chain.</p>
+<p class="qa-answer"><strong>Answer:</strong> Add serialization, propagation, processing, and waiting times; for pipelined segments, account for overlap instead of multiplying blindly.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2023, Aufgabe 1</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Identify time-discrete/value-continuous signals and highest-information symbols.</p>
+<p class="qa-answer"><strong>Answer:</strong> Time-discrete signals exist only at sample instants; value-continuous signals can take arbitrary amplitudes. Highest information belongs to the least frequent symbol.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2023, Aufgabe 2</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Decide whether Fourier series applies.</p>
+<p class="qa-answer"><strong>Answer:</strong> It applies when the given signal is periodic; otherwise use the Fourier transform.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2023, Aufgabe 5</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Analyze a periodically repeated ground pulse.</p>
+<p class="qa-answer"><strong>Answer:</strong> Draw one period, repeat it with period <code>T</code>, then use Fourier-series coefficients for periodic frequency analysis.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2023, Aufgabe 6</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Explain channel codes and line codes.</p>
+<p class="qa-answer"><strong>Answer:</strong> Channel codes add redundancy to detect/correct errors; line codes map bits/codewords to physical signal waveforms.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2024, Aufgabe 1</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Answer MC on sampling, quantization, QAM, serialization, propagation, and CRC.</p>
+<p class="qa-answer"><strong>Answer:</strong> Sampling discretizes time, quantization discretizes values, 1024-QAM carries 10 bits/symbol, serialization is <code>L/R</code>, propagation is <code>d/v</code>, and CRC detects but does not repair errors.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2024, Aufgabe 2</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Complete a transmission chain with Huffman, coding, and CRC.</p>
+<p class="qa-answer"><strong>Answer:</strong> Source coding compresses, channel/CRC redundancy protects against errors, line/modulation maps bits to signals.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2025, Aufgabe 1</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Compute sampling interval for <code>f_A=20 kHz</code> and entropy.</p>
+<p class="qa-answer"><strong>Answer:</strong> <code>T_A=1/20000=50 µ s</code>; entropy is <code>- p_i_2 p_i</code>.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2025, Aufgabe 6</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Infer modulation and bitrate from a constellation and basisband signal.</p>
+<p class="qa-answer"><strong>Answer:</strong> Count constellation points for bits/symbol, combine with symbol rate and coding rate for effective data rate.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2022, Aufgabe 3</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Recognize and use Manchester coding.</p>
+<p class="qa-answer"><strong>Answer:</strong> Manchester represents bits by transitions inside a bit interval, supporting clock recovery at the cost of more bandwidth.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2022, Aufgabe 4</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Determine information content and delay/rate tradeoffs.</p>
+<p class="qa-answer"><strong>Answer:</strong> Use <code>I(x)=-_2 p(x)</code>, and compute delay from serialization plus propagation over each hop.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2024, Aufgabe 1</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Select known digital modulation methods and highest-information symbol.</p>
+<p class="qa-answer"><strong>Answer:</strong> ASK, PSK, QAM are modulation methods; the rarest symbol has highest information content.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2024, Aufgabe 2</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Analyze periodic EKG-like signal.</p>
+<p class="qa-answer"><strong>Answer:</strong> Draw the periodic waveform and compute Fourier-series terms using the period and ground pulse.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2024, Aufgabe 4</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Compute satellite transmission performance.</p>
+<p class="qa-answer"><strong>Answer:</strong> Propagation dominates for astronomical distances; throughput depends on frame size, bitrate, and error probability/retransmission assumptions.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2025, Aufgabe 1</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> State correct properties of optical conductors.</p>
+<p class="qa-answer"><strong>Answer:</strong> Optical links support high data rates and long distances and do not need electrical shielding; RJ45 is for twisted-pair copper, not fiber.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2025, Aufgabe 2</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Digital radio with collision probability and modulation/coding.</p>
+<p class="qa-answer"><strong>Answer:</strong> Treat independent retries geometrically and combine symbol rate, bits/symbol, and coding overhead for useful data rate.</p>
+</div>
+</article>
+</section>
+<section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Exam Answer Checklist</h1></section>
+<section class="note-card wide"><span class="pill">Checklist</span><h2>Exam Answer Checklist</h2><ul>
+<li>Serialization delay: <code>t_s=L/R</code>. Propagation delay: <code>t_p=d/v</code>. Do not mix frame length with distance.</li>
+<li>Sampling interval: <code>T_A=1/f_A</code>. Nyquist condition: <code>f_A  2B</code>.</li>
+<li><code>M</code> equiprobable symbols carry <code>_2 M</code> bits per symbol.</li>
+<li>Shannon-Hartley: <code>C=B_2(1+SNR)</code>, with linear SNR.</li>
+<li>Channel coding adds structured redundancy for error detection/correction; source coding removes statistical redundancy.</li>
+</ul></section>
+      <section class="section-heading all-notes-topic" id="notes-datalink-theory">
+        <p class="eyebrow">All Notes</p>
+        <h1>Data Link Layer</h1>
+      </section>
+<section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Theory Questions and Answers</h1></section>
+<section class="notes-grid compact">
+<article class="note-card"><span class="pill">Question</span>
+<h2>What are the main tasks of the data link layer?</h2>
+<p>It handles communication over one direct link or broadcast domain: framing, L2 addressing, medium access control, and error detection such as FCS/CRC.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Why is medium access control needed?</h2>
+<p>On shared media, multiple stations can transmit at the same time. MAC rules coordinate access so collisions are avoided, detected, or recovered from.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Compare ALOHA, slotted ALOHA, CSMA, CSMA/CD, and CSMA/CA.</h2>
+<ul class="answer-list">
+<li><strong>ALOHA:</strong> sends without sensing and relies on retransmission.</li>
+<li><strong>Slotted ALOHA:</strong> only starts transmissions at slot boundaries.</li>
+<li><strong>CSMA:</strong> senses the channel before sending.</li>
+<li><strong>CSMA/CD:</strong> detects collisions while transmitting and aborts.</li>
+<li><strong>CSMA/CA:</strong> tries to avoid collisions with backoff and acknowledgements, useful for WLAN.</li>
+</ul>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Why classic Ethernet CSMA/CD but WLAN CSMA/CA?</h2>
+<p>A wired Ethernet sender can listen while sending and detect a collision. A WLAN sender cannot reliably hear collisions while transmitting and hidden terminals exist, so WLAN reduces collision probability and uses ACKs.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Define collision domain and broadcast domain.</h2>
+<ul class="answer-list">
+<li><strong>Collision domain:</strong> nodes whose simultaneous transmissions can collide.</li>
+<li><strong>Broadcast domain:</strong> nodes receiving an L2 broadcast.</li>
+</ul>
+<div class="table-wrap">
+<table class="notes-table compact-table">
+<thead>
+<tr>
+<th>Device</th>
+<th>Collision Domain</th>
+<th>Broadcast Domain</th>
+<th>Exam Memory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hub</strong></td>
+<td>One shared collision domain</td>
+<td>One shared broadcast domain</td>
+<td>Repeats bits to all ports; collisions can happen.</td>
+</tr>
+<tr>
+<td><strong>Switch</strong></td>
+<td>Splits collision domains, usually one per port</td>
+<td>Normally keeps one broadcast domain</td>
+<td>Forwards by MAC table; broadcasts are still flooded.</td>
+</tr>
+<tr>
+<td><strong>Access Point as L2 bridge</strong></td>
+<td>WLAN side is one shared collision/contention domain; each Ethernet cable/link is its own collision domain.</td>
+<td>Same broadcast domain as the connected LAN; forwards L2 broadcasts between Wi-Fi and wired LAN.</td>
+<td>Acts like a bridge for L2 broadcasts, but Wi-Fi airtime is still shared.</td>
+</tr>
+<tr>
+<td><strong>Router</strong></td>
+<td>Separates L2 links</td>
+<td>Splits broadcast domains</td>
+<td>Broadcasts do not cross routers by default.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>How does a switch learn and forward?</h2>
+<ul class="answer-list">
+<li>Learns source MAC to ingress port mappings.</li>
+<li>For a known destination, forwards only to the learned port.</li>
+<li>For an unknown unicast or broadcast, floods to all other ports.</li>
+</ul>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Why are switches transparent but WLAN APs explicitly addressed?</h2>
+<p>Ethernet hosts send frames directly to the final L2 peer; switches forward without changing source/destination MAC. In WLAN, the AP participates in the wireless frame exchange, so wireless frames include AP-related transmitter/receiver addresses.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Why can WLAN frames contain three MAC addresses?</h2>
+<p>WLAN needs to distinguish wireless receiver/transmitter from the original source/final destination across the distribution system. Ethernet usually needs only destination and source MAC.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>What are the Ethernet frame fields?</h2>
+<ul class="answer-list">
+<li><strong>Destination MAC:</strong> 6 B</li>
+<li><strong>Source MAC:</strong> 6 B</li>
+<li><strong>Ethertype/Length:</strong> 2 B</li>
+<li><strong>Payload:</strong> usually up to 1500 B</li>
+<li><strong>FCS:</strong> 4 B</li>
+<li><strong>Preamble and inter-frame gap:</strong> physical/on-wire overhead, normally not counted as MAC frame length in exam calculations.</li>
+</ul>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>What does Ethernet MTU 1500 B include?</h2>
+<ul class="answer-list">
+<li>Maximum L3 packet size inside the Ethernet payload.</li>
+<li>Includes IP header, transport header, and transport/application data.</li>
+<li>Excludes Ethernet header and FCS.</li>
+<li>Usual maximum Ethernet frame: <code>14 + 1500 + 4 = 1518</code> B.</li>
+</ul>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain ARP.</h2>
+<p>ARP maps an IPv4 address in the local L2 network to a MAC address. The request is sent to broadcast MAC ff:ff:ff:ff:ff:ff; the reply is normally unicast back to the requester.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain CRC.</h2>
+<p>The sender treats the bit string as a polynomial, divides by a reduction polynomial, and appends the remainder as checksum. The receiver divides message plus checksum by the same polynomial; a zero remainder indicates no detected error.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Why is CRC not error correction?</h2>
+<p>CRC detects many error patterns but does not identify the exact bit positions to repair. It is primarily error detection, not correction.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Store-and-forward versus cut-through switching?</h2>
+<p>Store-and-forward receives the whole frame and can verify FCS before forwarding. Cut-through begins forwarding once the output port is known, reducing latency but possibly forwarding corrupted frames.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>In mixed hub/switch/AP topologies, how do you pick MAC addresses?</h2>
+<p>For Ethernet over switches, source/destination MAC stay the sender/final L2 receiver inside the broadcast domain. Across WLAN, the AP may be the receiver/transmitter address on the wireless hop. Across routers, the L2 addresses change per hop.</p>
+</article>
+</section>
+<section class="section-heading"><p class="eyebrow">Old Exams</p><h1>Old Exam Questions and Answers</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 1</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Which MAC address is used when sending to a notebook through an AP/switch topology?</p>
+<p class="qa-answer"><strong>Answer:</strong> The L2 destination is the next receiver on that L2 technology; in WLAN the AP may be explicitly addressed, while the final IP destination remains the notebook.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2021, Aufgabe 4</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Analyze WLAN plus switch/AP forwarding and domains.</p>
+<p class="qa-answer"><strong>Answer:</strong> The switch learns from source MACs and floods unknown destinations; the AP translates between 802.11 and Ethernet; switches split collision domains, routers split broadcast domains.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2022, Aufgabe 2</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Why does WLAN often use three MAC addresses while Ethernet uses two?</p>
+<p class="qa-answer"><strong>Answer:</strong> The AP is not transparent on the wireless link, so WLAN must encode receiver/transmitter and original source/final destination information.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2022, Aufgabe 3</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Work with a CRC reduction polynomial.</p>
+<p class="qa-answer"><strong>Answer:</strong> Use polynomial division over <code>GF(2)</code>; irreducibility is not strictly required for CRC, because practical polynomials are chosen for useful error-detection properties.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2023, Aufgabe 3</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> What is CRC used for in Ethernet and how is the checksum computed?</p>
+<p class="qa-answer"><strong>Answer:</strong> CRC detects bit errors in frames; append the polynomial remainder so receiver division yields zero if no error is detected.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2023, Aufgabe 4</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Predict frame forwarding in a layer-2 topology.</p>
+<p class="qa-answer"><strong>Answer:</strong> Hubs repeat to all ports, switches learn source MACs and flood unknown destinations, then forward known destinations selectively.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2024, Aufgabe 1</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> What does a switch do for unknown destination MAC?</p>
+<p class="qa-answer"><strong>Answer:</strong> It floods the frame to all ports except the ingress port; it does not ARP, wait, or send it back.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2023, Aufgabe 1</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Count broadcast and collision domains.</p>
+<p class="qa-answer"><strong>Answer:</strong> Each switch port is its own collision domain in full-duplex Ethernet; routers separate broadcast domains; switches alone do not.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2024, Aufgabe 7</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Mark collision and broadcast domains.</p>
+<p class="qa-answer"><strong>Answer:</strong> Mark shared hub/WLAN regions as collision-related areas, switch ports as separated collision domains, and router-separated regions as different broadcast domains.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2023, Aufgabe 6</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> How large is a maximum Ethernet frame for MTU 1500 B?</p>
+<p class="qa-answer"><strong>Answer:</strong> <code>1500</code> B L3 payload plus 14 B Ethernet header plus 4 B FCS equals 1518 B.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2024, Aufgabe 5</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Analyze an Ethernet frame without FCS.</p>
+<p class="qa-answer"><strong>Answer:</strong> First 14 B are Ethernet header; remaining bytes begin with the L3 packet selected by Ethertype.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2023, Aufgabe 1</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Reconstruct Ethernet/IPv4/TCP frame fields.</p>
+<p class="qa-answer"><strong>Answer:</strong> Use current-hop MACs, end-to-end IPs, TCP ports, header lengths, total length, and FCS/checksum information to fill the hexdump.</p>
+</div>
+</article>
+</section>
+<section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Exam Answer Checklist</h1></section>
+<section class="note-card wide"><span class="pill">Checklist</span><h2>Exam Answer Checklist</h2><ul>
+<li>Unknown unicast on a switch is flooded to all other ports; known unicast is sent only to the learned port.</li>
+<li>Switches break collision domains but normally keep one broadcast domain. Routers break broadcast domains.</li>
+<li>Ethernet MTU 1500 B is the L3 packet in the Ethernet payload; Ethernet header and FCS are extra.</li>
+<li>Ethernet frame without preamble/inter-frame gap: 14 B header + up to 1500 B payload + 4 B FCS = 1518 B.</li>
+<li>ARP request uses broadcast destination MAC; ARP reply usually uses unicast.</li>
+</ul></section>
+      <section class="section-heading all-notes-topic" id="notes-network-theory">
+        <p class="eyebrow">All Notes</p>
+        <h1>Network Layer</h1>
+      </section>
+<section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Theory Questions and Answers</h1></section>
+<section class="notes-grid compact">
+<article class="note-card"><span class="pill">Question</span>
+<h2>Why is the network layer needed even with Ethernet switching?</h2>
+<p>Ethernet MAC addresses are flat and local to a broadcast domain. The network layer provides logical hierarchical addressing, subnetting, routing across multiple links, and interconnection of different L2 networks.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Compare circuit, message, and packet switching.</h2>
+<ul class="answer-list">
+<li><strong>Circuit switching:</strong> reserves a path before transmission.</li>
+<li><strong>Message switching:</strong> forwards complete messages hop by hop.</li>
+<li><strong>Packet switching:</strong> splits data into packets with headers, allowing multiplexing and independent forwarding.</li>
+</ul>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Forwarding versus routing?</h2>
+<p>Forwarding is the local action of sending one packet to the selected next hop/interface. Routing is the process of building the routing table and deciding which paths should be used.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain IPv4 prefix, network address, broadcast address, and usable host range.</h2>
+<ul class="answer-list">
+<li><strong>Prefix length:</strong> number of leading bits that identify the network.</li>
+<li><strong>Network address:</strong> host bits are all <code>0</code>.</li>
+<li><strong>Broadcast address:</strong> host bits are all <code>1</code>.</li>
+<li><strong>Usable host range:</strong> normally between network and broadcast, excluding both.</li>
+</ul>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>How do you compute IPv4 subnet information?</h2>
+<ol class="answer-list">
+<li>Apply the subnet mask to the IP address to get the network address.</li>
+<li>Set all host bits to <code>1</code> to get the broadcast address.</li>
+<li>First usable address is normally network plus one.</li>
+<li>Last usable address is normally broadcast minus one.</li>
+<li>Watch for special assumptions such as point-to-point <code>/31</code>.</li>
+</ol>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain longest-prefix matching.</h2>
+<p>A router chooses the matching route with the most specific prefix, i.e. the largest prefix length. Only if specificity ties do metrics/administrative preferences become relevant.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Important IPv4 header fields?</h2>
+<ul class="answer-list">
+<li><strong>Version:</strong> identifies IPv4.</li>
+<li><strong>IHL:</strong> gives the IPv4 header length.</li>
+<li><strong>Total Length:</strong> gives the complete IPv4 packet size.</li>
+<li><strong>Identification, Flags, Fragment Offset:</strong> support fragmentation.</li>
+<li><strong>TTL:</strong> limits packet lifetime across routers.</li>
+<li><strong>Protocol:</strong> selects L4/ICMP, e.g. TCP, UDP, ICMP.</li>
+<li><strong>Header Checksum:</strong> protects the IPv4 header.</li>
+<li><strong>Source/Destination:</strong> end-to-end IP addresses.</li>
+</ul>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain IPv4 fragmentation.</h2>
+<ul class="answer-list">
+<li>If an IPv4 packet exceeds the outgoing MTU and DF is not set, a router may split it.</li>
+<li>All fragments share the same Identification value.</li>
+<li>Fragment Offset is measured in 8-byte units.</li>
+<li>MF is set on all fragments except the last.</li>
+<li>Fragment payload, except the last fragment, must be a multiple of 8 bytes.</li>
+</ul>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>MTU, path MTU, IP packet size, segment size, application payload?</h2>
+<ul class="answer-list">
+<li><strong>MTU:</strong> maximum L3 packet size on one L2 link.</li>
+<li><strong>Path MTU:</strong> minimum MTU along the whole path.</li>
+<li><strong>IP packet size:</strong> IP header plus IP payload.</li>
+<li><strong>TCP segment size:</strong> TCP header plus TCP payload.</li>
+<li><strong>Application payload:</strong> what remains after IP and transport headers.</li>
+</ul>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain IPv6 address concepts.</h2>
+<p>IPv6 addresses are 128 bits. Leading zeroes in each 16-bit group may be omitted. One longest run of zero groups may be compressed with <code>::</code>. Link-local addresses start with <code>fe80::/10</code>. Global unicast addresses are globally routable. Solicited-node multicast is used by Neighbor Discovery.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>ARP versus Neighbor Discovery?</h2>
+<p>ARP maps IPv4 addresses to MAC addresses using L2 broadcast. IPv6 uses ICMPv6 Neighbor Solicitation and Neighbor Advertisement, usually sent to solicited-node multicast rather than broadcast.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain SLAAC.</h2>
+<p>Stateless Address Autoconfiguration lets a host create its own IPv6 address from an advertised prefix plus an interface identifier. Privacy extensions randomize/change interface identifiers to reduce tracking.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>IPv4 versus IPv6 fragmentation?</h2>
+<ul class="answer-list">
+<li><strong>IPv4:</strong> routers may fragment packets if DF is not set.</li>
+<li><strong>IPv6:</strong> routers do not fragment normal packets.</li>
+<li><strong>IPv6 source host:</strong> must send suitably sized packets or use the IPv6 Fragment extension header.</li>
+</ul>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>ICMP/ICMPv6 messages?</h2>
+<p>Echo Request/Reply support ping-style reachability tests. TTL/Hop-Limit exceeded is sent when a router decrements TTL/Hop Limit to zero. ICMP also carries error information such as destination unreachable or packet too big.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Static, distance-vector, link-state, and path-vector routing?</h2>
+<ul class="answer-list">
+<li><strong>Static:</strong> routes are configured manually.</li>
+<li><strong>Distance-vector:</strong> routers exchange distances to destinations.</li>
+<li><strong>Link-state:</strong> routers flood topology information and compute shortest paths.</li>
+<li><strong>Path-vector:</strong> protocols advertise paths, e.g. AS paths in BGP.</li>
+</ul>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Count-to-infinity?</h2>
+<p>It is a distance-vector failure mode where routers slowly increase a metric due to stale mutual information. Split horizon avoids advertising a route back where it was learned; path-vector carries the path so loops can be detected.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain AS relationships and BGP policy.</h2>
+<p>An AS is a network under one administrative control. Customer/provider/peer relationships affect which routes are announced. Providers sell transit, customers buy transit, peers exchange traffic between their own/customer networks. BGP is policy-driven, not just shortest-path routing.</p>
+</article>
+<article class="note-card"><span class="pill">Routing</span>
+<h2>What is a Tier-1 autonomous system?</h2>
+<p>A <strong>Tier-1 autonomous system</strong> is at the top level of the Internet routing hierarchy. It can reach every other network on the Internet <strong>without buying transit</strong> from another provider.</p>
+</article>
+</section>
+<section class="section-heading"><p class="eyebrow">Old Exams</p><h1>Old Exam Questions and Answers</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 1</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Which IP and MAC destination are used when sending to another host?</p>
+<p class="qa-answer"><strong>Answer:</strong> The IP destination is the final host; the MAC destination is the next L2 receiver on the current link, e.g. gateway/AP/final host depending on topology.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2022, Aufgabe 1</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> How long is an IPv6 address and how are link-local addresses shortened?</p>
+<p class="qa-answer"><strong>Answer:</strong> IPv6 is 128 bits; remove leading zeroes per group and compress one longest zero run with <code>::</code>.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2022, Aufgabe 4</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Send ICMP Echo through a residential IPv4 network.</p>
+<p class="qa-answer"><strong>Answer:</strong> ARP is needed for each next-hop MAC if caches are empty; L2 MACs change at each hop; IP source/destination stay end-to-end; TTL decreases per router.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2022, Aufgabe 5</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Interpret Ethernet + IPv4 + TCP/SMTP frame.</p>
+<p class="qa-answer"><strong>Answer:</strong> Ethertype 0x0800 means IPv4, IHL 5 means 20 B IPv4 header, Protocol 0x06 means TCP, TCP destination port 25 means SMTP.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2023, Aufgabe 2</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Configure IP routing in a lab topology.</p>
+<p class="qa-answer"><strong>Answer:</strong> Assign addresses from the correct prefixes, set gateways/routes so each destination has a next hop, and remember routers separate broadcast domains.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2023, Aufgabe 3</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> MC on domains and addressing.</p>
+<p class="qa-answer"><strong>Answer:</strong> Switches split collision domains, routers split broadcast domains, and IP routing is required across subnets.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2024, Aufgabe 3</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Use longest-prefix matching in a routing table.</p>
+<p class="qa-answer"><strong>Answer:</strong> Select the route with the longest matching prefix; UDP likely explains out-of-order chat messages because UDP provides no ordering guarantee.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2024, Aufgabe 4</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Analyze an IPv6/TCP hexdump.</p>
+<p class="qa-answer"><strong>Answer:</strong> IPv6 base header is 40 B; Next Header 0x06 is TCP; Hop Limit is decremented by routers; source/destination IPv6 addresses occupy 16 B each.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2025, Aufgabe 2</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> IPv6 Wohnheim network with empty caches.</p>
+<p class="qa-answer"><strong>Answer:</strong> Hosts use NDP to learn MAC addresses, can form addresses from prefix plus interface identifier when SLAAC applies, and send off-link traffic to the gateway.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2025, Aufgabe 3</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Identify ICMP in a frame.</p>
+<p class="qa-answer"><strong>Answer:</strong> IPv4 Protocol 1 identifies ICMP; ICMP type/code state whether it is Echo, TTL exceeded, unreachable, etc.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2022, Aufgabe 1</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Which routes does one AS announce to a peer?</p>
+<p class="qa-answer"><strong>Answer:</strong> An AS typically announces its own and customer prefixes to peers/providers, but not routes learned from one peer/provider to another peer/provider.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2022, Aufgabe 2</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Give IPv4 PTR name and detect invalid subnet.</p>
+<p class="qa-answer"><strong>Answer:</strong> Reverse IPv4 uses reversed octets under <code>in-addr.arpa</code>; e.g. 203.0.113.4 becomes <code>4.113.0.203.in-addr.arpa</code>. A subnet address must have host bits zero.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2022, Aufgabe 6</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> IPv4 network with NAT.</p>
+<p class="qa-answer"><strong>Answer:</strong> NAT rewrites private source IP/port to public IP/port on outgoing packets and uses its mapping table for incoming replies.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2023, Aufgabe 5</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Home network with NAT-capable router.</p>
+<p class="qa-answer"><strong>Answer:</strong> Inside hosts use private addresses and default route to the NAT router; the router translates addresses/ports for Internet traffic.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2023, Aufgabe 6</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> MTU and maximum Ethernet frame size.</p>
+<p class="qa-answer"><strong>Answer:</strong> MTU 1500 B is L3 packet size; Ethernet frame with header and FCS is 1518 B. Propagation and serialization are separate delays.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2024, Aufgabe 3</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Fill source/destination MAC and IP at points across NAT.</p>
+<p class="qa-answer"><strong>Answer:</strong> MACs change every hop; IP destination is rewritten by NAT when entering the private side; public-to-private mapping determines the final private IP/port.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2024, Aufgabe 7</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Derive IPv6 solicited-node address and multicast MAC.</p>
+<p class="qa-answer"><strong>Answer:</strong> Use last 24 bits of the IPv6 address: solicited-node is <code>ff02::1:ffXX:XXXX</code>; Ethernet multicast MAC is <code>33:33:ff:XX:XX:XX</code>.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2025, Aufgabe 1</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Which IPv6 address is fully shortened?</p>
+<p class="qa-answer"><strong>Answer:</strong> Remove all leading zeroes and compress exactly one longest zero run; do not use <code>::</code> twice.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2025, Aufgabe 3</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Forward IPv4 packets across routers.</p>
+<p class="qa-answer"><strong>Answer:</strong> Each router forwards based on LPM, decrements TTL, and sends the packet in a new L2 frame to the next-hop MAC.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2025, Aufgabe 5</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> IPv4, UDP, and NAT hole punching.</p>
+<p class="qa-answer"><strong>Answer:</strong> UDP hole punching relies on both peers creating NAT mappings by sending outbound packets, so later inbound packets match existing NAT table entries.</p>
+</div>
+</article>
+</section>
+<section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Exam Answer Checklist</h1></section>
+<section class="note-card wide"><span class="pill">Checklist</span><h2>Exam Answer Checklist</h2><ul>
+<li>L2 addresses change at every hop; L3 source/destination normally stay end-to-end unless NAT is involved.</li>
+<li>TTL/Hop Limit decreases by one at each router.</li>
+<li>IPv4 routers may fragment; IPv6 routers do not fragment normal packets. IPv6 uses source fragmentation plus Fragment extension header.</li>
+<li>Fragment offset is counted in 8-byte units.</li>
+<li>Longest-prefix match beats lower metric among less-specific alternatives.</li>
+<li>IPv6 abbreviation: remove leading zeroes in groups and compress one longest all-zero run with <code>::</code>; use <code>::</code> at most once.</li>
+</ul></section>
+      <section class="section-heading all-notes-topic" id="notes-transport-application">
+        <p class="eyebrow">All Notes</p>
+        <h1>Transport & Application</h1>
+      </section>
+<section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Theory Questions and Answers</h1></section>
+<section class="notes-grid compact">
+<article class="note-card"><span class="pill">Question</span>
+<h2>Compare UDP and TCP.</h2>
+<ul class="answer-list">
+<li><strong>UDP:</strong> connectionless, datagram-oriented, unreliable, no ordering guarantee.</li>
+<li><strong>TCP:</strong> connection-oriented, stream-oriented, reliable, ordered, with flow and congestion control.</li>
+</ul>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Why can UDP datagrams arrive out of order?</h2>
+<p>IP packets may take different paths or experience different delays, and UDP does not reorder or retransmit. TCP numbers bytes and delivers them to the application in order.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain the TCP three-way handshake.</h2>
+<ol class="answer-list">
+<li>Client sends <strong>SYN</strong> with its initial sequence number.</li>
+<li>Server replies <strong>SYN-ACK</strong> with its own sequence number and acknowledgement of the client SYN.</li>
+<li>Client sends <strong>ACK</strong>.</li>
+<li><strong>MSS</strong> may be announced as a TCP option during the SYN exchange.</li>
+</ol>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>How do you compute MSS from MTU?</h2>
+<ul class="answer-list">
+<li><strong>MSS:</strong> maximum TCP payload, not the full IP packet.</li>
+<li><strong>IPv4 without options on Ethernet:</strong> <code>1500 - 20 - 20 = 1460</code> B.</li>
+<li><strong>TCP options:</strong> subtract them if present.</li>
+<li><strong>IPv6 without extension headers:</strong> <code>1500 - 40 - 20 = 1440</code> B.</li>
+</ul>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain TCP teardown.</h2>
+<p>Each direction is closed independently with FIN and ACK. A common graceful close is FIN, ACK, FIN, ACK, though FINs can sometimes be combined with data/ACKs.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain TCP congestion control.</h2>
+<ul class="answer-list">
+<li>The sender controls a congestion window to avoid overloading the network.</li>
+<li><strong>Slow start:</strong> increases quickly.</li>
+<li><strong>Congestion avoidance:</strong> increases more cautiously.</li>
+<li><strong>Packet loss:</strong> reduces the window.</li>
+<li><strong>Goal:</strong> network stability and fair sharing.</li>
+</ul>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain NAT/PAT.</h2>
+<p>NAT rewrites IP addresses; PAT additionally rewrites transport ports so many internal hosts can share one public IP. The NAT table maps internal tuple to external tuple and uses it to translate replies.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Why is NAT harder for ICMP?</h2>
+<p>TCP/UDP have ports that identify flows. ICMP often lacks ports; error messages may include part of the original packet, so the NAT must inspect embedded headers to find the internal flow.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain UDP hole punching.</h2>
+<ol class="answer-list">
+<li>Both peers send outbound UDP packets so their NATs create mappings.</li>
+<li>A coordination server tells each peer the other peer's public endpoint.</li>
+<li>Incoming packets can then match existing NAT state.</li>
+</ol>
+</article>
+</section>
+<section class="section-heading"><p class="eyebrow">Important Read</p><h1>Sockets / POSIX API</h1></section>
+<section class="note-card wide">
+<span class="pill">Sockets</span>
+<h2>Function Roles</h2>
+<pre class="note-code">socket(domain, type, protocol)
+creates socket
+domain: AF_INET / AF_INET6
+type: SOCK_STREAM = TCP, SOCK_DGRAM = UDP
+protocol usually 0 = choose default
+
+bind(sockfd, addr, addrlen)
+assigns local IP + local port to socket
+server usually binds
+client may bind, but often OS chooses ephemeral port
+
+listen(sockfd, backlog)
+marks TCP socket as passive/listening
+only for TCP server after bind
+
+accept(sockfd, addr, addrlen)
+blocks until incoming TCP connection
+returns NEW connected socket
+original listening socket stays open
+
+connect(sockfd, addr, addrlen)
+TCP: starts connection to remote IP/port
+UDP: sets default peer, no handshake
+
+send()/recv()
+send/receive on connected socket
+
+sendto()/recvfrom()
+send/receive with explicit address
+typical for UDP
+
+close(sockfd)
+closes socket / TCP connection teardown
+
+select()
+waits until one or more sockets are ready
+can monitor multiple sockets
+may block until event or timeout</pre>
+</section>
+<section class="notes-grid compact">
+<article class="note-card">
+<span class="pill">Order</span>
+<h2>TCP Server</h2>
+<pre class="note-code">socket()
+bind()
+listen()
+accept()
+recv()/send()
+close()</pre>
+</article>
+<article class="note-card">
+<span class="pill">Order</span>
+<h2>TCP Client</h2>
+<pre class="note-code">socket()
+connect()
+send()/recv()
+close()</pre>
+</article>
+<article class="note-card">
+<span class="pill">Order</span>
+<h2>UDP Server</h2>
+<pre class="note-code">socket()
+bind()
+recvfrom()/sendto()
+close()</pre>
+</article>
+<article class="note-card">
+<span class="pill">Order</span>
+<h2>UDP Client</h2>
+<pre class="note-code">socket()
+sendto()/recvfrom()
+close()</pre>
+</article>
+</section>
+<section class="note-card wide">
+<span class="pill">Common Exam Traps</span>
+<h2>Socket API Traps</h2>
+<ul class="answer-list">
+<li><code>listen()</code> does <strong>not</strong> accept a connection.</li>
+<li><code>accept()</code> returns a <strong>new</strong> connected socket.</li>
+<li><code>bind()</code> does <strong>not</strong> connect to a remote host.</li>
+<li><code>connect()</code> on TCP triggers the handshake.</li>
+<li><code>socket()</code> chooses protocol family/type, not local port.</li>
+<li><code>select()</code> does not send data; it waits for readiness.</li>
+<li>UDP has no <code>listen()</code> or <code>accept()</code>.</li>
+</ul>
+</section>
+<section class="notes-grid compact">
+<article class="note-card"><span class="pill">Question</span>
+<h2>Recursive versus iterative DNS?</h2>
+<p>In a recursive query, the resolver is asked to obtain the final answer. In an iterative query, a server returns the best information it has, often a referral to another nameserver.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>DNS lookup roles?</h2>
+<ol class="answer-list">
+<li>The stub resolver asks a recursive resolver.</li>
+<li>The recursive resolver queries root servers.</li>
+<li>It then queries TLD servers.</li>
+<li>It then queries authoritative nameservers until it obtains the requested record.</li>
+</ol>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Explain common DNS records.</h2>
+<ul class="answer-list">
+<li><strong>A:</strong> maps name to IPv4.</li>
+<li><strong>AAAA:</strong> maps name to IPv6.</li>
+<li><strong>NS:</strong> delegates or identifies nameservers.</li>
+<li><strong>CNAME:</strong> aliases one name to another.</li>
+<li><strong>PTR:</strong> maps address to name in reverse DNS.</li>
+<li><strong>SOA:</strong> gives zone authority metadata.</li>
+<li><strong>MX:</strong> names mail exchangers.</li>
+</ul>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Reverse DNS for IPv4 and IPv6?</h2>
+<ul class="answer-list">
+<li><strong>IPv4:</strong> reverses octets under <code>in-addr.arpa</code>.</li>
+<li><strong>IPv6:</strong> reverses hexadecimal nibbles under <code>ip6.arpa</code>.</li>
+<li><strong>Example:</strong> <code>203.0.113.4</code> becomes <code>4.113.0.203.in-addr.arpa</code>.</li>
+</ul>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Which HTTP method loads a simple file/video?</h2>
+<p>Usually <code>GET</code>. It requests representation of the resource identified by the URL.</p>
+</article>
+<article class="note-card"><span class="pill">Question</span>
+<h2>Where does TLS fit and what do X.509 certificates prove?</h2>
+<p>TLS sits above TCP and below applications like HTTP; in OSI terms it provides session/presentation functions such as authentication, key agreement, encryption, and integrity. X.509 validation checks the certificate chain to a trusted root and that the requested domain is covered by the certificate.</p>
+</article>
+</section>
+<section class="section-heading"><p class="eyebrow">Important Read</p><h1>Reliability and Security Properties</h1></section>
+<section class="note-card wide">
+<span class="pill">Exam Nuance</span>
+<h2>TCP/UDP Checksums Are Not Security Integrity</h2>
+<p>Use this in the exam by first naming the goal, then saying <strong>which mechanism provides it</strong>. Example: TCP provides reliability through sequence numbers, ACKs, retransmissions, and ordered delivery. TLS provides confidentiality, integrity, and authenticity through cryptographic protection and certificates.</p>
+<div class="table-wrap">
+<table class="notes-table">
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Reliability</th>
+<th>Confidentiality</th>
+<th>Integrity</th>
+<th>Authenticity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TCP</strong></td>
+<td><strong>Yes.</strong> Sequence numbers, ACKs, retransmissions, and ordered delivery repair lost or reordered data.</td>
+<td><strong>No.</strong> TCP does not encrypt payload.</td>
+<td><strong>No, for security.</strong> TCP checksum only detects accidental errors, not malicious manipulation.</td>
+<td><strong>No.</strong> TCP does not prove who the peer is.</td>
+</tr>
+<tr>
+<td><strong>UDP</strong></td>
+<td><strong>No.</strong> No ACKs, retransmissions, ordering, or connection state.</td>
+<td><strong>No.</strong> UDP payload is not encrypted.</td>
+<td><strong>No, for security.</strong> UDP checksum only detects accidental corruption.</td>
+<td><strong>No.</strong> UDP does not authenticate sender identity.</td>
+</tr>
+<tr>
+<td><strong>TLS</strong></td>
+<td><strong>No by itself.</strong> TLS relies on TCP or QUIC underneath for delivery.</td>
+<td><strong>Yes.</strong> TLS encrypts application data.</td>
+<td><strong>Yes.</strong> TLS detects tampering cryptographically.</td>
+<td><strong>Yes.</strong> TLS uses certificates, usually X.509, to authenticate the server.</td>
+</tr>
+<tr>
+<td><strong>HTTP</strong></td>
+<td><strong>Only via lower layer.</strong> HTTP itself has no reliability; usually TCP below it provides reliable byte delivery.</td>
+<td><strong>No.</strong> Plain HTTP is readable on the network.</td>
+<td><strong>No.</strong> Plain HTTP can be modified by an attacker on path.</td>
+<td><strong>No.</strong> Plain HTTP does not cryptographically prove server identity.</td>
+</tr>
+<tr>
+<td><strong>HTTPS</strong></td>
+<td><strong>Yes.</strong> Reliability comes from TCP or QUIC underneath.</td>
+<td><strong>Yes.</strong> TLS encrypts HTTP data.</td>
+<td><strong>Yes.</strong> TLS detects manipulation using cryptographic integrity protection.</td>
+<td><strong>Yes.</strong> TLS certificates authenticate the server; sometimes client certificates are also used.</td>
+</tr>
+<tr>
+<td><strong>QUIC</strong></td>
+<td><strong>Yes.</strong> ACKs, retransmissions, streams, and ordering per stream.</td>
+<td><strong>Yes.</strong> QUIC includes TLS 1.3 security.</td>
+<td><strong>Yes.</strong> Cryptographic integrity via TLS/QUIC.</td>
+<td><strong>Yes.</strong> TLS certificate authentication.</td>
+</tr>
+<tr>
+<td><strong>IPsec</strong></td>
+<td><strong>No, not normally.</strong> IPsec secures IP packets, but does not itself retransmit lost packets or guarantee ordering.</td>
+<td><strong>Yes.</strong> ESP can encrypt IP payloads.</td>
+<td><strong>Yes.</strong> IPsec can cryptographically protect packets against modification.</td>
+<td><strong>Yes.</strong> Peers are authenticated using keys, certificates, or security associations.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul class="answer-list">
+<li><strong>TCP provides reliability, but not security.</strong></li>
+<li><strong>TLS, QUIC, HTTPS, and IPsec provide security properties.</strong></li>
+<li><strong>UDP and plain HTTP alone provide almost none of these security guarantees.</strong></li>
+</ul>
+<div class="transition-list">
+<strong>Useful combinations:</strong>
+<ul class="answer-list compact-list">
+<li><strong>HTTP + TCP:</strong> reliable, not secure.</li>
+<li><strong>HTTP + TLS + TCP:</strong> HTTPS, reliable and secure.</li>
+<li><strong>HTTP + QUIC + UDP:</strong> HTTP/3, reliable and secure.</li>
+<li><strong>TCP + TLS:</strong> secure reliable channel.</li>
+<li><strong>UDP + QUIC:</strong> reliable secure transport.</li>
+<li><strong>IPsec + TCP/UDP:</strong> network-layer security underneath transport.</li>
+</ul>
+</div>
+<div class="transition-list">
+<strong>Best exam sentence:</strong> TCP gives reliability. TLS gives confidentiality, integrity, and authenticity. HTTPS combines HTTP with TLS, usually over TCP, so it gets both reliability and security.
+</div>
+<pre class="note-code">Checksum is not security integrity.
+Do not say TCP/UDP provide integrity in a security sense.</pre>
+</section>
+<section class="section-heading"><p class="eyebrow">Old Exams</p><h1>Old Exam Questions and Answers</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Endterm 2022, Aufgabe 3</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Compute TCP MSS over Ethernet/IPv4 and complete the TCP handshake.</p>
+<p class="qa-answer"><strong>Answer:</strong> MSS is MTU minus IPv4 and TCP headers/options; with Ethernet MTU 1500 and IPv4/TCP base headers it is 1460 B, or 1456 B if a 4 B MSS option is included in the segment under consideration. Handshake is SYN, SYN-ACK, ACK.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2022, Aufgabe 6</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> What happens with <code>listen()</code> on UDP and how many sockets does a TCP server need?</p>
+<p class="qa-answer"><strong>Answer:</strong> <code>listen()</code> makes sense for connection-oriented sockets, not UDP. A TCP server has a listening socket and a connected socket for each accepted client.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2024, Aufgabe 3</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Chat messages arrive out of order; which transport protocol is likely?</p>
+<p class="qa-answer"><strong>Answer:</strong> UDP, because it does not guarantee ordering. TCP would deliver an ordered byte stream.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2024, Aufgabe 5</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Download a video over HTTP/TCP/IPv6.</p>
+<p class="qa-answer"><strong>Answer:</strong> Use HTTP <code>GET</code>; TCP payload per full packet is <code>MTU - 40</code> B IPv6 header <code>-20</code> B TCP header when no options are present.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2025, Aufgabe 1</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> What must a browser check in an HTTPS X.509 certificate?</p>
+<p class="qa-answer"><strong>Answer:</strong> The certificate must chain to a trusted root and cover the requested domain. The private signing key is not inside the certificate.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2025, Aufgabe 4</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Configure/understand DNS delegation to an authoritative nameserver.</p>
+<p class="qa-answer"><strong>Answer:</strong> Parent zone contains NS records delegating the child zone, and often glue A/AAAA records if needed to reach in-bailiwick nameservers.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2025, Aufgabe 5</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Assign TLS to OSI layers and name functions.</p>
+<p class="qa-answer"><strong>Answer:</strong> TLS can be explained as session/presentation-layer functionality: session establishment/key agreement, authentication, encryption, and integrity protection above TCP.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2022, Aufgabe 5</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Fill a DNS zonefile.</p>
+<p class="qa-answer"><strong>Answer:</strong> Use SOA for zone metadata, NS for authoritative nameservers, A/AAAA for addresses, MX for mail, CNAME for aliases, and correct fully qualified names/trailing dots.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2022, Aufgabe 7</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Explain TCP Reno congestion control.</p>
+<p class="qa-answer"><strong>Answer:</strong> The sender adjusts congestion window; slow start grows quickly, congestion avoidance grows linearly, and loss reduces the window/threshold.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2023, Aufgabe 3</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Critique DNS resolution with recursive and iterative queries.</p>
+<p class="qa-answer"><strong>Answer:</strong> Stub to local resolver is usually recursive; resolver to root/TLD/authoritative servers is iterative, following NS referrals until the final RR is returned.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2025, Aufgabe 4</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> Forward and reverse DNS with IPv6.</p>
+<p class="qa-answer"><strong>Answer:</strong> Forward names use A/AAAA. IPv6 reverse DNS reverses hexadecimal nibbles under <code>ip6.arpa</code>, and delegation occurs on nibble boundaries unless special mechanisms are used.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2025, Aufgabe 5</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> IPv4, UDP, and NAT hole punching.</p>
+<p class="qa-answer"><strong>Answer:</strong> NAT maps private IP/port to public IP/port. Hole punching tries to create matching outbound NAT state at both ends so direct UDP packets are accepted.</p>
+</div>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2025, Aufgabe 6</span>
+<div class="qa-block">
+<p class="qa-question"><strong>Question:</strong> TCP congestion control under network problems.</p>
+<p class="qa-answer"><strong>Answer:</strong> Loss/timeout indicates congestion; the sender reduces its congestion window and then grows it according to slow start/congestion avoidance rules.</p>
+</div>
+</article>
+</section>
+<section class="section-heading"><p class="eyebrow">Theory Notes</p><h1>Exam Answer Checklist</h1></section>
+<section class="note-card wide"><span class="pill">Checklist</span><h2>Exam Answer Checklist</h2><ul>
+<li>UDP is datagram-oriented and connectionless; TCP is connection-oriented and stream-oriented.</li>
+<li>TCP MSS is not the MTU: subtract IP header, TCP header, and TCP options if present.</li>
+<li>NAT changes at least source or destination IP/port plus checksums; replies are mapped using the NAT table.</li>
+<li>DNS recursive query asks the resolver to finish the lookup; iterative query returns the best referral or answer known by that server.</li>
+<li>HTTPS certificate checks include a valid trust chain and that the requested domain is covered by the certificate.</li>
+</ul></section>
+      <section class="section-heading all-notes-topic" id="notes-paper-checklist">
+        <p class="eyebrow">All Notes</p>
+        <h1>Paper Checklist</h1>
+      </section>
+<section class="section-heading"><p class="eyebrow">Paper Checklist</p><h1>Complete Non-MCQ Paper Notes</h1></section>
+<section class="section-heading sub"><p class="eyebrow">Old Paper</p><h1>Midterm 2020</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 2a</span>
+<p>Shannon versus Hartley capacity. Shannon depends on bandwidth and noise/SNR: <code>C=B_2(1+SNR)</code>. Hartley depends on bandwidth and distinguishable signal levels: <code>C=2B_2(M)</code> in the common baseband formulation.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 2b</span>
+<p>Quantization levels for interval <code>[-3,3]</code> with 2 bit and minimized error. Two bits give 4 levels. For centered quantization bins over width 6, use <code>-2.25,-0.75,0.75,2.25</code>.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 2c</span>
+<p>MLT-3 for bit sequence <code>00010011</code>. In MLT-3, a 0 keeps the current level and a 1 moves to the next level in the cycle <code>0,+1,0,-1,0,...</code>. Starting at 0, only the 1 bits cause transitions.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 2d</span>
+<p>Draw all broadcast domains. Broadcast domains are separated by routers/VLANs. Switches and hubs normally remain in the same broadcast domain.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 2e</span>
+<p>CSMA/CD versus CSMA/CA binary exponential backoff. CSMA/CD backs off after a detected collision. CSMA/CA randomizes access even when the medium appears free, using a contention window, because WLAN cannot reliably detect collisions while transmitting.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 2f</span>
+<p>Why IEEE 802.11 often has three MAC-address fields. The AP is explicit on the wireless link. The frame may need receiver/transmitter plus original source/final destination information.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 2g</span>
+<p>Mark the L3 PDU inside an Ethernet frame. The Ethernet L2 payload/SDU is the L3 PDU. It starts after destination MAC, source MAC, and Ethertype, and ends before the FCS.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 2h</span>
+<p>Assign frame, packet, and segment to OSI layers. Frame is L2, packet is L3, segment is L4.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 2i</span>
+<p>Give signal-space assignments for ASK, PSK, and QAM. ASK varies amplitude on one axis. PSK uses equal-radius phase points. QAM varies amplitude and phase, giving points with multiple radii and phases.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 2j</span>
+<p>IPv4 fields changed by a forwarding router without fragmentation. TTL is decremented and IPv4 header checksum is recomputed. With fragmentation, Total Length, flags, and Fragment Offset may also change.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 3a-d</span>
+<p>IPoAC/physical transport calculations. An 8 GiB carrier holds <code>2^36</code> bit. Serialization over 256 s gives <code>2^28</code> bit/s, above 100 Mbit/s. Propagation over 50 km at 120 km/h is 1500 s. A 50 GiB archive needs 7 carriers, so delay is <code>7256+1500=3292</code> s.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 4a-c</span>
+<p>Encode <code>QRV?</code>, split into frames, and compute coding ratio. Since the text is not digits only, use 8-bit ASCII. <code>QRV?</code> is 32 payload bits. With 12 payload bits per 16-bit packet, 3 packets are required, so useful/transmitted ratio is <code>32/48=2/3</code>.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 4d-e</span>
+<p>CRC failure types and checksum. CRC misses errors that are multiples of the reduction polynomial; burst errors longer than the guaranteed degree are not always detected. For SDU <code>0x515</code> with <code>x^4+x^2+1</code>, checksum is <code>0101</code>.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2020, Aufgabe 4f-j</span>
+<p>Transmission duration, message graph, and repeater media-access issue. 840 ASCII chars need <code>8408/12=560</code> packets; at 16 bit each and 512 bit/s, duration is 17.5 s. Senders to pagers form a directed graph. A same-frequency repeater introduces possible collisions; use time multiplexing or another frequency. description</p>
+</article>
+</section>
+<section class="section-heading sub"><p class="eyebrow">Old Paper</p><h1>Midterm 2021</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Midterm 2021, Aufgabe 2a-f</span>
+<p>GRNVS of the Air frame, CRC, Manchester, and 4-ASK. ASCII <code>toot</code> is <code>01110100 01101111 01101111 01110100</code>. With 6 payload bits per frame, 6 frames are needed. CRC uses the given polynomial and appends the padded remainder. Manchester provides clock transitions; 4-ASK has four amplitude levels and carries 2 bit per symbol.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2021, Aufgabe 3a-e</span>
+<p>Audio channel capacity and coding. A 16-bit DAC has <code>2^16=65536</code> levels. Hartley capacity uses <code>B=16000-70=15930</code> Hz and <code>M=2^16</code>, giving about 509.76 kbit/s without noise. If signal power is twice noise power, <code>SNR=3.01</code> dB and Shannon capacity is about 25.25 kbit/s. A code rate reduces useful data rate by the useful/transmitted ratio.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2021, Aufgabe 4a-b</span>
+<p>Mark broadcast and collision domains. One L2 LAN without routers is one broadcast domain. Collision domains are separated by switch ports; WLAN clients associated to the same AP share the wireless medium in the simplified exam model.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2021, Aufgabe 4c-d</span>
+<p>Is the AP transparent? For notebooks, no: the AP is addressed on WLAN. For wired PCs, yes in the simplified Ethernet view: the AP forwards frames to associated WLAN stations.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2021, Aufgabe 4e</span>
+<p>Why 802.3 has two addresses but 802.11 can have up to four. Ethernet identifies transmitter/source and receiver/destination without L2 relay ambiguity. WLAN may need transmitter, receiver, original source, and final destination across an AP or distribution system.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2021, Aufgabe 4f-i</span>
+<p>Address fields for NB1, AP, PC1, and NB2 reception. NB1 to AP uses TA=SA=NB1, RA=AP, DA=PC1. AP to PC1 on Ethernet uses TA/SA=NB1 and RA/DA=PC1 in the simplified answer. Other wireless clients may physically hear but discard frames not addressed to them.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2021, Aufgabe 4j</span>
+<p>Empty switch table forwarding. If PC2 sends to NB2 and the switch has not learned NB2, it floods to all ports except the ingress port. description</p>
+</article>
+</section>
+<section class="section-heading sub"><p class="eyebrow">Old Paper</p><h1>Midterm 2022</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Midterm 2022, Aufgabe 2a-e</span>
+<p>Short theory: WLAN addresses, CSMA, hub/switch, source coding, channel coding. WLAN often needs three MAC addresses because APs are not transparent to WLAN stations. CSMA/CA uses avoidance/backoff and L2 ACKs; CSMA/CD detects collisions while sending. Hubs repeat to all ports; switches learn and forward selectively. Source coding removes redundancy; channel coding adds redundancy for error detection/correction.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2022, Aufgabe 3a-f</span>
+<p>CRC theory. A reducible CRC polynomial can still be useful. CRC does not require a field; it requires useful error-detection properties. Ethernet receivers discard frames with detected bit errors. Undetected errors are exactly those divisible by the reduction polynomial.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2022, Aufgabe 3c-e</span>
+<p>CRC calculation and bit error. For <code>r(x)=x^4+x^2</code>, compute the remainder over <code>GF(2)</code> by XOR division and append it. A single-bit error <code>e(x)=x^11</code> is detected in the given solution because the received polynomial has nonzero remainder.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2022, Aufgabe 4a-l</span>
+<p>Krönende Übertragung delay comparison. Split 6 h into six 1 h parts. One film part at 3000 kbit/s is 1.35 GB; total is 8.1 GB. Physical transport of one finished part takes about 10.9 h after filming. First arrival from ceremony start is about 11.9 h; last about 16.9 h. For digital streaming, payload per 1518 B frame is <code>1518-46=1472</code> B, serialization at 200 Mbit/s is 60.72 microseconds, propagation over 5200 km fiber is about 26 ms, so live-stream latency is roughly one packet delay instead of many hours. description</p>
+</article>
+</section>
+<section class="section-heading sub"><p class="eyebrow">Old Paper</p><h1>Midterm 2023</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Midterm 2023, Aufgabe 2a-e</span>
+<p>WLAN/CSMA/hub/source-channel coding short answers. Same recurring theory as Midterm 2022: APs are explicit on WLAN, CSMA/CA avoids while CSMA/CD detects, switches learn while hubs repeat, source coding compresses, channel coding protects.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2023, Aufgabe 3a-f</span>
+<p>CRC with <code>r(x)=x^4+x^2</code>. Show reducibility by factoring <code>x^4+x^2=x^2(x^2+1)=x^2(x+1)^2</code>. A non-irreducible polynomial may be chosen because CRC cares about which error patterns are detected, not field construction. Undetected errors are multiples of <code>r(x)</code>.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Midterm 2023, Aufgabe 4a-k</span>
+<p>Data-link topology. MAC addresses address nodes on a direct L2 network. A hub repeats frames to all other ports; a switch learns source MACs and forwards known destinations selectively. A host discards frames not addressed to it. A normal switch does not need a MAC address for forwarding. If a destination is unknown, the switch floods; after replies it learns additional table entries. Hubs create sniffing risk because other connected hosts can observe traffic. description</p>
+</article>
+</section>
+<section class="section-heading sub"><p class="eyebrow">Old Paper</p><h1>Endterm 2022</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Endterm 2022, Aufgabe 2a-e</span>
+<p>Short theory items from Aufgabe 2. Multiplexing methods include TDM, FDM, SDM, and CDM. An empty switch learns the source MAC and floods unknown destinations. DNS is application layer. Fourier spectrum drawing maps discrete harmonics back to a periodic time signal.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2022, Aufgabe 3a-d</span>
+<p>TCP data transfer. MSS over Ethernet/IPv4 with TCP MSS option is <code>1500-20-20-4=1456</code> B. A receive buffer for 7 full segments is <code>71456=10192</code> B. TCP handshake is SYN, SYN-ACK, ACK; SYN consumes one sequence number. The first client data segment carries the 980 B HTTP request; server full segments carry 1456 B.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2022, Aufgabe 4a-h</span>
+<p>Residential IPv4 network. Assign IPs according to prefixes; clients use low addresses and routers high/transport addresses as specified. With empty ARP cache, the ICMP Echo cannot be sent until the next-hop MAC is known. ARP Request uses broadcast destination MAC. Without routing entries, routers drop and may send ICMP Destination Unreachable. ARP is needed once per unknown next-hop L2 destination. TTL decreases per router; MAC addresses change per hop; IP source/destination stay end-to-end. Prefix sizing must leave enough host addresses.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2022, Aufgabe 5a-k</span>
+<p>Ethernet/IPv4/TCP/SMTP hexdump. L2 source and destination are the first two MAC fields. Ethertype <code>0x0800</code> means IPv4. IPv4 source is 131.159.20.214 and destination is 131.159.0.78. Protocol <code>0x06</code> means TCP. L4 starts after Ethernet 14 B plus IPv4 IHL 20 B. Destination port 25 suggests SMTP, used for mail exchange between MTAs. L7 starts after the TCP header; <code>45 48 4c 4f</code> is ASCII <code>EHLO</code>.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2022, Aufgabe 6b-f</span>
+<p>Socket programming theory. <code>bind()</code> associates a socket with local IP/port. <code>listen()</code> on UDP is meaningless and fails because UDP is connectionless. A TCP server communicating with one client uses a listening socket and a connected socket. UDP <code>connect()</code> sets a default peer/filter, not a TCP-style connection. <code>select()</code> waits for readiness in FD sets and returns ready descriptors or an error/timeout.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2022, Aufgabe 7a-g</span>
+<p>JWST physical/link calculations and modulation theory. Average travel speed is about 560 m/s. 68 GB storage at 235 Gbit/day lasts about 2.31 days. Four hours at 28 Mbit/s gives 50.40 GB/day. 4-PSK has four equal-radius phase points. Hartley gives 7 MHz for 28 Mbit/s with <code>M=4</code>; Shannon with <code>-20</code> dB SNR gives about 1.95 GHz, which is the limiting bandwidth because noise is decisive. description</p>
+</article>
+</section>
+<section class="section-heading sub"><p class="eyebrow">Old Paper</p><h1>Endterm 2023</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Endterm 2023, Aufgabe 1a-l</span>
+<p>Reconstruct IPv4/TCP frame. Current-hop MAC addresses come from the shown R1-to-PC link; Ethertype selects IPv4; IPv4 version/IHL is <code>0x45</code>; source/destination IPs are the end hosts; Protocol <code>0x06</code> selects TCP; TCP ports identify SSH/server-client roles; TCP offset locates L7; payload bytes are copied as given; FCS/checksum bytes go at the frame end.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2023, Aufgabe 2a-h</span>
+<p>IP routing testbed. DHCP can reuse previous leases only for the actually connected MAC; stale leases for other interfaces do not apply. Direct test links should use private non-overlapping subnets. S2 route table contains connected routes for both test subnets and management net plus default route via 10.1.176.1. Same-host communication can use <code>127.0.0.1</code>; a concrete process is addressed by IP address plus transport port. SLAAC creates IPv6 addresses from prefix plus interface identifier; privacy issue is stable interface identifiers tracking devices. Expanding an exhausted /20 requires a shorter prefix covering the old range.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2023, Aufgabe 5a-e</span>
+<p>Fourier analysis. A periodic repetition uses Fourier series. <code>=2/T</code>, and for <code>T=2</code>, <code>=</code>. The DC coefficient follows <code>a_0=(2/T)_T s(t)dt</code>; with <code>g(t)=1-t^2</code> on <code>[-1,1]</code>, <code>a_0=4/3</code>. The spectrum consists of discrete coefficients at harmonics.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2023, Aufgabe 6c-j</span>
+<p>4B5B, line coding, MLT-3, and entropy. Encode characters as 8-bit ASCII, then map 4-bit nibbles to 5-bit 4B5B code words. 4B5B is a line code because it prepares bit patterns for physical transmission and clock recovery, not error correction. Extra symbols serve control/framing. MLT-3 changes level only on 1 bits. Entropy is <code>H(X)=- p_i_2p_i</code>. description</p>
+</article>
+</section>
+<section class="section-heading sub"><p class="eyebrow">Old Paper</p><h1>Endterm 2024</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Endterm 2024, Aufgabe 2a-j</span>
+<p>Coding-chain task. Build Huffman tree from probabilities; most likely symbols get shortest code words. Name the transmission-chain steps: source coding/compression, channel coding/error protection, line coding/modulation as appropriate. The ground pulse/DC part is computed by integration over one symbol interval. QAM is identified by multiple amplitude and phase states. CRC validation divides received codeword by generator; zero remainder means no detected error. Entropy with checksum overhead counts source distribution and transmitted redundancy.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2024, Aufgabe 3a-f</span>
+<p>Transport symptoms, deployment, and routing. Out-of-order chat messages suggest UDP; TCP would deliver ordered byte stream. Global service should support IPv6 and often IPv4 for reachability; IPv4 behind NAT may need port forwarding for inbound connections, IPv6 global unicast usually does not need NAT. Longest-prefix matching determines the packet path; adjacent route entries can be aggregated only if they form a valid aligned prefix.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2024, Aufgabe 4a-l</span>
+<p>IPv6/TCP hexdump. Mark L2 source/destination first. Ethertype <code>0x86dd</code> means IPv6. IPv6 source may be SLAAC-derived if it embeds an interface identifier. Next Header <code>0x06</code> means TCP. L4 starts at Ethernet 14 B plus IPv6 base header 40 B. L7 protocol follows from TCP port. TCP data offset locates L7. ASCII payload must be decoded and its server-side effect explained.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2024, Aufgabe 5a-k</span>
+<p>HTTP/TCP/IPv6 video transfer and congestion/flow control. HTTP <code>GET</code> loads the video. Responses may include fields such as Content-Type, Date, Server, ETag, or Cache-Control. MSS over IPv6/Ethernet without extensions/options is <code>1500-40-20=1440</code> B. Complete the TCP handshake with SYN/SYN-ACK/ACK. Number server segments by content length divided by MSS. Congestion control reacts to loss by reducing <code>cwnd</code>; flow control protects a weak receiver by advertising a smaller receive window. description</p>
+</article>
+</section>
+<section class="section-heading sub"><p class="eyebrow">Old Paper</p><h1>Endterm 2025</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Endterm 2025, Aufgabe 2a-i</span>
+<p>IPv6 residential network and NDP. Assign link-local and global unicast addresses from the given prefixes/interface IDs. SLAAC privacy issue: stable MAC-derived identifiers allow tracking. Shorten IPv6 by removing leading zeroes and one longest zero run. Neighbor Solicitation is ICMPv6 and is sent to a solicited-node multicast address; the matching Ethernet multicast begins with <code>33:33</code>. Duplicate Address Detection uses the same NS/NA mechanism before using an address. Default routing points off-link traffic to the gateway.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2025, Aufgabe 3a-l</span>
+<p>IPv4/ICMP hexdump and FCS. L2 source/destination and FCS are marked in the Ethernet frame. FCS detects frame corruption; receivers discard bad frames. Ethertype <code>0x0800</code> means IPv4; Protocol <code>0x01</code> means ICMP. TTL/Hop Limit is read from L3. ICMP Echo Request/Reply supports ping; NDP-related ICMPv6 traffic is different. The reply swaps ICMP type and relevant addresses while using the current-hop MACs.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2025, Aufgabe 4a-h</span>
+<p>DNS zone and resolution. Add A and AAAA records for nameserver reachability. Delegate a child zone with NS records and glue if the nameserver is inside the delegated zone. MX records route mail. To find a mail server IP, resolve MX first, then A/AAAA for the returned exchange name. Draw recursive query from PC to resolver and iterative resolver queries to root/TLD/authoritative servers; final returned records are those answering the original name/type.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2025, Aufgabe 5a-e</span>
+<p>TCP plus TLS. TLS is above TCP and below application protocols; OSI mapping is often session/presentation because it provides authentication, key agreement, encryption, and integrity. TCP handshake consumes one RTT before TLS messages. Empty TCP payload segments after handshake are often ACKs. Reliability comes from TCP sequence numbers, ACKs, retransmission; confidentiality and integrity come from TLS cryptography and authenticated records.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Endterm 2025, Aufgabe 6a-h</span>
+<p>Reverse modulation, coding rate, and framing. Identify the modulation from the signal-space constellation. Decode symbols to bits, then undo line/channel coding according to the given mapping. Coderate is useful input bits divided by transmitted coded bits. Effective data rate multiplies symbol rate, bits per symbol, and coderate. Transmission time is payload plus overhead divided by effective rate. Alternatives to explicit control characters include length fields, escape/byte stuffing, bit stuffing, or out-of-band framing. description</p>
+</article>
+</section>
+<section class="section-heading sub"><p class="eyebrow">Old Paper</p><h1>Retake 2022</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Retake 2022, Aufgabe 2a-d</span>
+<p>PTR, invalid subnet, aggregation, IPv6 shortening. IPv4 PTR for 203.0.113.4 is the reversed-octet name under <code>in-addr.arpa</code>: <code>4.113.0.203.</code> followed by that suffix. A network address must have all host bits zero; <code>192.168.240.15/20</code> is not a valid subnet address. Aggregation requires adjacent aligned prefixes. IPv6 shortening removes leading zeroes and compresses one longest zero run.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2022, Aufgabe 3a-h</span>
+<p>Sendeimpuls and spectrum. Name the common pulse shape from the graph, decide Fourier transform versus series by periodicity, give an analytic time-domain expression, and use magnitude spectrum when phase/sign is less relevant or the plotted spectrum is symmetric. Compute the transform by applying known pulse-transform pairs and simplification.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2022, Aufgabe 4a-j</span>
+<p>Clacks/message switching. Bits per symbol are <code>_2(M)</code>. Equal symbols have information content <code>_2(M)</code>. Data rate is symbol rate times bits per symbol. Packet switching splits messages into packets; it lowers latency for long messages and enables multiplexing compared with message/circuit switching.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2022, Aufgabe 5a-d</span>
+<p>DNS zonefile. Use A/AAAA for webserver addresses, CNAME for service aliases such as calendar/contacts, MX for outsourced mail, and TXT for ownership verification.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2022, Aufgabe 6a-k</span>
+<p>IPv4 NAT home network. Hosts can get addresses statically or with DHCP; IPv6 can also use SLAAC. NAT is needed for private IPv4 Internet access and saves public addresses. NAT table capacity is bounded by available transport ports per public address. HTTP likely uses TCP port 80 and GET. ICMP errors or unreachable hosts must be handled. Hosting an internal server needs port forwarding or a relay/reverse tunnel.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2022, Aufgabe 7a-g</span>
+<p>TCP Reno. Congestion control avoids overloading the network by sender-side <code>cwnd</code>. Flow control avoids overloading the receiver by receiver-advertised window. Loss causes window reduction; slow start grows exponentially, congestion avoidance linearly. Effective rate is average window per RTT. TCP suffers badly when lower layers lose many packets because it interprets loss as congestion. description</p>
+</article>
+</section>
+<section class="section-heading sub"><p class="eyebrow">Old Paper</p><h1>Retake 2023</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Retake 2023, Aufgabe 2a-l</span>
+<p>IPv6/TCP hexdump. Mark Ethernet addresses, identify IPv6 by Ethertype, read source and destination IPv6 addresses, infer SLAAC if the address contains an interface identifier, identify TCP by Next Header, locate L4 at byte 54, infer L7 from port, compute L7 length from payload length minus TCP header length, and map visible MAC/IP addresses to topology devices.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2023, Aufgabe 3a-b</span>
+<p>DNS resolution critique and AAAA. Typical errors: asking authoritative servers recursively, skipping root/TLD referrals, confusing NS names with their addresses, missing glue where needed, or querying the wrong RR type. For AAAA, return the IPv6 address associated with the queried name and type.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2023, Aufgabe 4a-e</span>
+<p>Fourier periodic signal. Draw the periodic signal, compute <code>=2/T</code>, justify Fourier series because the signal is periodic, compute <code>a_0</code> by integrating one period, then compute nonzero coefficients using symmetry and integrals.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2023, Aufgabe 5b-h</span>
+<p>HTTP before request, ARP, TCP/TLS handshakes, and ICMP. Before sending to a server, the host needs a next-hop MAC, learned via ARP for IPv4. First frame to discover it is broadcast. TCP and possibly TLS handshakes occur before HTTP data. Header fields use current-hop MACs and end-to-end IPs. ICMP Fragmentation Needed means the packet exceeded path MTU with DF set; reduce packet size/MSS.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2023, Aufgabe 6a-d</span>
+<p>Maximum Ethernet frame, latency, frame count, transfer completion. Maximum standard Ethernet frame is 1518 B including header and FCS, with 1500 B MTU payload. Total latency is serialization plus propagation and any stated processing. Number of frames is ceiling(file size / payload per frame). Completion time adds serialization of all frames and propagation of the last frame. description</p>
+</article>
+</section>
+<section class="section-heading sub"><p class="eyebrow">Old Paper</p><h1>Retake 2024</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Retake 2024, Aufgabe 2d-e</span>
+<p>Physical-layer statement justification and hidden calculation. Justify choices using the named formulas: serialization <code>L/R</code>, propagation <code>d/v</code>, Shannon <code>B_2(1+SNR)</code>, Hartley <code>2B_2M</code>, coding rate useful/transmitted, and modulation bits per symbol <code>_2M</code>.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2024, Aufgabe 3a-c</span>
+<p>MAC/IP fields, TTL, route aggregation. Across routers, MAC addresses are per-hop while IP addresses identify end-to-end endpoints unless NAT changes them. TTL 4 reaches only if hop count is at most 4 after decrements. <code>10.222.15.128/26</code> and <code>10.222.15.192/26</code> aggregate to <code>10.222.15.128/25</code>.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2024, Aufgabe 4a-g</span>
+<p>Satellite reliability, propagation, serialization, and satellite count. Packet success probability is <code>(1-p)^bits</code>. Decide whether 99 satellites is sensible from resulting success/failure probability and stated goal. Mark serialization, propagation, processing, and queuing at the correct places in a time diagram. Propagation is path length over signal speed; serialization is total transmitted bits over bitrate.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2024, Aufgabe 5a-l</span>
+<p>IPv4/TCP/HTTP hexdump. Same hexdump recipe: L2 fields, Ethertype, IPv4 addresses, likely address assignment mechanism, TCP via Protocol 6, TCP header length via data offset, L7 protocol via port, L7 start offset, ASCII command decoding, and explain the application protocol's purpose.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2024, Aufgabe 6a-h</span>
+<p>DNS resolution and zonefile. Draw recursive stub-to-resolver and iterative resolver-to-root/TLD/authoritative exchanges. Mark which components answer recursively or iteratively. Glue records let a resolver contact an in-bailiwick nameserver without separately resolving it first. Zonefile entries: NS for secondary nameserver, A for primary nameserver, A/AAAA for web, MX for mail, CNAME for shop alias.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2024, Aufgabe 7a-f</span>
+<p>IPv6 multicast, multiplexing, domains, TCP header, socket order. Solicited-node multicast uses the last 24 bits: <code>ff02::1:ffXX:XXXX</code>; Ethernet MAC is <code>33:33:ff:XX:XX:XX</code>. Multiplexing methods: TDM, FDM, SDM, CDM. Collision/broadcast domains follow hub/switch/router rules. A client HTTPS TCP header should have destination port 443, correct data offset/flags/window/checksum fields. TCP server call order: <code>socket, bind, listen, accept, read, close</code>; client: <code>socket, connect, write, close</code>. description</p>
+</article>
+</section>
+<section class="section-heading sub"><p class="eyebrow">Old Paper</p><h1>Retake 2025</h1></section>
+<section class="note-list">
+<article class="note-card wide">
+<span class="pill muted">Retake 2025, Aufgabe 2a-k</span>
+<p>Radio channel, Shannon, coding, bit stuffing. More than three attempts means first three fail: <code>0.4^3=6.4%</code>. 876--880 MHz with 200 kHz channels gives 20 channels. SNR from 2 W/180 mW is about 10.46 dB. Shannon capacity with 200 kHz is about 719.65 kbit/s. 16-QAM carries 4 bit/symbol. Code rate <code>7/8</code> means 56 useful bits in a 64-bit codeword. Bit stuffing is used so reserved bit patterns/control delimiters do not appear accidentally in payload and to preserve synchronization.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2025, Aufgabe 3a-i</span>
+<p>RARP frame and modern replacement. RARP uses ARP-like payload with Ethertype <code>0x8035</code>. Request uses L2 broadcast destination and opcode 3; reply uses opcode 4. Padding is needed to reach minimum Ethernet frame size. The reply Ethernet header goes from R1 MAC to PC1 MAC with RARP Ethertype. Payload contains sender hardware/protocol address of R1 and target hardware/protocol address of PC1. RARP is obsolete; DHCP is the typical modern mechanism. A server not addressed by L2 will not receive the unicast reply.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2025, Aufgabe 4a-e</span>
+<p>DNS names, reverse DNS, SOA serial, and LLM critique. FQDN parts: labels, subdomain, second-level domain, TLD, and root. IPv6 reverse DNS reverses every hex nibble under <code>ip6.arpa</code>; the delegated /48 part is the reversed prefix portion. PTR maps the reverse name to the forward FQDN. After zone changes, increment SOA serial. Common LLM mistakes: reversing bytes/groups instead of nibbles for IPv6 reverse DNS, using A/AAAA instead of PTR, missing delegation boundary, or failing to use fully qualified names.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2025, Aufgabe 5a-h</span>
+<p>IPv4, UDP, NAT hole punching. NAT conserves public IPv4 addresses by mapping many private hosts through one public address. For 64 hosts choose at least 66 addresses, so /25. PC uses default route to R1; R1 has connected routes plus default route to ISP. PC1 needs R2 public IP because PC2 private IP is not globally routable. NAT table maps local <code>10.2.0.2:1234</code> to the chosen global port. Incoming packets are accepted only if they match NAT state; if PC1 sends before PC2 creates state, the packet is likely dropped.</p>
+</article>
+<article class="note-card wide">
+<span class="pill muted">Retake 2025, Aufgabe 6a-i</span>
+<p>TCP congestion and socket API. Congestion control protects the network; the sender adjusts <code>cwnd</code>. Flow control protects the receiver; the receiver advertises a window. Slow start grows exponentially, 3 duplicate ACKs usually indicate one lost segment, and Reno halves window/sets threshold before linear growth. Timeout may be caused by severe loss or no ACK arriving before RTO. A TCP server for incoming clients uses <code>socket()</code>, <code>bind()</code>, <code>listen()</code>, then <code>accept()</code> for each connection. description</p>
+</article>
+</section>
+      <footer class="notes-footer" aria-label="Bottom navigation">
+        <nav class="note-nav notes-bottom-nav" aria-label="Bottom site navigation">
+          <details class="note-menu-dropdown">
+            <summary>Notes Home</summary>
+            <div class="note-menu-panel">
+              <a class="note-menu-item" href="./notes.html">Notes Home</a>
+              <a class="note-menu-item active" href="./notes-all.html" aria-current="page">All Notes</a>
+              <a class="note-menu-item" href="./notes-coding.html">Coding & Modulation</a>
+              <a class="note-menu-item" href="./notes-ipv6.html">IPv6 Address Notes</a>
+              <a class="note-menu-item" href="./notes-layers.html">Layers & Encapsulation</a>
+              <a class="note-menu-item" href="./notes-physical-theory.html">Physical Layer</a>
+              <a class="note-menu-item" href="./notes-datalink-theory.html">Data Link Layer</a>
+              <a class="note-menu-item" href="./notes-network-theory.html">Network Layer</a>
+              <a class="note-menu-item" href="./notes-transport-application.html">Transport & Application</a>
+              <a class="note-menu-item" href="./notes-paper-checklist.html">Paper Checklist</a>
+            </div>
+          </details>
+          <a class="secondary link-button" href="./index.html">Practice</a>
+        </nav>
+      </footer>
+    </main>
+    <script src="./notes-diagrams.js"></script>
+  </body>
+</html>
