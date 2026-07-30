@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Introduction, Layer Models, and Encapsulation</title>
     <meta name="description" content="GRNVS study notes." />
-    <link rel="stylesheet" href="./styles.css?v=15" />
+    <link rel="stylesheet" href="./styles.css?v=16" />
   </head>
   <body>
     <main class="notes-shell">
@@ -63,6 +63,64 @@
 <li><strong>L6 Presentation:</strong> representation, encryption, compression</li>
 <li><strong>L7 Application:</strong> DNS, HTTP and other application protocols</li>
 </ul>
+</article>
+<article class="note-card wide"><span class="pill">Exam Memory</span>
+<h2>Course Layer Cheat Sheet</h2>
+<div class="table-wrap">
+<table class="notes-table compact-table">
+<thead>
+<tr>
+<th>Layer</th>
+<th>German name</th>
+<th>Unit / PDU name</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><strong>7</strong></td><td>Anwendungsschicht</td><td>message / data</td><td>HTTP, DNS, SSH, FTP, TLS often discussed here-ish</td></tr>
+<tr><td><strong>4</strong></td><td>Transportschicht</td><td>segment / datagram</td><td>TCP, UDP, ports, SEQ/ACK, MSS</td></tr>
+<tr><td><strong>3</strong></td><td>Vermittlungsschicht / Netzwerkschicht</td><td>packet / Paket</td><td>IPv4, IPv6, ICMP, routing, TTL/Hop Limit</td></tr>
+<tr><td><strong>2</strong></td><td>Sicherungsschicht</td><td>frame / Rahmen</td><td>Ethernet, MAC addresses, ARP, switches, FCS</td></tr>
+<tr><td><strong>1</strong></td><td>Bitübertragungsschicht</td><td>bits / signal</td><td>cables, wireless signal, modulation, line coding</td></tr>
+</tbody>
+</table>
+</div>
+<pre class="note-code">Application = what the user/program wants
+Transport   = which process/port and reliable delivery
+Network     = which host/IP and routing
+Data link   = which next local device/MAC
+Physical    = actual bits/signals</pre>
+</article>
+<article class="note-card wide"><span class="pill">Exam Mapping</span>
+<h2>Common Layer Mapping</h2>
+<div class="table-wrap">
+<table class="notes-table compact-table">
+<thead>
+<tr>
+<th>Thing</th>
+<th>Layer</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>HTTP GET / HTTP Response</td><td>7</td></tr>
+<tr><td>DNS query / DNS response</td><td>7</td></tr>
+<tr><td>SSH / FTP commands</td><td>7</td></tr>
+<tr><td>TLS encryption/handshake</td><td>usually between 4 and 7, often application/session/presentation</td></tr>
+<tr><td>TCP SYN, ACK, FIN, SEQ/ACK numbers</td><td>4</td></tr>
+<tr><td>UDP</td><td>4</td></tr>
+<tr><td>IPv4 / IPv6 header</td><td>3</td></tr>
+<tr><td>ICMP / ICMPv6</td><td>3</td></tr>
+<tr><td>Routing table / next hop / TTL</td><td>3</td></tr>
+<tr><td>ARP</td><td>between 2 and 3, usually treated as Layer 2 helper</td></tr>
+<tr><td>NDP</td><td>ICMPv6, so Layer 3 helper for IPv6 neighbor discovery</td></tr>
+<tr><td>Ethernet MAC addresses</td><td>2</td></tr>
+<tr><td>Ethernet FCS</td><td>2</td></tr>
+<tr><td>Switch</td><td>2</td></tr>
+<tr><td>Router</td><td>3</td></tr>
+<tr><td>Hub / cable / signal</td><td>1</td></tr>
+</tbody>
+</table>
+</div>
 </article>
 <article class="note-card"><span class="pill">Question</span>
 <h2>Distinguish horizontal communication from vertical communication.</h2>
