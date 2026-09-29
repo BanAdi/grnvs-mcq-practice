@@ -39,6 +39,13 @@ input {
   font: inherit;
 }
 
+.back-link {
+  display: grid;
+  place-items: center;
+  min-height: 42px;
+  text-decoration: none;
+}
+
 button {
   cursor: pointer;
 }

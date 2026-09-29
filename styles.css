@@ -142,6 +142,25 @@ h1 {
   font-size: 12px;
 }
 
+.readiness {
+  display: grid;
+  gap: 6px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  background: #eef8f6;
+}
+
+.readiness span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.readiness strong {
+  font-size: 14px;
+  line-height: 1.35;
+}
+
 .quiz {
   display: grid;
   align-content: start;
@@ -174,6 +193,17 @@ h2 {
 
 .actions.bottom {
   justify-content: flex-end;
+}
+
+.timer {
+  min-width: 72px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: var(--panel);
+  color: var(--accent-dark);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
 }
 
 .primary,
@@ -337,7 +367,14 @@ h3 {
 }
 
 .feedback.visible {
-  display: block;
+  display: grid;
+  gap: 6px;
+}
+
+.feedback span {
+  color: var(--ink);
+  font-weight: 500;
+  line-height: 1.45;
 }
 
 .feedback.good {

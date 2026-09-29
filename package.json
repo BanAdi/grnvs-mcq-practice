@@ -1,0 +1,7 @@
+{
+  "name": "grnvs-mcq-practice",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/data.test.mjs"
+  }
+}

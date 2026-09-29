@@ -19,10 +19,11 @@
         </div>
 
         <label class="field">
-          <span>Section</span>
+          <span>Mode</span>
           <select id="source-filter">
-            <option value="original">Original Exams</option>
-            <option value="extra">Extra Questions</option>
+            <option value="practice">Topic practice</option>
+            <option value="review">Review mistakes</option>
+            <option value="exam">Timed exam</option>
           </select>
         </label>
 
@@ -31,24 +32,26 @@
           <select id="topic-filter"></select>
         </label>
 
-        <label class="field" id="year-field">
-          <span>Year</span>
-          <select id="year-filter"></select>
-        </label>
-
         <label class="field">
           <span>Search</span>
           <input id="search" placeholder="DNS, TCP, IPv6..." />
         </label>
 
         <div class="stats">
-          <div><strong id="score-label">0/0</strong><span>score</span></div>
+          <div><strong id="score-label">0/0</strong><span>first-try</span></div>
           <div><strong id="answered-label">0</strong><span>answered</span></div>
         </div>
 
+        <div class="readiness" id="readiness-card">
+          <span>Needs most work</span>
+          <strong id="weakest-label">Answer a few questions</strong>
+        </div>
+
         <div class="actions vertical">
+          <a class="primary link-button" href="./archive/page-overlay-backup/index.html">Practice Original Papers</a>
           <a class="secondary link-button" href="./notes.html">Open Notes</a>
           <button id="shuffle-button" class="secondary">Shuffle</button>
+          <button id="retry-button" class="secondary">Retry Mistakes</button>
           <button id="reset-button" class="secondary">Reset Answers</button>
         </div>
       </aside>
@@ -56,10 +59,11 @@
       <section class="quiz">
         <header class="topbar">
           <div>
-            <p class="eyebrow" id="mode-label">Mixed exam-year questionnaire</p>
+            <p class="eyebrow" id="mode-label">Paper-grounded topic practice</p>
             <h2 id="question-position">Question</h2>
           </div>
           <div class="actions">
+            <strong id="timer-label" class="timer" hidden>30:00</strong>
             <button id="prev-button" class="secondary">Previous</button>
             <button id="next-button" class="secondary">Next</button>
           </div>
@@ -80,12 +84,13 @@
         <div class="actions bottom">
           <button id="check-button" class="primary">Check Answer</button>
           <button id="show-button" class="secondary">Show Answer</button>
+          <button id="submit-button" class="primary" hidden>Submit Exam</button>
         </div>
       </section>
     </main>
 
-    <script src="./questions-data.js?v=2"></script>
-    <script src="./extra-questions-data.js?v=2"></script>
-    <script src="./app.js?v=2"></script>
+    <script src="./extra-questions-data.js?v=3"></script>
+    <script src="./paper-variants-data.js?v=1"></script>
+    <script src="./app.js?v=3"></script>
   </body>
 </html>
