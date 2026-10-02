@@ -59,3 +59,18 @@ test("original-paper viewer includes every endterm and retake plus 2026", () => 
   assert.equal(exam2026.sections[0].optionCount, 97);
   assert.equal(exam2026.sections[0].answerCount, 23);
 });
+
+test("timed exam keeps submission separate from bottom navigation", () => {
+  const html = fs.readFileSync("index.html", "utf8");
+  const headerStart = html.indexOf('<header class="topbar">');
+  const headerEnd = html.indexOf("</header>", headerStart);
+  const bottomStart = html.indexOf('<div class="actions bottom">');
+  const submitPosition = html.indexOf('id="submit-button"');
+  const previousPosition = html.indexOf('id="prev-button"');
+  const nextPosition = html.indexOf('id="next-button"');
+
+  assert.ok(submitPosition > headerStart && submitPosition < headerEnd);
+  assert.ok(previousPosition > bottomStart);
+  assert.ok(nextPosition > previousPosition);
+  assert.ok(nextPosition > bottomStart);
+});

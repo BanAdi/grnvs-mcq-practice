@@ -192,7 +192,25 @@ h2 {
 }
 
 .actions.bottom {
-  justify-content: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: min(100%, 900px);
+}
+
+.navigation-actions {
+  margin-left: auto;
+}
+
+.submit-exam {
+  background: #8f3440;
+  border-color: #8f3440;
+  color: #fff;
+  font-weight: 800;
+}
+
+.submit-exam:hover {
+  background: #742731;
+  border-color: #742731;
 }
 
 .timer {
@@ -207,7 +225,8 @@ h2 {
 }
 
 .primary,
-.secondary {
+.secondary,
+.submit-exam {
   min-height: 40px;
   border-radius: 8px;
   padding: 0 15px;
@@ -715,6 +734,10 @@ h3 {
 
   .actions.bottom {
     align-items: stretch;
+  }
+
+  .navigation-actions {
+    margin-left: 0;
   }
 
   .notes-grid,

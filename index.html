@@ -65,8 +65,7 @@
           </div>
           <div class="actions">
             <strong id="timer-label" class="timer" hidden>30:00</strong>
-            <button id="prev-button" class="secondary">Previous</button>
-            <button id="next-button" class="secondary">Next</button>
+            <button id="submit-button" class="submit-exam" hidden>Submit Exam</button>
           </div>
         </header>
 
@@ -83,9 +82,14 @@
         <div id="feedback" class="feedback"></div>
 
         <div class="actions bottom">
-          <button id="check-button" class="primary">Check Answer</button>
-          <button id="show-button" class="secondary">Show Answer</button>
-          <button id="submit-button" class="primary" hidden>Submit Exam</button>
+          <div class="actions answer-actions">
+            <button id="check-button" class="primary">Check Answer</button>
+            <button id="show-button" class="secondary">Show Answer</button>
+          </div>
+          <div class="actions navigation-actions">
+            <button id="prev-button" class="secondary">Previous</button>
+            <button id="next-button" class="primary">Next</button>
+          </div>
         </div>
       </section>
     </main>
