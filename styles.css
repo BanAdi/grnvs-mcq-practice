@@ -330,6 +330,25 @@ h3 {
   line-height: 1.35;
 }
 
+.option-result {
+  grid-column: 2;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.option.correct .option-result {
+  color: var(--good);
+}
+
+.option.wrong .option-result {
+  color: var(--bad);
+}
+
+.option.missed .option-result {
+  color: var(--missed);
+}
+
 .option:hover,
 .option.selected {
   border-color: var(--accent);

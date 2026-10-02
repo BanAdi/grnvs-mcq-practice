@@ -208,12 +208,18 @@ function renderFeedback(question) {
   const selected = selectedFor(question);
   const ok = isSameSet(selected, question.answers);
   const answerText = question.answers.map((index) => String.fromCharCode(65 + index)).join(", ");
+  const selectedText = selected.map((index) => String.fromCharCode(65 + index)).join(", ");
   const score = answerBreakdown(question);
   const scoringText = question.multiple
     ? `<em>Exam-style score: ${score.rawPoints}/${score.availablePoints} · ${score.correctChosen} correct selected · ${score.wrongChosen} wrong selected · ${score.missed} missed</em>`
     : "";
   el.feedback.className = ok ? "feedback visible good" : "feedback visible bad";
-  el.feedback.innerHTML = `<strong>${ok ? "Correct." : `Correct answer${question.answers.length > 1 ? "s" : ""}: ${answerText}.`}</strong>${scoringText}<span>${escapeHtml(question.explanation)}</span>`;
+  const resultText = ok
+    ? `Correct · Your answer: ${selectedText}.`
+    : selected.length
+      ? `Your answer: ${selectedText}. Correct answer${question.answers.length > 1 ? "s" : ""}: ${answerText}.`
+      : `No answer selected. Correct answer${question.answers.length > 1 ? "s" : ""}: ${answerText}.`;
+  el.feedback.innerHTML = `<strong>${resultText}</strong>${scoringText}<span>${escapeHtml(question.explanation)}</span>`;
 }
 
 function render() {
@@ -256,17 +262,27 @@ function render() {
     const button = document.createElement("button");
     const chosen = selected.includes(index);
     const showResult = checked && (mode !== "exam" || examSubmitted);
+    const correct = question.answers.includes(index);
     button.className = "option";
     if (chosen) button.classList.add("selected");
     if (showResult) {
-      if (question.answers.includes(index)) button.classList.add("correct");
-      if (chosen && !question.answers.includes(index)) button.classList.add("wrong");
-      if (!chosen && question.answers.includes(index)) button.classList.add("missed");
+      if (correct) button.classList.add("correct");
+      if (chosen && !correct) button.classList.add("wrong");
+      if (!chosen && correct) button.classList.add("missed");
     }
     button.disabled = mode === "exam" && examSubmitted;
-    button.innerHTML = `<span>${String.fromCharCode(65 + index)}</span><strong>${escapeHtml(option)}</strong>`;
+    const resultLabel = !showResult
+      ? ""
+      : chosen && correct
+        ? "Your answer · Correct"
+        : chosen
+          ? "Your answer · Incorrect"
+          : correct
+            ? "Correct answer · Not selected"
+            : "";
+    button.innerHTML = `<span>${String.fromCharCode(65 + index)}</span><strong>${escapeHtml(option)}</strong>${resultLabel ? `<small class="option-result">${resultLabel}</small>` : ""}`;
     button.addEventListener("click", () => {
-      const next = question.multiple ? toggle(selected, index) : selected.includes(index) ? [] : [index];
+      const next = question.multiple ? toggle(selected, index) : [index];
       checked = false;
       setSelected(question, next);
       render();
