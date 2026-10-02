@@ -92,11 +92,11 @@ window.MULTI_ANSWER_DATA = [
   {
     id: "multi-ip-address-scope-1",
     topic: "IPv4/IPv6/Routing",
-    question: "Welche Adressen werden normalerweise nicht global im Internet geroutet?",
+    question: "Welche Adressen gehören zu Bereichen, die für lokale, private oder Dokumentationszwecke reserviert sind und deshalb normalerweise nicht global im Internet geroutet werden?",
     options: ["127.0.0.2", "10.20.30.40", "fe80::1234", "::1", "128.0.0.1", "2001:db8::1"],
     answers: [0, 1, 2, 3, 5],
     multiple: true,
-    explanation: "Loopback-, private, Link-Local- und Dokumentationsadressen sind nicht global routbar. 128.0.0.1 ist dagegen grundsätzlich eine globale IPv4-Adresse.",
+    explanation: "127.0.0.2 liegt in 127.0.0.0/8 (IPv4-Loopback), 10.20.30.40 in 10.0.0.0/8 (privat), fe80::1234 in fe80::/10 (IPv6 Link-Local), ::1 ist IPv6-Loopback und 2001:db8::1 liegt in 2001:db8::/32 (Dokumentation). Diese fünf Adressen sind nicht für globale Internet-Routen vorgesehen. 128.0.0.1 gehört dagegen zu keinem dieser speziellen Bereiche: 128/8 ist gewöhnlicher IPv4-Adressraum. „Grundsätzlich global“ bedeutet hier nur, dass die Adresse nicht aufgrund eines Sonderbereichs ausgeschlossen ist; tatsächliche Erreichbarkeit erfordert zusätzlich eine Zuweisung und eine angekündigte Route.",
     sourceRefs: ["2022 Endterm 1h", "2022 Retake 1c", "2023 Retake 1m"],
   },
   {
