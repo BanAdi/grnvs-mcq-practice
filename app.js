@@ -378,16 +378,41 @@ function showAnswer() {
   render();
 }
 
+function navigateQuestions(direction) {
+  const list = filteredIndexes();
+  const destination = Math.max(0, Math.min(list.length - 1, current + direction));
+  if (!list.length || destination === current) return;
+  current = destination;
+  checked = mode === "exam" && examSubmitted;
+  reshuffleOptions(activeQuestion());
+  render();
+}
+
+function isTypingTarget(target) {
+  return target instanceof Element && (target.matches("input, textarea, select") || target.isContentEditable);
+}
+
 configureTopics();
 el.sourceFilter.addEventListener("change", (event) => setMode(event.target.value));
 el.topic.addEventListener("change", (event) => { topic = event.target.value; current = 0; checked = false; optionOrders = {}; render(); });
 el.search.addEventListener("input", (event) => { search = event.target.value; current = 0; checked = false; optionOrders = {}; render(); });
-el.prev.addEventListener("click", () => { current = Math.max(0, current - 1); checked = mode === "exam" && examSubmitted; reshuffleOptions(activeQuestion()); render(); });
-el.next.addEventListener("click", () => { current = Math.min(filteredIndexes().length - 1, current + 1); checked = mode === "exam" && examSubmitted; reshuffleOptions(activeQuestion()); render(); });
+el.prev.addEventListener("click", () => navigateQuestions(-1));
+el.next.addEventListener("click", () => navigateQuestions(1));
 el.check.addEventListener("click", checkAnswer);
 el.show.addEventListener("click", showAnswer);
 el.submit.addEventListener("click", submitExam);
 el.shuffle.addEventListener("click", shuffle);
 el.retry.addEventListener("click", () => { el.sourceFilter.value = "review"; setMode("review"); });
 el.reset.addEventListener("click", () => { records = {}; checked = false; save(); render(); });
+document.addEventListener("keydown", (event) => {
+  if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey || isTypingTarget(event.target)) return;
+  if (event.key === "ArrowLeft") {
+    event.preventDefault();
+    navigateQuestions(-1);
+  }
+  if (event.key === "ArrowRight") {
+    event.preventDefault();
+    navigateQuestions(1);
+  }
+});
 render();
