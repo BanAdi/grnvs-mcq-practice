@@ -11,16 +11,28 @@ function load(files) {
 }
 
 test("topic questions have unique IDs and valid answers", () => {
-  const data = load(["extra-questions-data.js", "paper-variants-data.js"]);
-  const questions = [...data.EXTRA_QUESTION_DATA, ...data.PAPER_VARIANT_DATA];
+  const data = load(["extra-questions-data.js", "paper-variants-data.js", "multi-answer-data.js"]);
+  const questions = [...data.EXTRA_QUESTION_DATA, ...data.PAPER_VARIANT_DATA, ...data.MULTI_ANSWER_DATA];
   assert.equal(new Set(questions.map((question) => question.id)).size, questions.length);
-  assert.ok(questions.length >= 140);
+  assert.ok(questions.length >= 165);
   for (const question of questions) {
     assert.ok(question.question);
     assert.ok(question.topic);
     assert.ok(question.options.length >= 2);
     assert.ok(question.answers.length >= 1);
     assert.ok(question.answers.every((index) => index >= 0 && index < question.options.length));
+  }
+});
+
+test("multiple-answer drill has broad topic coverage and several correct choices", () => {
+  const { MULTI_ANSWER_DATA: questions } = load(["multi-answer-data.js"]);
+  assert.ok(questions.length >= 28);
+  assert.equal(new Set(questions.map((question) => question.topic)).size, 7);
+  for (const question of questions) {
+    assert.equal(question.multiple, true, question.id);
+    assert.ok(question.answers.length >= 2, question.id);
+    assert.ok(question.explanation.length >= 40, question.id);
+    assert.ok(question.sourceRefs.length >= 1, question.id);
   }
 });
 

@@ -6,6 +6,7 @@ A static study site built from the available GRNVS solution papers.
 
 - **Original papers:** exact interactive MCQ pages from the 2022–2026 endterms and 2022–2025 retakes. Official solution marks are covered until answers are checked or revealed.
 - **Topic practice:** focused questions covering only concepts and operations that occur in those papers.
+- **Multiple-answer drill:** a dedicated set of select-all-that-apply questions with exam-style positive and negative marking.
 - **Review mistakes:** questions answered incorrectly or revealed during study.
 - **Timed exam:** 18 shuffled questions, 30 minutes, delayed feedback, and partial-credit scoring for multiple-answer questions.
 

@@ -377,6 +377,13 @@ h3 {
   line-height: 1.45;
 }
 
+.feedback em {
+  color: var(--ink);
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 700;
+}
+
 .feedback.good {
   border: 1px solid rgba(21, 130, 79, 0.35);
   background: #eef9f2;

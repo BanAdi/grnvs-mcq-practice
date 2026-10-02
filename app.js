@@ -1,5 +1,6 @@
 const legacyQuestions = window.EXTRA_QUESTION_DATA || [];
 const paperQuestions = window.PAPER_VARIANT_DATA || [];
+const multiAnswerQuestions = window.MULTI_ANSWER_DATA || [];
 const topicGuidance = {
   "Physical/Signal/Coding": "Apply the signal/coding definition or formula; the distractors usually mix units, coding goals, or unrelated protocol concepts.",
   "Ethernet/WLAN/L2": "Use Layer-2 forwarding and media-access rules; routing and transport behavior do not determine this answer.",
@@ -9,7 +10,7 @@ const topicGuidance = {
   "DNS/Application": "Use the DNS record or application-layer role literally; distractors often swap record targets, layers, or lookup directions.",
   "TLS/Byte Order": "Keep certificate trust and byte-order rules separate; private keys are never carried in certificates.",
 };
-const allQuestions = [...paperQuestions, ...legacyQuestions].map((question) => ({
+const allQuestions = [...multiAnswerQuestions, ...paperQuestions, ...legacyQuestions].map((question) => ({
   ...question,
   topic: question.topic || "General",
   explanation: question.explanation || `Correct answer${question.answers.length > 1 ? "s" : ""}: ${question.answers.map((index) => question.options[index]).join("; ")}. ${topicGuidance[question.topic] || "The remaining choices conflict with the definition used in the papers."}`,
@@ -140,6 +141,7 @@ function filteredIndexes() {
   return order.filter((index) => {
     const question = allQuestions[index];
     const record = recordFor(question);
+    if (mode === "multi" && !question.multiple) return false;
     if (mode === "review" && !(record.revealed || record.lastCorrect === false)) return false;
     if (topic !== "all" && question.topic !== topic) return false;
     if (!needle) return true;
@@ -153,12 +155,21 @@ function activeQuestion() {
   return allQuestions[list[current]];
 }
 
-function examPoints(question) {
+function answerBreakdown(question) {
   const selected = selectedFor(question);
-  if (!question.multiple) return isSameSet(selected, question.answers) ? 1 : 0;
   const correctChosen = selected.filter((value) => question.answers.includes(value)).length;
   const wrongChosen = selected.filter((value) => !question.answers.includes(value)).length;
-  return Math.max(0, correctChosen - wrongChosen) / question.answers.length;
+  const missed = question.answers.length - correctChosen;
+  const rawPoints = question.multiple
+    ? Math.max(0, correctChosen - wrongChosen)
+    : isSameSet(selected, question.answers) ? 1 : 0;
+  const availablePoints = question.multiple ? question.answers.length : 1;
+  return { correctChosen, wrongChosen, missed, rawPoints, availablePoints };
+}
+
+function examPoints(question) {
+  const score = answerBreakdown(question);
+  return score.rawPoints / score.availablePoints;
 }
 
 function submitExam() {
@@ -197,15 +208,20 @@ function renderFeedback(question) {
   const selected = selectedFor(question);
   const ok = isSameSet(selected, question.answers);
   const answerText = question.answers.map((index) => String.fromCharCode(65 + index)).join(", ");
+  const score = answerBreakdown(question);
+  const scoringText = question.multiple
+    ? `<em>Exam-style score: ${score.rawPoints}/${score.availablePoints} · ${score.correctChosen} correct selected · ${score.wrongChosen} wrong selected · ${score.missed} missed</em>`
+    : "";
   el.feedback.className = ok ? "feedback visible good" : "feedback visible bad";
-  el.feedback.innerHTML = `<strong>${ok ? "Correct." : `Correct answer${question.answers.length > 1 ? "s" : ""}: ${answerText}.`}</strong><span>${escapeHtml(question.explanation)}</span>`;
+  el.feedback.innerHTML = `<strong>${ok ? "Correct." : `Correct answer${question.answers.length > 1 ? "s" : ""}: ${answerText}.`}</strong>${scoringText}<span>${escapeHtml(question.explanation)}</span>`;
 }
 
 function render() {
   const list = filteredIndexes();
-  const modeNames = { practice: "Paper-grounded topic practice", review: "Mistakes and revealed answers", exam: "Timed 18-question exam" };
+  const modeNames = { practice: "Paper-grounded topic practice", multi: "Multiple-answer drill · select every correct option", review: "Mistakes and revealed answers", exam: "Timed 18-question exam" };
   el.modeLabel.textContent = modeNames[mode];
-  el.total.textContent = `${allQuestions.length} relevant topic questions · 9 original papers`;
+  const multipleCount = allQuestions.filter((question) => question.multiple).length;
+  el.total.textContent = `${allQuestions.length} questions · ${multipleCount} multiple-answer · 9 papers`;
   el.timer.hidden = mode !== "exam";
   el.submit.hidden = mode !== "exam";
   el.check.hidden = mode === "exam";
@@ -215,8 +231,8 @@ function render() {
   renderTimer();
 
   if (!list.length) {
-    el.pos.textContent = "No review questions yet";
-    el.q.textContent = "Questions you answer incorrectly or reveal will appear here.";
+    el.pos.textContent = mode === "review" ? "No review questions yet" : "No questions found";
+    el.q.textContent = mode === "review" ? "Questions you answer incorrectly or reveal will appear here." : "Try another topic or search term.";
     el.options.innerHTML = "";
     el.footnote.textContent = "";
     el.feedback.className = "feedback";
