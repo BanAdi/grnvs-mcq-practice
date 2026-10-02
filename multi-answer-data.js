@@ -36,7 +36,7 @@ window.MULTI_ANSWER_DATA = [
     options: ["Abtastung macht die Zeitachse diskret", "Quantisierung macht den Wertebereich diskret", "Eine zu niedrige Abtastrate kann Aliasing verursachen", "Quantisierung erhöht die Ausbreitungsgeschwindigkeit", "Die Abtastperiode ist der Kehrwert der Abtastfrequenz"],
     answers: [0, 1, 2, 4],
     multiple: true,
-    explanation: "Abtastung diskretisiert die Zeit, Quantisierung die Werte. Tₐ = 1/fₐ. Wird das Abtasttheorem verletzt, können unterschiedliche Frequenzen ununterscheidbar werden.",
+    explanation: "Abtastung diskretisiert die Zeit, Quantisierung die Werte. Die Abtastperiode Tₐ ist die Zeit zwischen zwei Messpunkten und der Kehrwert der Abtastfrequenz: Tₐ = 1/fₐ; bei 1000 Hz gilt also Tₐ = 1 ms. Ist die Abtastrate zu niedrig, können hohe Frequenzen wie niedrigere Frequenzen erscheinen (Aliasing). Nach dem Nyquist-Kriterium muss die Abtastfrequenz größer als das Doppelte der höchsten Signalfrequenz sein.",
     sourceRefs: ["2024 Endterm 1a", "2025 Endterm 1b", "2023 Endterm Aufgabe 4"],
   },
   {

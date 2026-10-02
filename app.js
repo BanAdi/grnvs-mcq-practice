@@ -32,6 +32,7 @@ let examSelections = {};
 let examSubmitted = false;
 let examSecondsLeft = examDurationSeconds;
 let timerHandle = null;
+let optionOrders = {};
 
 try {
   records = JSON.parse(localStorage.getItem(stateKey) || "{}");
@@ -105,8 +106,50 @@ function configureTopics() {
   el.topic.innerHTML = `<option value="all">All topics</option>${topics.map((value) => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("")}`;
 }
 
+function randomIndex(upperBound) {
+  if (window.crypto?.getRandomValues) {
+    const value = new Uint32Array(1);
+    window.crypto.getRandomValues(value);
+    return value[0] % upperBound;
+  }
+  return Math.floor(Math.random() * upperBound);
+}
+
+function shuffled(values) {
+  const result = [...values];
+  for (let index = result.length - 1; index > 0; index -= 1) {
+    const other = randomIndex(index + 1);
+    [result[index], result[other]] = [result[other], result[index]];
+  }
+  return result;
+}
+
 function shuffledIndexes() {
-  return allQuestions.map((_, index) => index).map((value) => ({ value, sort: Math.random() })).sort((a, b) => a.sort - b.sort).map((item) => item.value);
+  return shuffled(allQuestions.map((_, index) => index));
+}
+
+function reshuffleOptions(question) {
+  if (!question) return;
+  const previous = optionOrders[question.id];
+  const next = shuffled(question.options.map((_, index) => index));
+  if (previous && next.length > 1 && next.every((value, index) => value === previous[index])) {
+    [next[0], next[1]] = [next[1], next[0]];
+  }
+  optionOrders[question.id] = next;
+}
+
+function optionOrderFor(question) {
+  if (!optionOrders[question.id]) reshuffleOptions(question);
+  return optionOrders[question.id];
+}
+
+function answerLetters(question, indexes) {
+  const optionOrder = optionOrderFor(question);
+  return indexes
+    .map((index) => optionOrder.indexOf(index))
+    .sort((a, b) => a - b)
+    .map((index) => String.fromCharCode(65 + index))
+    .join(", ");
 }
 
 function startExam() {
@@ -115,6 +158,7 @@ function startExam() {
   examSelections = {};
   examSubmitted = false;
   examSecondsLeft = examDurationSeconds;
+  optionOrders = {};
   current = 0;
   checked = false;
   timerHandle = setInterval(() => {
@@ -131,7 +175,10 @@ function setMode(nextMode) {
   search = "";
   el.search.value = "";
   if (mode === "exam") startExam();
-  else clearInterval(timerHandle);
+  else {
+    clearInterval(timerHandle);
+    optionOrders = {};
+  }
   render();
 }
 
@@ -207,8 +254,8 @@ function renderFeedback(question) {
   }
   const selected = selectedFor(question);
   const ok = isSameSet(selected, question.answers);
-  const answerText = question.answers.map((index) => String.fromCharCode(65 + index)).join(", ");
-  const selectedText = selected.map((index) => String.fromCharCode(65 + index)).join(", ");
+  const answerText = answerLetters(question, question.answers);
+  const selectedText = answerLetters(question, selected);
   const score = answerBreakdown(question);
   const scoringText = question.multiple
     ? `<em>Exam-style score: ${score.rawPoints}/${score.availablePoints} · ${score.correctChosen} correct selected · ${score.wrongChosen} wrong selected · ${score.missed} missed</em>`
@@ -249,6 +296,7 @@ function render() {
 
   const question = activeQuestion();
   const selected = selectedFor(question);
+  const optionOrder = optionOrderFor(question);
   el.pos.textContent = `Question ${current + 1} of ${list.length}`;
   el.type.textContent = question.multiple ? "Multiple answers" : "Single answer";
   el.source.textContent = question.topic;
@@ -258,7 +306,8 @@ function render() {
   el.next.disabled = current === list.length - 1;
   el.options.innerHTML = "";
 
-  question.options.forEach((option, index) => {
+  optionOrder.forEach((index, displayIndex) => {
+    const option = question.options[index];
     const button = document.createElement("button");
     const chosen = selected.includes(index);
     const showResult = checked && (mode !== "exam" || examSubmitted);
@@ -280,7 +329,7 @@ function render() {
           : correct
             ? "Correct answer · Not selected"
             : "";
-    button.innerHTML = `<span>${String.fromCharCode(65 + index)}</span><strong>${escapeHtml(option)}</strong>${resultLabel ? `<small class="option-result">${resultLabel}</small>` : ""}`;
+    button.innerHTML = `<span>${String.fromCharCode(65 + displayIndex)}</span><strong>${escapeHtml(option)}</strong>${resultLabel ? `<small class="option-result">${resultLabel}</small>` : ""}`;
     button.addEventListener("click", () => {
       const next = question.multiple ? toggle(selected, index) : [index];
       checked = false;
@@ -305,6 +354,7 @@ function toggle(values, index) {
 
 function shuffle() {
   order = shuffledIndexes();
+  optionOrders = {};
   current = 0;
   checked = false;
   render();
@@ -330,10 +380,10 @@ function showAnswer() {
 
 configureTopics();
 el.sourceFilter.addEventListener("change", (event) => setMode(event.target.value));
-el.topic.addEventListener("change", (event) => { topic = event.target.value; current = 0; checked = false; render(); });
-el.search.addEventListener("input", (event) => { search = event.target.value; current = 0; checked = false; render(); });
-el.prev.addEventListener("click", () => { current = Math.max(0, current - 1); checked = mode === "exam" && examSubmitted; render(); });
-el.next.addEventListener("click", () => { current = Math.min(filteredIndexes().length - 1, current + 1); checked = mode === "exam" && examSubmitted; render(); });
+el.topic.addEventListener("change", (event) => { topic = event.target.value; current = 0; checked = false; optionOrders = {}; render(); });
+el.search.addEventListener("input", (event) => { search = event.target.value; current = 0; checked = false; optionOrders = {}; render(); });
+el.prev.addEventListener("click", () => { current = Math.max(0, current - 1); checked = mode === "exam" && examSubmitted; reshuffleOptions(activeQuestion()); render(); });
+el.next.addEventListener("click", () => { current = Math.min(filteredIndexes().length - 1, current + 1); checked = mode === "exam" && examSubmitted; reshuffleOptions(activeQuestion()); render(); });
 el.check.addEventListener("click", checkAnswer);
 el.show.addEventListener("click", showAnswer);
 el.submit.addEventListener("click", submitExam);
