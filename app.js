@@ -5,7 +5,7 @@ const topicGuidance = {
   "Physical/Signal/Coding": "Apply the signal/coding definition or formula; the distractors usually mix units, coding goals, or unrelated protocol concepts.",
   "Ethernet/WLAN/L2": "Use Layer-2 forwarding and media-access rules; routing and transport behavior do not determine this answer.",
   "IPv4/IPv6/Routing": "Apply address scope, prefix, fragmentation, or longest-prefix rules exactly; similar-looking address families are common distractors.",
-  NAT: "Trace the packet direction and distinguish source translation on the way out from destination translation on the reply path.",
+  NAT: "Exam papers usually use NAT as the general term. When TCP/UDP ports are translated too, the precise name is NAPT or PAT. Trace the outgoing source translation and the reverse translation on the reply.",
   "TCP/UDP/Transport": "Separate connection semantics, reliability, flow control, congestion control, and socket API behavior.",
   "DNS/Application": "Use the DNS record or application-layer role literally; distractors often swap record targets, layers, or lookup directions.",
   "TLS/Byte Order": "Keep certificate trust and byte-order rules separate; private keys are never carried in certificates.",
