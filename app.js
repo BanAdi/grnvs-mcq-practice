@@ -18,6 +18,7 @@ const allQuestions = [...multiAnswerQuestions, ...paperQuestions, ...legacyQuest
 }));
 
 const stateKey = "grnvs-practice-state-v3";
+const sessionKey = "grnvs-practice-session-v1";
 const examLength = 18;
 const examDurationSeconds = 30 * 60;
 let records = {};
@@ -31,6 +32,7 @@ let examIndexes = [];
 let examSelections = {};
 let examSubmitted = false;
 let examSecondsLeft = examDurationSeconds;
+let examDeadline = null;
 let timerHandle = null;
 let optionOrders = {};
 
@@ -73,6 +75,70 @@ function escapeHtml(value) {
 
 function save() {
   localStorage.setItem(stateKey, JSON.stringify(records));
+}
+
+function saveSession() {
+  localStorage.setItem(sessionKey, JSON.stringify({
+    mode,
+    current,
+    topic,
+    search,
+    order,
+    checked,
+    examIndexes,
+    examSelections,
+    examSubmitted,
+    examSecondsLeft,
+    examDeadline,
+    optionOrders,
+  }));
+}
+
+function validIndexList(values, length, requireComplete = false) {
+  return Array.isArray(values)
+    && (!requireComplete || values.length === length)
+    && new Set(values).size === values.length
+    && values.every((value) => Number.isInteger(value) && value >= 0 && value < length);
+}
+
+function restoreSession() {
+  let saved;
+  try {
+    saved = JSON.parse(localStorage.getItem(sessionKey) || "null");
+  } catch {
+    return;
+  }
+  if (!saved || typeof saved !== "object") return;
+
+  if (["practice", "multi", "review", "exam"].includes(saved.mode)) mode = saved.mode;
+  if (Number.isInteger(saved.current) && saved.current >= 0) current = saved.current;
+  if (typeof saved.topic === "string") topic = saved.topic;
+  if (typeof saved.search === "string") search = saved.search;
+  if (validIndexList(saved.order, allQuestions.length, true)) order = saved.order;
+  checked = saved.checked === true;
+  examSubmitted = saved.examSubmitted === true;
+  if (Number.isFinite(saved.examSecondsLeft)) examSecondsLeft = Math.max(0, Math.min(examDurationSeconds, Math.floor(saved.examSecondsLeft)));
+  if (Number.isFinite(saved.examDeadline)) examDeadline = saved.examDeadline;
+
+  if (validIndexList(saved.examIndexes, allQuestions.length) && saved.examIndexes.length <= examLength) {
+    examIndexes = saved.examIndexes;
+  }
+
+  if (saved.examSelections && typeof saved.examSelections === "object") {
+    examSelections = {};
+    allQuestions.forEach((question) => {
+      const values = saved.examSelections[question.id];
+      if (validIndexList(values, question.options.length)) examSelections[question.id] = values;
+    });
+  }
+
+  if (saved.optionOrders && typeof saved.optionOrders === "object") {
+    optionOrders = {};
+    allQuestions.forEach((question) => {
+      const values = saved.optionOrders[question.id];
+      if (validIndexList(values, question.options.length, true)) optionOrders[question.id] = values;
+    });
+  }
 }
 
 function isSameSet(a, b) {
@@ -152,20 +218,31 @@ function answerLetters(question, indexes) {
     .join(", ");
 }
 
+function updateExamTime() {
+  if (!examDeadline || examSubmitted) return;
+  examSecondsLeft = Math.max(0, Math.ceil((examDeadline - Date.now()) / 1000));
+}
+
+function runExamTimer() {
+  clearInterval(timerHandle);
+  timerHandle = setInterval(() => {
+    updateExamTime();
+    renderTimer();
+    if (examSecondsLeft <= 0) submitExam();
+  }, 1000);
+}
+
 function startExam() {
   clearInterval(timerHandle);
   examIndexes = shuffledIndexes().slice(0, Math.min(examLength, allQuestions.length));
   examSelections = {};
   examSubmitted = false;
   examSecondsLeft = examDurationSeconds;
+  examDeadline = Date.now() + examDurationSeconds * 1000;
   optionOrders = {};
   current = 0;
   checked = false;
-  timerHandle = setInterval(() => {
-    examSecondsLeft -= 1;
-    renderTimer();
-    if (examSecondsLeft <= 0) submitExam();
-  }, 1000);
+  runExamTimer();
 }
 
 function setMode(nextMode) {
@@ -221,6 +298,7 @@ function examPoints(question) {
 
 function submitExam() {
   if (mode !== "exam" || examSubmitted) return;
+  updateExamTime();
   examSubmitted = true;
   clearInterval(timerHandle);
   checked = true;
@@ -291,6 +369,7 @@ function render() {
     el.feedback.className = "feedback";
     el.feedback.textContent = "";
     renderStats();
+    saveSession();
     return;
   }
 
@@ -346,6 +425,7 @@ function render() {
   }
   renderFeedback(question);
   renderStats();
+  saveSession();
 }
 
 function toggle(values, index) {
@@ -392,7 +472,27 @@ function isTypingTarget(target) {
   return target instanceof Element && (target.matches("input, textarea, select") || target.isContentEditable);
 }
 
+restoreSession();
 configureTopics();
+if (![...el.topic.options].some((option) => option.value === topic)) topic = "all";
+el.sourceFilter.value = mode;
+el.topic.value = topic;
+el.search.value = search;
+if (mode === "exam") {
+  if (!examIndexes.length) {
+    startExam();
+  } else if (!examSubmitted) {
+    updateExamTime();
+    if (examSecondsLeft <= 0) {
+      examSubmitted = true;
+      checked = true;
+    } else {
+      runExamTimer();
+    }
+  } else {
+    checked = true;
+  }
+}
 el.sourceFilter.addEventListener("change", (event) => setMode(event.target.value));
 el.topic.addEventListener("change", (event) => { topic = event.target.value; current = 0; checked = false; optionOrders = {}; render(); });
 el.search.addEventListener("input", (event) => { search = event.target.value; current = 0; checked = false; optionOrders = {}; render(); });
